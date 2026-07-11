@@ -1,0 +1,19 @@
+{
+  "specs": {
+    "clickhouse-cloud-v1": {
+      "url": "https://api.clickhouse.cloud/v1",
+      "filename": "clickhouse-cloud-v1.json",
+      "spec_version": "1.0",
+      "openapi": "3.1.2",
+      "paths": 64,
+      "operations": 110,
+      "sha256": "48d0fbbbb8bed41c4422296f7ff8661a781f677da4dd4c9181da1ea85adf0e0b",
+      "sanitized_sha256": "89490599c9a38137011a4c47751c2430c4858aebefc9707d79cdaa5c3a231a9e",
+      "redactions": {
+        "slack_webhook_url_example": 2
+      },
+      "bytes": 910305,
+      "fetched": "2026-07-12"
+    }
+  }
+}
