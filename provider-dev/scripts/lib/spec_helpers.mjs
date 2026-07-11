@@ -120,6 +120,65 @@ export function paginationParams(op, pathItem, resolve) {
   return params.filter((n) => PAGINATION_PARAM_NAMES.includes(n));
 }
 
+// ---------------------------------------------------------------------------
+// Resource and verb derivation, shared by build_inventory.mjs (draft columns)
+// and map_operations.mjs (authoritative mapping)
+// ---------------------------------------------------------------------------
+
+// PATCH/PUT on these trailing static segments is a state/credential command
+// on the parent resource (EXEC), not an entity update
+export const ACTION_SEGMENTS = new Set(['state', 'password']);
+// POST on these trailing static segments is an action on the parent
+// resource (EXEC), not a create
+export const POST_EXEC_SEGMENTS = new Set(['restoredService', 'readReplica', 'schemaDiscovery']);
+
+// Strips /v1/, then iteratively strips scoping pairs (a static segment
+// followed by a path parameter) while more segments follow: organizations/
+// {organizationId}/services/{serviceId}/backups -> backups. The last
+// stripped parent is kept so action segments can resolve to it.
+export function scopedSegments(pathKey) {
+  let segs = pathKey.replace(/^\/v1\//, '').split('/').filter(Boolean);
+  let parent = null;
+  while (segs.length > 2 && !segs[0].startsWith('{') && segs[1].startsWith('{')) {
+    parent = segs[0];
+    segs = segs.slice(2);
+  }
+  return { segs, parent };
+}
+
+export function deriveResource(pathKey, verb, service, pluralizeFn) {
+  const { segs, parent } = scopedSegments(pathKey);
+  let statics = segs.filter((s) => !s.startsWith('{'));
+  const last = statics[statics.length - 1];
+  // an action segment names a method on the scoping parent, not a resource
+  if (verb !== 'get' && ACTION_SEGMENTS.has(last)) {
+    statics = statics.slice(0, -1);
+    if (statics.length === 0 && parent) statics = [parent];
+  }
+  if (verb === 'post' && POST_EXEC_SEGMENTS.has(last)) {
+    statics = statics.slice(0, -1);
+    if (statics.length === 0 && parent) statics = [parent];
+  }
+  if (statics.length === 0 && parent) statics = [parent];
+  // drop a leading segment that just restates the service name
+  if (statics.length > 1 && camelToSnake(statics[0]) === service) statics = statics.slice(1);
+  const snake = statics.map(camelToSnake);
+  const lastSnake = snake[snake.length - 1];
+  return [...snake.slice(0, -1), pluralizeFn(lastSnake)].join('_');
+}
+
+export function deriveVerb(verb, pathKey) {
+  const { segs } = scopedSegments(pathKey);
+  const statics = segs.filter((s) => !s.startsWith('{'));
+  const last = statics[statics.length - 1];
+  if (verb === 'get') return 'select';
+  if (verb === 'delete') return 'delete';
+  if (verb === 'patch' || verb === 'put') return ACTION_SEGMENTS.has(last) ? 'exec' : 'update';
+  // post
+  if (POST_EXEC_SEGMENTS.has(last) || ACTION_SEGMENTS.has(last)) return 'exec';
+  return 'insert';
+}
+
 // Skip rules for operations that stay visible in the CSV artifacts but are
 // not mapped to StackQL methods.
 //   prometheus_text_metrics - Prometheus scrape endpoints return text/plain,

@@ -79,6 +79,47 @@ The split is recorded as ordered path rules in `provider-dev/config/service_name
 
 Decisions taken from the inventory: `roles` and `clickpipes` are dedicated services (surfaces not in the original candidate list; roles are referenced by both keys and members, so neither absorbs them); there is no `network` service (the only org-level private endpoint resource is a single deprecated GET, folded into `organizations`); BYOC infrastructure folds into `organizations` (three write-only operations, no reads); ClickStack is a dedicated service with unprefixed resource names (`clickhouse.clickstack.dashboards`).
 
+## 2. Split into Service Specs
+
+```bash
+npm run split -- --provider-name clickhouse --overwrite
+```
+
+Splits the pinned spec into per-service OpenAPI specs in `provider-dev/source/` using the path rules in `provider-dev/config/service_names.json`. A path with no rule fails the run without writing. Pass `--services` to split a subset (the phase 1 pilots):
+
+```bash
+npm run split -- --provider-name clickhouse --services services,keys,organizations --overwrite
+```
+
+## 3. Generate Mappings
+
+```bash
+npm run generate-mappings -- --provider-name clickhouse --input-dir provider-dev/source --output-dir provider-dev/config
+npm run map-operations
+```
+
+`generate-mappings` (provider-utils `analyze`) writes the skeleton `provider-dev/config/all_services.csv`; `map-operations` populates `stackql_resource_name`, `stackql_method_name`, `stackql_verb` and `stackql_object_key` deterministically. Manual mapping decisions are rules in `provider-dev/scripts/map_operations.mjs`, never CSV edits. The script validates before writing: every operation mapped or reason-coded, method names unique per resource, and unique required-parameter signatures per SQL verb - it fails without writing on any violation.
+
+Mapping conventions:
+
+| Operation pattern | StackQL verb | Resource / method |
+|---|---|---|
+| GET collection (`$.result` array) | `SELECT` | `<resource>.list`, objectKey `$.result` |
+| GET single / singleton config | `SELECT` | `<resource>.get`, objectKey `$.result` |
+| POST create | `INSERT` | `<resource>.create` |
+| PATCH / PUT update | `UPDATE` | `<resource>.update` - the service `PATCH` takes `add`/`remove` arrays for `ipAccessList`, `privateEndpointIds` and `tags` |
+| DELETE | `DELETE` | `<resource>.delete` |
+| PATCH `.../state`, `.../password` | `EXEC` | `services.update_state` (with `@command`), `services.update_password` |
+| Prometheus text endpoints, PEM certificate read, deprecated `.../scaling` | skipped | reason-coded in the inventory |
+
+Pilot mapping results (`services`, `keys`, `organizations` - 42 operations): 17 `SELECT`, 6 `INSERT`, 7 `UPDATE`, 7 `DELETE`, 2 `EXEC`, 3 skipped. 15 resources:
+
+- `services`: `services`, `replica_scalings`, `scaling_schedules`, `upgrade_windows`, `clickhouse_settings`, `clickhouse_settings_schemas`, `private_endpoints`, `private_endpoint_configs`, `service_query_endpoints`
+- `keys`: `keys`
+- `organizations`: `organizations`, `activities`, `usage_costs`, `private_endpoint_configs`, `byoc_infrastructures`
+
+`organizations.usage_costs.list` projects `$.result.costs` (the per-entity cost rows) rather than `$.result` (a wrapper carrying `grandTotalCHC` plus the array) so FinOps queries are row-oriented - the one deliberate object-key refinement over the uniform `$.result`.
+
 ## Status
 
 Phase 1 (spec acquisition, endpoint inventory, pilot service mappings) is in progress. Steps below this line are documented as they are completed.
