@@ -65,9 +65,11 @@ Every step is deterministic and re-runnable. Manual mapping decisions are applie
 
 ### 1. Split into service specs
 
-`npm run split` with `--provider-name clickhouse`. Candidate service split (final decision from the endpoint inventory, recorded in `provider-dev/config/service_names.json`):
+`npm run split` with `--provider-name clickhouse`. Final service split (decided from the endpoint inventory, recorded as ordered path rules in `provider-dev/config/service_names.json` - the vendor's tags are too coarse to split on):
 
-`organizations` (organizations, activities, usage cost, prometheus-skips recorded here), `services` (services, state, replicaScaling, password, clickhouseSettings, serviceQueryEndpoint, privateEndpoint, privateEndpointConfig), `backups` (backups, backup configuration), `keys` (API keys), `members` (members, invitations), `network` (org-level private endpoint resources if distinct from service-level), `byoc` (BYOC infrastructure), `clickstack` (dashboards, alerts, sources, webhooks), `postgres` (Managed Postgres services and their metrics endpoints minus prometheus skips)
+`organizations` (organizations, activities, usage cost, org-level privateEndpointConfig, BYOC infrastructure, org prometheus-skip), `services` (services, state, replicaScaling, password, privateEndpoint, privateEndpointConfig, serviceQueryEndpoint, scalingSchedule, upgradeWindow, clickhouseSettings), `backups` (backups, backup configuration, backup bucket), `keys` (API keys), `roles` (org RBAC roles - referenced by both keys and members, so neither absorbs it), `members` (members, invitations), `clickpipes` (ClickPipes, settings, scaling, state, CDC scaling, schema discovery, reverse private endpoints), `clickstack` (dashboards, alerts, sources, webhooks - a dedicated service, resource names unprefixed since the service supplies the context), `postgres` (Managed Postgres services, config, metrics, slow query patterns, minus prometheus/PEM skips)
+
+Changes from the phase-0 candidate list, decided by the inventory: `roles` and `clickpipes` added (surfaces not in the candidate list); `network` dropped (the only org-level private endpoint resource is a single deprecated GET, folded into `organizations`; service-level private endpoint resources live in `services`); `byoc` folded into `organizations` (three write-only operations under the Organization tag, no reads).
 
 ### 2. Generate mappings
 

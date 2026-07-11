@@ -61,6 +61,24 @@ Inventory results for the pinned spec (110 operations):
 - **Beta**: 43 operations carry the vendor's beta labelling, in two tiers mirrored in the inventory - 33 `beta-stable` ("API contract is stable": ClickStack, Postgres, backup bucket, ClickPipes schema discovery) and 10 `beta-evolving` ("contract may change": `clickhouseSettings`, `scalingSchedule`, Postgres prometheus)
 - **Array-operation PATCH semantics**: the service `PATCH` takes `add`/`remove` arrays for `ipAccessList`, `privateEndpointIds` and `tags`; the organization `PATCH` takes them for `privateEndpoints` (vendor-deprecated in favour of the service-level field). The API key `PATCH` `ipAccessList` is plain replacement.
 
+### Service Split
+
+The split is recorded as ordered path rules in `provider-dev/config/service_names.json` (first match wins), shared by the inventory and the split step. The vendor's tags are too coarse to split on - `Organization` spans organizations, BYOC and private endpoints, and `Service` spans the whole service surface.
+
+| Service | Surface | Mapped ops |
+|---|---|---|
+| `services` | services, state, replica scaling, password, private endpoints, query endpoint, scaling schedule, upgrade window, ClickHouse settings | 24 |
+| `clickpipes` | ClickPipes, settings, scaling, state, CDC scaling, schema discovery, reverse private endpoints | 17 |
+| `postgres` | Managed Postgres services, config, metrics, slow query patterns | 15 |
+| `clickstack` | dashboards, alerts, sources, webhooks | 12 |
+| `organizations` | organizations, activities, usage cost, org private endpoint config, BYOC infrastructure | 10 |
+| `backups` | backups, backup configuration, backup bucket | 8 |
+| `members` | members, invitations | 8 |
+| `roles` | organization RBAC roles | 5 |
+| `keys` | API keys | 5 |
+
+Decisions taken from the inventory: `roles` and `clickpipes` are dedicated services (surfaces not in the original candidate list; roles are referenced by both keys and members, so neither absorbs them); there is no `network` service (the only org-level private endpoint resource is a single deprecated GET, folded into `organizations`); BYOC infrastructure folds into `organizations` (three write-only operations, no reads); ClickStack is a dedicated service with unprefixed resource names (`clickhouse.clickstack.dashboards`).
+
 ## Status
 
 Phase 1 (spec acquisition, endpoint inventory, pilot service mappings) is in progress. Steps below this line are documented as they are completed.
