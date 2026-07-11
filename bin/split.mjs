@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 // Splits the pinned ClickHouse Cloud spec into per-service StackQL service
-// specs. The spec is split by tag with consolidation: every tag must map to
-// a service in provider-dev/config/service_names.json ("*" matches any tag).
-// Unmapped tags fail the run without writing anything.
+// specs. The spec is split by the ordered path rules in
+// provider-dev/config/service_names.json (shared with build_inventory.mjs via
+// lib/spec_helpers.mjs); the vendor's tags are too coarse for the split
+// (Organization spans organizations/BYOC/private endpoints, Service spans
+// the whole service surface). Unmatched paths fail the run without writing.
 //
 // provider-utils split() cleans its output dir on every call, so the spec is
 // split into a temp dir and the requested service specs are copied into
@@ -20,6 +22,7 @@ import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { providerdev } from '@stackql/provider-utils';
+import { makeServiceResolver } from '../provider-dev/scripts/lib/spec_helpers.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -32,7 +35,6 @@ const getArg = (flag) => {
 const providerName = getArg('--provider-name') || 'clickhouse';
 const apiDoc = getArg('--api-doc') || path.join(repoRoot, 'provider-dev', 'downloaded', 'clickhouse-cloud-v1.json');
 const outputDir = getArg('--output-dir') || path.join(repoRoot, 'provider-dev', 'source');
-const serviceNamesPath = getArg('--service-names') || path.join(repoRoot, 'provider-dev', 'config', 'service_names.json');
 const servicesFilter = getArg('--services') ? getArg('--services').split(',').map((s) => s.trim()) : null;
 const overwrite = args.includes('--overwrite');
 const verbose = args.includes('--verbose');
@@ -41,12 +43,7 @@ if (!fs.existsSync(apiDoc)) {
   console.error(`Error: spec not found at ${apiDoc} (run npm run fetch-spec first)`);
   process.exit(1);
 }
-const serviceNames = JSON.parse(fs.readFileSync(serviceNamesPath, 'utf8'));
-const tagMap = serviceNames.tags;
-if (!tagMap) {
-  console.error(`Error: no "tags" map in ${serviceNamesPath}`);
-  process.exit(1);
-}
+const resolveService = makeServiceResolver();
 
 // Prepare the output directory, preserving non-spec files (e.g. .gitkeep)
 fs.mkdirSync(outputDir, { recursive: true });
@@ -57,11 +54,10 @@ if (existing.length > 0 && !overwrite) {
 }
 
 const unmapped = new Set();
-const svcDiscriminatorFn = (pathKey, operationId, tags) => {
-  const tag = (tags && tags.length > 0) ? tags[0] : '';
-  const service = tagMap[tag] || tagMap['*'];
+const svcDiscriminatorFn = (pathKey) => {
+  const service = resolveService(pathKey);
   if (!service) {
-    unmapped.add(tag || `(no tag: ${pathKey})`);
+    unmapped.add(pathKey);
     return 'unmapped_service';
   }
   return service;
@@ -85,7 +81,7 @@ try {
     process.exit(1);
   }
   if (unmapped.size > 0) {
-    console.error(`Error: tags with no service mapping in ${serviceNamesPath}:`);
+    console.error('Error: paths with no service rule in provider-dev/config/service_names.json:');
     for (const t of [...unmapped].sort()) console.error(`  ${t}`);
     process.exit(1);
   }

@@ -45,6 +45,22 @@ ClickHouse notes that the API evolves and consumers may need to adjust - the pin
 
 The written snapshot is sanitized deterministically: vendor example values that pattern-match real credentials (the Slack webhook URL examples in the ClickStack webhook schemas) are replaced with an inert placeholder, since they trip secret-scanning push protection in every artifact that embeds them. The pin records the raw upstream hash (drift is always compared against upstream), the sanitized hash of the file on disk, and the redaction count.
 
+## 1. Endpoint Inventory and Service Split
+
+```bash
+npm run build-inventory
+```
+
+Builds `provider-dev/config/endpoint_inventory.csv` from the pinned spec: one row per operation with the response envelope check, request body and array-operation (add/remove) PATCH fields, the vendor's beta tier, pagination-style query parameters, the proposed service from the path rules in `provider-dev/config/service_names.json`, a draft resource and StackQL verb, and a skip reason where applicable. The script fails without writing if any path lacks a service rule or a mapped operation deviates from the `$.result` envelope.
+
+Inventory results for the pinned spec (110 operations):
+
+- **Disposition**: 104 mapped; 6 skipped with reason codes (4 `prometheus_text_metrics` - the Prometheus scrape endpoints return `text/plain`; 1 `non_json_response_pem` - the Postgres CA certificate read returns `application/x-pem-file`; 1 `deprecated_superseded` - `PATCH .../scaling`, replaced by `PATCH .../replicaScaling`)
+- **Envelope**: uniform - every mapped JSON response wraps its payload in `$.result` (16 collection reads as `result-array`, 73 single reads and writes as `result-object`); the 16 `status-only` responses are all `DELETE` operations returning `{status, requestId}`, which need no object key
+- **Pagination**: none - no list endpoint carries paging parameters or returns a cursor; collections are bounded and complete. The single exception is `GET .../postgres/{postgresId}/slowQueryPatterns`, which takes optional `limit`/`offset` query parameters (parameter-driven windowing, usable in the `WHERE` clause; no traversal to configure)
+- **Beta**: 43 operations carry the vendor's beta labelling, in two tiers mirrored in the inventory - 33 `beta-stable` ("API contract is stable": ClickStack, Postgres, backup bucket, ClickPipes schema discovery) and 10 `beta-evolving` ("contract may change": `clickhouseSettings`, `scalingSchedule`, Postgres prometheus)
+- **Array-operation PATCH semantics**: the service `PATCH` takes `add`/`remove` arrays for `ipAccessList`, `privateEndpointIds` and `tags`; the organization `PATCH` takes them for `privateEndpoints` (vendor-deprecated in favour of the service-level field). The API key `PATCH` `ipAccessList` is plain replacement.
+
 ## Status
 
 Phase 1 (spec acquisition, endpoint inventory, pilot service mappings) is in progress. Steps below this line are documented as they are completed.

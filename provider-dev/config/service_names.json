@@ -1,0 +1,14 @@
+{
+  "description": "Service split for the clickhouse provider. Ordered path rules, first match wins; every operation path must match a rule (the terminal catch-all assigns org-level resources to the organizations service). Used by bin/split.mjs and provider-dev/scripts/build_inventory.mjs via lib/spec_helpers.mjs.",
+  "rules": [
+    { "pathRegex": "/services/\\{serviceId\\}/clickpipes", "service": "clickpipes" },
+    { "pathRegex": "/services/\\{serviceId\\}/clickstack/", "service": "clickstack" },
+    { "pathRegex": "/services/\\{serviceId\\}/backup", "service": "backups" },
+    { "pathRegex": "/keys(/|$)", "service": "keys" },
+    { "pathRegex": "/roles(/|$)", "service": "roles" },
+    { "pathRegex": "/(members|invitations)(/|$)", "service": "members" },
+    { "pathRegex": "/postgres(/|$)", "service": "postgres" },
+    { "pathRegex": "/services(/|$)", "service": "services" },
+    { "pathRegex": "^/v1/organizations", "service": "organizations" }
+  ]
+}
