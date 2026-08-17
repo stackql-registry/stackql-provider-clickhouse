@@ -39,3 +39,6 @@ website/.shared-config/
 # the ClickHouse Cloud API serves a single unversioned spec, and committing
 # the snapshot makes every refresh a reviewable diff against the hash pin
 # in provider-dev/config/spec_pin.json.
+
+# integration test registry copy (rebuilt every run)
+tests/integration/.registry-tmp/

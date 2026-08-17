@@ -11,6 +11,18 @@
 // split into a temp dir and the requested service specs are copied into
 // --output-dir (all services by default, or a --services subset).
 //
+// After the split every service spec is rebased onto the organization-scoped
+// server template in provider-dev/config/servers.json
+// (https://api.clickhouse.cloud/v1/organizations/{organizationId}, with the
+// {organizationId} server variable carrying x-stackQL-envVar: CLICKHOUSE_ORG_ID
+// so stackql resolves it from the environment - stackql/stackql#707). Paths
+// lose the /v1/organizations/{organizationId} prefix and the organizationId
+// path parameter. The two organization-root paths (/v1/organizations and
+// /v1/organizations/{organizationId}) are the exception: they keep their full
+// path and are pinned back to the bare API base by a path-level servers
+// override, injected by provider-dev/scripts/post_process.mjs after
+// generation (the normalize step strips path-level servers).
+//
 // Usage:
 //   node bin/split.mjs --provider-name clickhouse \
 //     [--api-doc provider-dev/downloaded/clickhouse-cloud-v1.json] \
@@ -21,8 +33,9 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import yaml from 'js-yaml';
 import { providerdev } from '@stackql/provider-utils';
-import { makeServiceResolver } from '../provider-dev/scripts/lib/spec_helpers.mjs';
+import { makeServiceResolver, ORG_PREFIX, ORG_ROOT_PATHS, rebaseOrgScopedPaths } from '../provider-dev/scripts/lib/spec_helpers.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -44,6 +57,8 @@ if (!fs.existsSync(apiDoc)) {
   process.exit(1);
 }
 const resolveService = makeServiceResolver();
+const serversPath = path.join(repoRoot, 'provider-dev', 'config', 'servers.json');
+const servers = JSON.parse(fs.readFileSync(serversPath, 'utf8'));
 
 // Prepare the output directory, preserving non-spec files (e.g. .gitkeep)
 fs.mkdirSync(outputDir, { recursive: true });
@@ -93,8 +108,10 @@ try {
   for (const outFile of fs.readdirSync(tmpDir)) {
     const service = outFile.replace(/\.(yaml|yml|json)$/, '');
     if (servicesFilter && !servicesFilter.includes(service)) continue;
-    fs.copyFileSync(path.join(tmpDir, outFile), path.join(outputDir, outFile));
-    written.push(outFile);
+    const doc = yaml.load(fs.readFileSync(path.join(tmpDir, outFile), 'utf8'));
+    const { rebased, kept } = rebaseOrgScopedPaths(doc, servers);
+    fs.writeFileSync(path.join(outputDir, outFile), yaml.dump(doc, { lineWidth: -1, noRefs: true }));
+    written.push(`${outFile} (${rebased} paths rebased under ${ORG_PREFIX}${kept ? `, ${kept} organization-root paths kept` : ''})`);
   }
 } finally {
   fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -104,3 +121,4 @@ console.log(`Split completed: ${written.length} service specs written to ${outpu
 for (const f of written.sort()) {
   console.log(`  ${f}`);
 }
+console.log(`Server template: ${servers[0].url} (organizationId via x-stackQL-envVar ${servers[0].variables.organizationId['x-stackQL-envVar']}; root paths ${ORG_ROOT_PATHS.join(', ')} pinned to the API base in post_process)`);

@@ -1,43 +1,111 @@
 filename,path,operationId,formatted_op_id,verb,response_object,tags,formatted_tags,stackql_resource_name,stackql_method_name,stackql_verb,stackql_object_key,op_description
-keys.yaml,/v1/organizations/{organizationId}/keys,openapiKeyGetList,openapi_key_get_list,get,,OpenAPI,open_api,keys,list,select,$.result,Get list of all keys
-keys.yaml,/v1/organizations/{organizationId}/keys,openapiKeyCreate,openapi_key_create,post,,OpenAPI,open_api,keys,create,insert,,Create key
-keys.yaml,/v1/organizations/{organizationId}/keys/{keyId},openapiKeyGet,openapi_key_get,get,,OpenAPI,open_api,keys,get,select,$.result,Get key details
-keys.yaml,/v1/organizations/{organizationId}/keys/{keyId},openapiKeyUpdate,openapi_key_update,patch,,OpenAPI,open_api,keys,update,update,,Update key
-keys.yaml,/v1/organizations/{organizationId}/keys/{keyId},openapiKeyDelete,openapi_key_delete,delete,,OpenAPI,open_api,keys,delete,delete,,Delete key
+backups.yaml,/services/{serviceId}/backups,backupGetList,backup_get_list,get,,Backup,backup,backups,list,select,$.result,List of service backups
+backups.yaml,/services/{serviceId}/backups/{backupId},backupGet,backup_get,get,,Backup,backup,backups,get,select,$.result,Get backup details
+backups.yaml,/services/{serviceId}/backupConfiguration,backupConfigurationGet,backup_configuration_get,get,,Backup,backup,backup_configurations,get,select,$.result,Get service backup configuration
+backups.yaml,/services/{serviceId}/backupConfiguration,backupConfigurationUpdate,backup_configuration_update,patch,,Backup,backup,backup_configurations,update,update,,Update service backup configuration
+backups.yaml,/services/{serviceId}/backupBucket,backupBucketGet,backup_bucket_get,get,,Backup,backup,backup_buckets,get,select,$.result,Get service backup bucket
+backups.yaml,/services/{serviceId}/backupBucket,backupBucketCreate,backup_bucket_create,post,,Backup,backup,backup_buckets,create,insert,,Create service backup bucket
+backups.yaml,/services/{serviceId}/backupBucket,backupBucketUpdate,backup_bucket_update,patch,,Backup,backup,backup_buckets,update,update,,Update service backup bucket
+backups.yaml,/services/{serviceId}/backupBucket,backupBucketDelete,backup_bucket_delete,delete,,Backup,backup,backup_buckets,delete,delete,,Delete service backup bucket
+clickpipes.yaml,/services/{serviceId}/clickpipes,clickPipeGetList,click_pipe_get_list,get,,ClickPipes,click_pipes,clickpipes,list,select,$.result,List ClickPipes
+clickpipes.yaml,/services/{serviceId}/clickpipes,clickPipeCreate,click_pipe_create,post,,ClickPipes,click_pipes,clickpipes,create,insert,,Create ClickPipe
+clickpipes.yaml,/services/{serviceId}/clickpipes/{clickPipeId},clickPipeGet,click_pipe_get,get,,ClickPipes,click_pipes,clickpipes,get,select,$.result,Get ClickPipe
+clickpipes.yaml,/services/{serviceId}/clickpipes/{clickPipeId},clickPipeUpdate,click_pipe_update,patch,,ClickPipes,click_pipes,clickpipes,update,update,,Update ClickPipe
+clickpipes.yaml,/services/{serviceId}/clickpipes/{clickPipeId},clickPipeDelete,click_pipe_delete,delete,,ClickPipes,click_pipes,clickpipes,delete,delete,,Delete ClickPipe
+clickpipes.yaml,/services/{serviceId}/clickpipes/{clickPipeId}/settings,clickPipeSettingsGet,click_pipe_settings_get,get,,ClickPipes,click_pipes,settings,get,select,$.result,Get ClickPipe settings
+clickpipes.yaml,/services/{serviceId}/clickpipes/{clickPipeId}/settings,clickPipeSettingsUpdate,click_pipe_settings_update,put,,ClickPipes,click_pipes,settings,update,update,,Update ClickPipe settings
+clickpipes.yaml,/services/{serviceId}/clickpipes/schemaDiscovery,clickPipeSchemaDiscovery,click_pipe_schema_discovery,post,,ClickPipes,click_pipes,clickpipes,schema_discovery,exec,,Discover ClickPipe source schema
+clickpipes.yaml,/services/{serviceId}/clickpipes/{clickPipeId}/scaling,clickPipeScalingUpdate,click_pipe_scaling_update,patch,,ClickPipes,click_pipes,scalings,update,update,,Update ClickPipe scaling
+clickpipes.yaml,/services/{serviceId}/clickpipes/{clickPipeId}/state,clickPipeStateUpdate,click_pipe_state_update,patch,,ClickPipes,click_pipes,clickpipes,update_state,exec,,Update ClickPipe state
+clickpipes.yaml,/services/{serviceId}/clickpipesCdcScaling,clickPipeCdcScalingGet,click_pipe_cdc_scaling_get,get,,ClickPipes,click_pipes,cdc_scalings,get,select,$.result,Get CDC ClickPipes scaling
+clickpipes.yaml,/services/{serviceId}/clickpipesCdcScaling,clickPipeCdcScalingUpdate,click_pipe_cdc_scaling_update,patch,,ClickPipes,click_pipes,cdc_scalings,update,update,,Update CDC ClickPipes scaling
+clickpipes.yaml,/services/{serviceId}/clickpipesReversePrivateEndpoints,clickPipeReversePrivateEndpointGetList,click_pipe_reverse_private_endpoint_get_list,get,,ClickPipes,click_pipes,reverse_private_endpoints,list,select,$.result,List reverse private endpoints
+clickpipes.yaml,/services/{serviceId}/clickpipesReversePrivateEndpoints,clickPipeReversePrivateEndpointCreate,click_pipe_reverse_private_endpoint_create,post,,ClickPipes,click_pipes,reverse_private_endpoints,create,insert,,Create reverse private endpoint
+clickpipes.yaml,/services/{serviceId}/clickpipesReversePrivateEndpoints/{reversePrivateEndpointId},clickPipeReversePrivateEndpointGet,click_pipe_reverse_private_endpoint_get,get,,ClickPipes,click_pipes,reverse_private_endpoints,get,select,$.result,Get reverse private endpoint
+clickpipes.yaml,/services/{serviceId}/clickpipesReversePrivateEndpoints/{reversePrivateEndpointId},clickPipeReversePrivateEndpointDelete,click_pipe_reverse_private_endpoint_delete,delete,,ClickPipes,click_pipes,reverse_private_endpoints,delete,delete,,Delete reverse private endpoint
+clickpipes.yaml,/services/{serviceId}/clickpipesReversePrivateEndpoints/{reversePrivateEndpointId},clickPipeReversePrivateEndpointUpdate,click_pipe_reverse_private_endpoint_update,patch,,ClickPipes,click_pipes,reverse_private_endpoints,update,update,,Update reverse private endpoint
+clickstack.yaml,/services/{serviceId}/clickstack/dashboards,clickStackListDashboards,click_stack_list_dashboards,get,,ClickStack,click_stack,dashboards,list,select,$.result,ClickStack: List Dashboards
+clickstack.yaml,/services/{serviceId}/clickstack/dashboards,clickStackCreateDashboard,click_stack_create_dashboard,post,,ClickStack,click_stack,dashboards,create,insert,,ClickStack: Create Dashboard
+clickstack.yaml,/services/{serviceId}/clickstack/dashboards/{clickStackDashboardId},clickStackGetDashboard,click_stack_get_dashboard,get,,ClickStack,click_stack,dashboards,get,select,$.result,ClickStack: Get Dashboard
+clickstack.yaml,/services/{serviceId}/clickstack/dashboards/{clickStackDashboardId},clickStackUpdateDashboard,click_stack_update_dashboard,put,,ClickStack,click_stack,dashboards,update,update,,ClickStack: Update Dashboard
+clickstack.yaml,/services/{serviceId}/clickstack/dashboards/{clickStackDashboardId},clickStackDeleteDashboard,click_stack_delete_dashboard,delete,,ClickStack,click_stack,dashboards,delete,delete,,ClickStack: Delete Dashboard
+clickstack.yaml,/services/{serviceId}/clickstack/alerts,clickStackListAlerts,click_stack_list_alerts,get,,ClickStack,click_stack,alerts,list,select,$.result,ClickStack: List Alerts
+clickstack.yaml,/services/{serviceId}/clickstack/alerts,clickStackCreateAlert,click_stack_create_alert,post,,ClickStack,click_stack,alerts,create,insert,,ClickStack: Create Alert
+clickstack.yaml,/services/{serviceId}/clickstack/sources,clickStackListSources,click_stack_list_sources,get,,ClickStack,click_stack,sources,list,select,$.result,ClickStack: List Sources
+clickstack.yaml,/services/{serviceId}/clickstack/alerts/{clickStackAlertId},clickStackGetAlert,click_stack_get_alert,get,,ClickStack,click_stack,alerts,get,select,$.result,ClickStack: Get Alert
+clickstack.yaml,/services/{serviceId}/clickstack/alerts/{clickStackAlertId},clickStackUpdateAlert,click_stack_update_alert,put,,ClickStack,click_stack,alerts,update,update,,ClickStack: Update Alert
+clickstack.yaml,/services/{serviceId}/clickstack/alerts/{clickStackAlertId},clickStackDeleteAlert,click_stack_delete_alert,delete,,ClickStack,click_stack,alerts,delete,delete,,ClickStack: Delete Alert
+clickstack.yaml,/services/{serviceId}/clickstack/webhooks,clickStackListWebhooks,click_stack_list_webhooks,get,,ClickStack,click_stack,webhooks,list,select,$.result,ClickStack: List Webhooks
+keys.yaml,/keys,openapiKeyGetList,openapi_key_get_list,get,,OpenAPI,open_api,keys,list,select,$.result,Get list of all keys
+keys.yaml,/keys,openapiKeyCreate,openapi_key_create,post,,OpenAPI,open_api,keys,create,insert,,Create key
+keys.yaml,/keys/{keyId},openapiKeyGet,openapi_key_get,get,,OpenAPI,open_api,keys,get,select,$.result,Get key details
+keys.yaml,/keys/{keyId},openapiKeyUpdate,openapi_key_update,patch,,OpenAPI,open_api,keys,update,update,,Update key
+keys.yaml,/keys/{keyId},openapiKeyDelete,openapi_key_delete,delete,,OpenAPI,open_api,keys,delete,delete,,Delete key
+members.yaml,/members,memberGetList,member_get_list,get,,User management,user management,members,list,select,$.result,List organization members
+members.yaml,/members/{userId},memberGet,member_get,get,,User management,user management,members,get,select,$.result,Get member details
+members.yaml,/members/{userId},memberUpdate,member_update,patch,,User management,user management,members,update,update,,Update organization member
+members.yaml,/members/{userId},memberDelete,member_delete,delete,,User management,user management,members,delete,delete,,Remove an organization member
+members.yaml,/invitations,invitationGetList,invitation_get_list,get,,User management,user management,invitations,list,select,$.result,List all invitations
+members.yaml,/invitations,invitationCreate,invitation_create,post,,User management,user management,invitations,create,insert,,Create an invitation
+members.yaml,/invitations/{invitationId},invitationGet,invitation_get,get,,User management,user management,invitations,get,select,$.result,Get invitation details
+members.yaml,/invitations/{invitationId},invitationDelete,invitation_delete,delete,,User management,user management,invitations,delete,delete,,Delete organization invitation
 organizations.yaml,/v1/organizations,organizationGetList,organization_get_list,get,,Organization,organization,organizations,list,select,$.result,Get list of available organizations
 organizations.yaml,/v1/organizations/{organizationId},organizationGet,organization_get,get,,Organization,organization,organizations,get,select,$.result,Get organization details
 organizations.yaml,/v1/organizations/{organizationId},organizationUpdate,organization_update,patch,,Organization,organization,organizations,update,update,,Update organization details
-organizations.yaml,/v1/organizations/{organizationId}/prometheus,organizationPrometheusGet,organization_prometheus_get,get,,Prometheus,prometheus,skip_this_resource,,,,Get organization metrics
-organizations.yaml,/v1/organizations/{organizationId}/activities,activityGetList,activity_get_list,get,,Organization,organization,activities,list,select,$.result,List of organization activities
-organizations.yaml,/v1/organizations/{organizationId}/activities/{activityId},activityGet,activity_get,get,,Organization,organization,activities,get,select,$.result,Organization activity
-organizations.yaml,/v1/organizations/{organizationId}/usageCost,usageCostGet,usage_cost_get,get,,Billing,billing,usage_costs,list,select,$.result.costs,Get organization usage costs
-organizations.yaml,/v1/organizations/{organizationId}/privateEndpointConfig,organizationPrivateEndpointConfigGetList,organization_private_endpoint_config_get_list,get,,Organization,organization,private_endpoint_configs,get,select,$.result,Get private endpoint configuration for region within cloud provider for an organization
-organizations.yaml,/v1/organizations/{organizationId}/byocInfrastructure,organizationByocInfrastructureCreate,organization_byoc_infrastructure_create,post,,Organization,organization,byoc_infrastructures,create,insert,,Create BYOC Infrastructure
-organizations.yaml,/v1/organizations/{organizationId}/byocInfrastructure/{byocInfrastructureId},organizationByocInfrastructureDelete,organization_byoc_infrastructure_delete,delete,,Organization,organization,byoc_infrastructures,delete,delete,,Remove a BYOC infrastructure
-organizations.yaml,/v1/organizations/{organizationId}/byocInfrastructure/{byocInfrastructureId},organizationByocInfrastructureUpdate,organization_byoc_infrastructure_update,patch,,Organization,organization,byoc_infrastructures,update,update,,Update BYOC Infrastructure
-services.yaml,/v1/organizations/{organizationId}/services,instanceGetList,instance_get_list,get,,Service,service,services,list,select,$.result,List of organization services
-services.yaml,/v1/organizations/{organizationId}/services,instanceCreate,instance_create,post,,Service,service,services,create,insert,,Create new service
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId},instanceGet,instance_get,get,,Service,service,services,get,select,$.result,Get service details
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId},instanceUpdate,instance_update,patch,,Service,service,services,update,update,,Update service basic details
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId},instanceDelete,instance_delete,delete,,Service,service,services,delete,delete,,Delete service
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/privateEndpointConfig,instancePrivateEndpointConfigGet,instance_private_endpoint_config_get,get,,Service,service,private_endpoint_configs,get,select,$.result,Get private endpoint configuration
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/serviceQueryEndpoint,instanceQueryEndpointGet,instance_query_endpoint_get,get,,Service,service,service_query_endpoints,get,select,$.result,Get the service query endpoint for a given instance
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/serviceQueryEndpoint,instanceQueryEndpointDelete,instance_query_endpoint_delete,delete,,Service,service,service_query_endpoints,delete,delete,,Delete the service query endpoint for a given instance
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/serviceQueryEndpoint,instanceQueryEndpointUpsert,instance_query_endpoint_upsert,post,,Service,service,service_query_endpoints,create,insert,,Upsert the service query endpoint for a given instance
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/state,instanceStateUpdate,instance_state_update,patch,,Service,service,services,update_state,exec,,Update service state
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/scaling,instanceScalingUpdate,instance_scaling_update,patch,,Service,service,skip_this_resource,,,,Update service auto scaling settings
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/replicaScaling,instanceReplicaScalingUpdate,instance_replica_scaling_update,patch,,Service,service,replica_scalings,update,update,,Update service auto scaling settings
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/password,instancePasswordUpdate,instance_password_update,patch,,Service,service,services,update_password,exec,,Update service password
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/privateEndpoint,instancePrivateEndpointCreate,instance_private_endpoint_create,post,,Service,service,private_endpoints,create,insert,,Create a private endpoint
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/prometheus,instancePrometheusGet,instance_prometheus_get,get,,Prometheus,prometheus,skip_this_resource,,,,Get service metrics
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/scalingSchedule,scalingScheduleGet,scaling_schedule_get,get,,Service,service,scaling_schedules,get,select,$.result,Get service autoscaling schedule
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/scalingSchedule,scalingScheduleUpsert,scaling_schedule_upsert,post,,Service,service,scaling_schedules,create,insert,,Create or replace service autoscaling schedule
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/scalingSchedule,scalingScheduleDelete,scaling_schedule_delete,delete,,Service,service,scaling_schedules,delete,delete,,Delete service scheduled scaling
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/upgradeWindow,upgradeWindowGet,upgrade_window_get,get,,Service,service,upgrade_windows,get,select,$.result,Get service upgrade window
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/upgradeWindow,upgradeWindowUpdate,upgrade_window_update,put,,Service,service,upgrade_windows,update,update,,Set service upgrade window
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/upgradeWindow,upgradeWindowDelete,upgrade_window_delete,delete,,Service,service,upgrade_windows,delete,delete,,Delete service upgrade window
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/clickhouseSettings,serviceClickhouseSettingsListGet,service_clickhouse_settings_list_get,get,,Service,service,clickhouse_settings,list,select,$.result,List ClickHouse settings
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/clickhouseSettings,serviceClickhouseSettingsUpdate,service_clickhouse_settings_update,patch,,Service,service,clickhouse_settings,update,update,,Update ClickHouse settings
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/clickhouseSettings/schema,serviceClickhouseSettingsSchemaGet,service_clickhouse_settings_schema_get,get,,Service,service,clickhouse_settings_schemas,get,select,$.result,Get ClickHouse settings schema
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/clickhouseSettings/{settingName},serviceClickhouseSettingGet,service_clickhouse_setting_get,get,,Service,service,clickhouse_settings,get,select,$.result,Get ClickHouse setting
-services.yaml,/v1/organizations/{organizationId}/services/{serviceId}/clickhouseSettings/{settingName},serviceClickhouseSettingDelete,service_clickhouse_setting_delete,delete,,Service,service,clickhouse_settings,delete,delete,,Reset ClickHouse setting to default
+organizations.yaml,/prometheus,organizationPrometheusGet,organization_prometheus_get,get,,Prometheus,prometheus,skip_this_resource,,,,Get organization metrics
+organizations.yaml,/activities,activityGetList,activity_get_list,get,,Organization,organization,activities,list,select,$.result,List of organization activities
+organizations.yaml,/activities/{activityId},activityGet,activity_get,get,,Organization,organization,activities,get,select,$.result,Organization activity
+organizations.yaml,/usageCost,usageCostGet,usage_cost_get,get,,Billing,billing,usage_costs,list,select,$.result.costs,Get organization usage costs
+organizations.yaml,/privateEndpointConfig,organizationPrivateEndpointConfigGetList,organization_private_endpoint_config_get_list,get,,Organization,organization,private_endpoint_configs,get,select,$.result,Get private endpoint configuration for region within cloud provider for an organization
+organizations.yaml,/byocInfrastructure,organizationByocInfrastructureCreate,organization_byoc_infrastructure_create,post,,Organization,organization,byoc_infrastructures,create,insert,,Create BYOC Infrastructure
+organizations.yaml,/byocInfrastructure/{byocInfrastructureId},organizationByocInfrastructureDelete,organization_byoc_infrastructure_delete,delete,,Organization,organization,byoc_infrastructures,delete,delete,,Remove a BYOC infrastructure
+organizations.yaml,/byocInfrastructure/{byocInfrastructureId},organizationByocInfrastructureUpdate,organization_byoc_infrastructure_update,patch,,Organization,organization,byoc_infrastructures,update,update,,Update BYOC Infrastructure
+postgres.yaml,/postgres,postgresServiceCreate,postgres_service_create,post,,Postgres,postgres,services,create,insert,,Create new Postgres service
+postgres.yaml,/postgres,postgresServiceGetList,postgres_service_get_list,get,,Postgres,postgres,services,list,select,$.result,List of organization Postgres services
+postgres.yaml,/postgres/prometheus,postgresOrgPrometheusGet,postgres_org_prometheus_get,get,,Prometheus,prometheus,skip_this_resource,,,,Get organization PostgreSQL metrics
+postgres.yaml,/postgres/{postgresId},postgresServiceGet,postgres_service_get,get,,Postgres,postgres,services,get,select,$.result,Get PostgreSQL service details
+postgres.yaml,/postgres/{postgresId},postgresServiceDelete,postgres_service_delete,delete,,Postgres,postgres,services,delete,delete,,Delete a PostgreSQL service
+postgres.yaml,/postgres/{postgresId},postgresServicePatch,postgres_service_patch,patch,,Postgres,postgres,services,update,update,,Update a PostgreSQL service
+postgres.yaml,/postgres/{postgresId}/caCertificates,postgresServiceCertsGet,postgres_service_certs_get,get,,Postgres,postgres,skip_this_resource,,,,Get Postgres CA certs
+postgres.yaml,/postgres/{postgresId}/restoredService,postgresInstanceRestore,postgres_instance_restore,post,,Postgres,postgres,services,restored_service,exec,,Restore a Postgres service
+postgres.yaml,/postgres/{postgresId}/password,postgresServiceSetPassword,postgres_service_set_password,patch,,Postgres,postgres,services,update_password,exec,,Update Postgres superuser password
+postgres.yaml,/postgres/{postgresId}/state,postgresServicePatchState,postgres_service_patch_state,patch,,Postgres,postgres,services,update_state,exec,,Update Postgres service state
+postgres.yaml,/postgres/{postgresId}/readReplica,postgresInstanceCreateReadReplica,postgres_instance_create_read_replica,post,,Postgres,postgres,services,read_replica,exec,,Create a read replica for a Postgres service
+postgres.yaml,/postgres/{postgresId}/config,postgresInstanceConfigGet,postgres_instance_config_get,get,,Postgres,postgres,configs,get,select,$.result,Get PostgreSQL service configuration
+postgres.yaml,/postgres/{postgresId}/config,postgresInstanceConfigPost,postgres_instance_config_post,post,,Postgres,postgres,configs,create,insert,,Replace Postgres service configuration
+postgres.yaml,/postgres/{postgresId}/config,postgresInstanceConfigPatch,postgres_instance_config_patch,patch,,Postgres,postgres,configs,update,update,,Update Postgres service configuration
+postgres.yaml,/postgres/{postgresId}/prometheus,postgresInstancePrometheusGet,postgres_instance_prometheus_get,get,,Prometheus,prometheus,skip_this_resource,,,,Get PostgreSQL service metrics
+postgres.yaml,/postgres/{postgresId}/metrics,postgresInstanceMetricsGet,postgres_instance_metrics_get,get,,Postgres,postgres,metrics,get,select,$.result,Get Postgres time-series metrics
+postgres.yaml,/postgres/{postgresId}/slowQueryPatterns,slowQueryPatternsGetList,slow_query_patterns_get_list,get,,Postgres,postgres,slow_query_patterns,list,select,$.result,List Postgres slow query patterns
+postgres.yaml,/postgres/{postgresId}/slowQueryPatterns/{queryId},slowQueryPatternGet,slow_query_pattern_get,get,,Postgres,postgres,slow_query_patterns,get,select,$.result,Get a Postgres slow query pattern with recent executions
+roles.yaml,/roles,organizationRolesGetList,organization_roles_get_list,get,,Role Management,role management,roles,list,select,$.result,List all available roles for an organization
+roles.yaml,/roles,organizationRolePost,organization_role_post,post,,Role Management,role management,roles,create,insert,,Create a new role
+roles.yaml,/roles/{roleId},organizationRoleGet,organization_role_get,get,,Role Management,role management,roles,get,select,$.result,Get role details
+roles.yaml,/roles/{roleId},organizationRolePatch,organization_role_patch,patch,,Role Management,role management,roles,update,update,,Update a role
+roles.yaml,/roles/{roleId},organizationRoleDelete,organization_role_delete,delete,,Role Management,role management,roles,delete,delete,,Delete a role
+services.yaml,/services,instanceGetList,instance_get_list,get,,Service,service,services,list,select,$.result,List of organization services
+services.yaml,/services,instanceCreate,instance_create,post,,Service,service,services,create,insert,,Create new service
+services.yaml,/services/{serviceId},instanceGet,instance_get,get,,Service,service,services,get,select,$.result,Get service details
+services.yaml,/services/{serviceId},instanceUpdate,instance_update,patch,,Service,service,services,update,update,,Update service basic details
+services.yaml,/services/{serviceId},instanceDelete,instance_delete,delete,,Service,service,services,delete,delete,,Delete service
+services.yaml,/services/{serviceId}/privateEndpointConfig,instancePrivateEndpointConfigGet,instance_private_endpoint_config_get,get,,Service,service,private_endpoint_configs,get,select,$.result,Get private endpoint configuration
+services.yaml,/services/{serviceId}/serviceQueryEndpoint,instanceQueryEndpointGet,instance_query_endpoint_get,get,,Service,service,service_query_endpoints,get,select,$.result,Get the service query endpoint for a given instance
+services.yaml,/services/{serviceId}/serviceQueryEndpoint,instanceQueryEndpointDelete,instance_query_endpoint_delete,delete,,Service,service,service_query_endpoints,delete,delete,,Delete the service query endpoint for a given instance
+services.yaml,/services/{serviceId}/serviceQueryEndpoint,instanceQueryEndpointUpsert,instance_query_endpoint_upsert,post,,Service,service,service_query_endpoints,create,insert,,Upsert the service query endpoint for a given instance
+services.yaml,/services/{serviceId}/state,instanceStateUpdate,instance_state_update,patch,,Service,service,services,update_state,exec,,Update service state
+services.yaml,/services/{serviceId}/scaling,instanceScalingUpdate,instance_scaling_update,patch,,Service,service,skip_this_resource,,,,Update service auto scaling settings
+services.yaml,/services/{serviceId}/replicaScaling,instanceReplicaScalingUpdate,instance_replica_scaling_update,patch,,Service,service,replica_scalings,update,update,,Update service auto scaling settings
+services.yaml,/services/{serviceId}/password,instancePasswordUpdate,instance_password_update,patch,,Service,service,services,update_password,exec,,Update service password
+services.yaml,/services/{serviceId}/privateEndpoint,instancePrivateEndpointCreate,instance_private_endpoint_create,post,,Service,service,private_endpoints,create,insert,,Create a private endpoint
+services.yaml,/services/{serviceId}/prometheus,instancePrometheusGet,instance_prometheus_get,get,,Prometheus,prometheus,skip_this_resource,,,,Get service metrics
+services.yaml,/services/{serviceId}/scalingSchedule,scalingScheduleGet,scaling_schedule_get,get,,Service,service,scaling_schedules,get,select,$.result,Get service autoscaling schedule
+services.yaml,/services/{serviceId}/scalingSchedule,scalingScheduleUpsert,scaling_schedule_upsert,post,,Service,service,scaling_schedules,create,insert,,Create or replace service autoscaling schedule
+services.yaml,/services/{serviceId}/scalingSchedule,scalingScheduleDelete,scaling_schedule_delete,delete,,Service,service,scaling_schedules,delete,delete,,Delete service scheduled scaling
+services.yaml,/services/{serviceId}/upgradeWindow,upgradeWindowGet,upgrade_window_get,get,,Service,service,upgrade_windows,get,select,$.result,Get service upgrade window
+services.yaml,/services/{serviceId}/upgradeWindow,upgradeWindowUpdate,upgrade_window_update,put,,Service,service,upgrade_windows,update,update,,Set service upgrade window
+services.yaml,/services/{serviceId}/upgradeWindow,upgradeWindowDelete,upgrade_window_delete,delete,,Service,service,upgrade_windows,delete,delete,,Delete service upgrade window
+services.yaml,/services/{serviceId}/clickhouseSettings,serviceClickhouseSettingsListGet,service_clickhouse_settings_list_get,get,,Service,service,clickhouse_settings,list,select,$.result,List ClickHouse settings
+services.yaml,/services/{serviceId}/clickhouseSettings,serviceClickhouseSettingsUpdate,service_clickhouse_settings_update,patch,,Service,service,clickhouse_settings,update,update,,Update ClickHouse settings
+services.yaml,/services/{serviceId}/clickhouseSettings/schema,serviceClickhouseSettingsSchemaGet,service_clickhouse_settings_schema_get,get,,Service,service,clickhouse_settings_schemas,get,select,$.result,Get ClickHouse settings schema
+services.yaml,/services/{serviceId}/clickhouseSettings/{settingName},serviceClickhouseSettingGet,service_clickhouse_setting_get,get,,Service,service,clickhouse_settings,get,select,$.result,Get ClickHouse setting
+services.yaml,/services/{serviceId}/clickhouseSettings/{settingName},serviceClickhouseSettingDelete,service_clickhouse_setting_delete,delete,,Service,service,clickhouse_settings,delete,delete,,Reset ClickHouse setting to default

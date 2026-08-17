@@ -1,14 +1,14 @@
 openapi: 3.1.2
 info:
-  title: keys API
-  description: clickhouse keys API
+  title: members API
+  description: clickhouse members API
   version: '1.0'
 paths:
-  /keys:
+  /members:
     get:
-      summary: Get list of all keys
-      description: Returns a list of all keys in the organization.
-      operationId: openapiKeyGetList
+      summary: List organization members
+      description: Returns a list of all members in the organization.
+      operationId: memberGetList
       parameters: []
       responses:
         '200':
@@ -29,7 +29,7 @@ paths:
                   result:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ApiKey'
+                      $ref: '#/components/schemas/Member'
         '400':
           description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
@@ -67,17 +67,289 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
       tags:
-        - OpenAPI
+        - User management
+  /members/{userId}:
+    get:
+      summary: Get member details
+      description: Returns a single organization member details.
+      operationId: memberGet
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the requested user.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 200
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+                  result:
+                    $ref: '#/components/schemas/Member'
+        '400':
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 400
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+        '500':
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: HTTP status code.
+                    example: 500
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+      tags:
+        - User management
+    patch:
+      summary: Update organization member
+      description: Updates organization member role.
+      operationId: memberUpdate
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the user to patch
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberPatchRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 200
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+                  result:
+                    $ref: '#/components/schemas/Member'
+        '400':
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 400
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+        '500':
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: HTTP status code.
+                    example: 500
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+      tags:
+        - User management
+    delete:
+      summary: Remove an organization member
+      description: Removes a user from the organization
+      operationId: memberDelete
+      parameters:
+        - in: path
+          name: userId
+          description: ID of the requested user.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 200
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+        '400':
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 400
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+        '500':
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: HTTP status code.
+                    example: 500
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+      tags:
+        - User management
+  /invitations:
+    get:
+      summary: List all invitations
+      description: Returns list of all organization invitations.
+      operationId: invitationGetList
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 200
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Invitation'
+        '400':
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    description: HTTP status code.
+                    example: 400
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+        '500':
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: HTTP status code.
+                    example: 500
+                  error:
+                    type: string
+                    description: Detailed error description.
+                  requestId:
+                    type: string
+                    description: Unique id assigned to every request. UUIDv4
+                    format: uuid
+      tags:
+        - User management
     post:
-      summary: Create key
-      description: Creates new API key.
-      operationId: openapiKeyCreate
+      summary: Create an invitation
+      description: Creates organization invitation.
+      operationId: invitationCreate
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApiKeyPostRequest'
+              $ref: '#/components/schemas/InvitationPostRequest'
       responses:
         '200':
           description: Successful response
@@ -95,7 +367,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
                   result:
-                    $ref: '#/components/schemas/ApiKeyPostResponse'
+                    $ref: '#/components/schemas/Invitation'
         '400':
           description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
@@ -133,16 +405,16 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
       tags:
-        - OpenAPI
-  /keys/{keyId}:
+        - User management
+  /invitations/{invitationId}:
     get:
-      summary: Get key details
-      description: Returns a single key details.
-      operationId: openapiKeyGet
+      summary: Get invitation details
+      description: Returns details for a single organization invitation.
+      operationId: invitationGet
       parameters:
         - in: path
-          name: keyId
-          description: ID of the requested key.
+          name: invitationId
+          description: ID of the requested organization.
           required: true
           schema:
             type: string
@@ -164,7 +436,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
                   result:
-                    $ref: '#/components/schemas/ApiKey'
+                    $ref: '#/components/schemas/Invitation'
         '400':
           description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
@@ -202,88 +474,15 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
       tags:
-        - OpenAPI
-    patch:
-      summary: Update key
-      description: Updates API key properties.
-      operationId: openapiKeyUpdate
-      parameters:
-        - in: path
-          name: keyId
-          description: ID of the key to update.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApiKeyPatchRequest'
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: number
-                    description: HTTP status code.
-                    example: 200
-                  requestId:
-                    type: string
-                    description: Unique id assigned to every request. UUIDv4
-                    format: uuid
-                  result:
-                    $ref: '#/components/schemas/ApiKey'
-        '400':
-          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: number
-                    description: HTTP status code.
-                    example: 400
-                  error:
-                    type: string
-                    description: Detailed error description.
-                  requestId:
-                    type: string
-                    description: Unique id assigned to every request. UUIDv4
-                    format: uuid
-        '500':
-          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    description: HTTP status code.
-                    example: 500
-                  error:
-                    type: string
-                    description: Detailed error description.
-                  requestId:
-                    type: string
-                    description: Unique id assigned to every request. UUIDv4
-                    format: uuid
-      tags:
-        - OpenAPI
+        - User management
     delete:
-      summary: Delete key
-      description: Deletes API key. Only a key not used to authenticate the active request can be deleted.
-      operationId: openapiKeyDelete
+      summary: Delete organization invitation
+      description: Deletes a single organization invitation.
+      operationId: invitationDelete
       parameters:
         - in: path
-          name: keyId
-          description: ID of the key to delete.
+          name: invitationId
+          description: ID of the requested organization.
           required: true
           schema:
             type: string
@@ -341,149 +540,102 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
       tags:
-        - OpenAPI
+        - User management
 components:
   schemas:
-    ApiKey:
+    Member:
       properties:
-        id:
-          description: Unique API key ID.
+        userId:
+          description: Unique user ID. If a user is a member in multiple organizations this ID will stay the same.
           type: string
-          format: uuid
         name:
-          description: Name of the key
+          description: Name of the member as set a personal user profile.
           type: string
-        state:
-          description: 'State of the key: ''enabled'', ''disabled''.'
+        email:
+          description: Email of the member as set in personal user profile.
+          type: string
+          format: email
+        role:
+          description: DEPRECATED. Use `assignedRoles` instead. Role of the member in the organization. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect current role assignments.
           type: string
           enum:
-            - enabled
-            - disabled
-        roles:
-          type: array
-          description: DEPRECATED. Use `assignedRoles` instead. List of roles assigned to the key. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect current role assignments.
-          items:
-            type: string
-            enum:
-              - admin
-              - developer
-              - query_endpoints
+            - admin
+            - developer
           deprecated: true
+        joinedAt:
+          description: Timestamp the member joined the organization. ISO-8601.
+          type: string
+          format: date-time
         assignedRoles:
           type: array
-          description: Custom roles and System roles assigned to this API key
+          description: Custom roles and System roles assigned to this member
           items:
             $ref: '#/components/schemas/AssignedRole'
-        keySuffix:
-          description: Last 4 letters of the key.
+      type: object
+    MemberPatchRequest:
+      properties:
+        role:
+          description: DEPRECATED. Use `assignedRoleIds` instead. Role of the member in the organization.
           type: string
+          enum:
+            - admin
+            - developer
+          deprecated: true
+        assignedRoleIds:
+          type: array
+          description: List of role IDs to assign to the member
+          items:
+            type: string
+      type: object
+    Invitation:
+      properties:
+        role:
+          description: DEPRECATED. Use `assignedRoles` instead. Role of the invited user in the organization. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect the role assignment that will be applied.
+          type: string
+          enum:
+            - admin
+            - developer
+          deprecated: true
+        id:
+          description: Unique invitation ID.
+          type: string
+          format: uuid
+        email:
+          description: Email of the invited user. Only a user with this email can join using the invitation. The email is stored in a lowercase form.
+          type: string
+          format: email
         createdAt:
-          description: Timestamp the key was created. ISO-8601.
+          description: Invitation creation timestamp. ISO-8601.
           type: string
           format: date-time
         expireAt:
-          description: Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601.
+          description: Timestamp the invitation expires. ISO-8601.
           type: string
           format: date-time
-          nullable: true
-        usedAt:
-          description: Timestamp the key was used last time. If not present the key was never used. ISO-8601.
-          type: string
-          format: date-time
-        ipAccessList:
+        assignedRoles:
           type: array
-          description: List of IP addresses allowed to access the API using this key
+          description: Custom roles and System roles that will be assigned to the user when they accept the invitation
           items:
-            $ref: '#/components/schemas/IpAccessListEntry'
+            $ref: '#/components/schemas/AssignedRole'
       type: object
-    ApiKeyPostRequest:
+    InvitationPostRequest:
       properties:
-        name:
-          description: Name of the key.
+        email:
+          description: Email of the invited user. Only a user with this email can join using the invitation. The email is stored in a lowercase form.
           type: string
-        expireAt:
-          description: Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601.
-          type: string
-          format: date-time
-          nullable: true
-        state:
-          description: 'Initial state of the key: ''enabled'', ''disabled''. If not provided the new key will be ''enabled''.'
+          format: email
+        role:
+          description: DEPRECATED. Use `assignedRoleIds` instead. Role to assign to the invited user in the organization.
           type: string
           enum:
-            - enabled
-            - disabled
-        hashData:
-          $ref: '#/components/schemas/ApiKeyHashData'
-        roles:
-          type: array
-          description: DEPRECATED. Use `assignedRoleIds` instead. List of roles assigned to the key. Contains at least 1 element.
-          items:
-            type: string
-            enum:
-              - admin
-              - developer
-              - query_endpoints
+            - admin
+            - developer
           deprecated: true
         assignedRoleIds:
           type: array
-          description: Array of role UUIDs to assign to the API key
+          description: List of role IDs to assign to the invited user when they accept the invitation
           items:
             type: string
-            format: uuid
-        ipAccessList:
-          type: array
-          description: List of IP addresses allowed to access the API using this key
-          items:
-            $ref: '#/components/schemas/IpAccessListEntry'
-      type: object
-    ApiKeyPostResponse:
-      properties:
-        key:
-          $ref: '#/components/schemas/ApiKey'
-        keyId:
-          description: Generated key ID. Provided only if there was no 'hashData' in the request.
-          type: string
-        keySecret:
-          description: Generated key secret. Provided only if there was no 'hashData' in the request.
-          type: string
-      type: object
-    ApiKeyPatchRequest:
-      properties:
-        name:
-          description: Name of the key
-          type: string
-        roles:
-          type: array
-          description: DEPRECATED. Use `assignedRoleIds` instead. List of roles assigned to the key.
-          items:
-            type: string
-            enum:
-              - admin
-              - developer
-              - query_endpoints
-          deprecated: true
-        assignedRoleIds:
-          type: array
-          description: Array of role UUIDs to assign to the API key
-          items:
-            type: string
-            format: uuid
-        expireAt:
-          description: Timestamp the key expires. If `null` or is empty the key never expires. ISO-8601.
-          type: string
-          format: date-time
-          nullable: true
-        state:
-          description: 'State of the key: ''enabled'', ''disabled''.'
-          type: string
-          enum:
-            - enabled
-            - disabled
-        ipAccessList:
-          type: array
-          description: List of IP addresses allowed to access the API using this key
-          items:
-            $ref: '#/components/schemas/IpAccessListEntry'
       type: object
     AssignedRole:
       properties:
@@ -500,27 +652,6 @@ components:
           enum:
             - system
             - custom
-      type: object
-    IpAccessListEntry:
-      properties:
-        source:
-          description: IP or CIDR
-          type: string
-        description:
-          description: Optional description of IPv4 address or IPv4 CIDR to allow access from
-          type: string
-      type: object
-    ApiKeyHashData:
-      properties:
-        keyIdHash:
-          description: 'Hash of the key ID. '
-          type: string
-        keyIdSuffix:
-          description: 'Last 4 digits of the key ID. Algorithm: echo -n "yourpassword" | sha256sum | tr -d ''-'' | xxd -r -p | base64'
-          type: string
-        keySecretHash:
-          description: 'Hash of the key secret. Algorithm: echo -n "yourpassword" | sha256sum | tr -d ''-'' | xxd -r -p | base64'
-          type: string
       type: object
 servers:
   - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}

@@ -194,3 +194,47 @@ export function skipReason(pathKey, op, resolve) {
   if (op.deprecated && /\/scaling$/.test(pathKey)) return 'deprecated_superseded';
   return '';
 }
+
+// ---------------------------------------------------------------------------
+// Organization-scoped server rebase (bin/split.mjs, post_process.mjs)
+// ---------------------------------------------------------------------------
+
+// Every operation except the two organization-root paths lives under this
+// prefix. It becomes the server URL template, with {organizationId} resolved
+// from CLICKHOUSE_ORG_ID via x-stackQL-envVar (stackql/stackql#707).
+export const ORG_PREFIX = '/v1/organizations/{organizationId}';
+// The organization list/get/update paths cannot live under the org-scoped
+// server; they keep their full path and a path-level servers override back
+// to the bare API base (injected after generation by post_process.mjs).
+export const ORG_ROOT_PATHS = ['/v1/organizations', '/v1/organizations/{organizationId}'];
+export const API_BASE_URL = 'https://api.clickhouse.cloud';
+
+// Rewrites a split service document in place: sets the org-scoped servers,
+// strips the org prefix from every non-root path and drops the organizationId
+// path parameter from those operations. Returns counts for the split summary.
+export function rebaseOrgScopedPaths(doc, servers) {
+  const newPaths = {};
+  let rebased = 0, kept = 0;
+  for (const [pathKey, pathItem] of Object.entries(doc.paths || {})) {
+    if (ORG_ROOT_PATHS.includes(pathKey)) {
+      newPaths[pathKey] = pathItem;
+      kept++;
+      continue;
+    }
+    if (!pathKey.startsWith(ORG_PREFIX + '/')) {
+      throw new Error(`path ${pathKey} is neither an organization-root path nor under ${ORG_PREFIX}`);
+    }
+    const shortPath = pathKey.slice(ORG_PREFIX.length);
+    if (shortPath in newPaths) throw new Error(`rebase collision: ${pathKey} -> ${shortPath}`);
+    const dropOrgParam = (params) => (params || []).filter((p) => !(p && p.in === 'path' && p.name === 'organizationId'));
+    if (pathItem.parameters) pathItem.parameters = dropOrgParam(pathItem.parameters);
+    for (const verb of HTTP_VERBS) {
+      if (pathItem[verb] && pathItem[verb].parameters) pathItem[verb].parameters = dropOrgParam(pathItem[verb].parameters);
+    }
+    newPaths[shortPath] = pathItem;
+    rebased++;
+  }
+  doc.paths = newPaths;
+  doc.servers = JSON.parse(JSON.stringify(servers));
+  return { rebased, kept };
+}

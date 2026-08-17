@@ -68,6 +68,8 @@ paths:
                     format: uuid
       tags:
         - Organization
+    servers:
+      - url: https://api.clickhouse.cloud
   /v1/organizations/{organizationId}:
     get:
       summary: Get organization details
@@ -210,6 +212,8 @@ paths:
                     format: uuid
       tags:
         - Organization
+    servers:
+      - url: https://api.clickhouse.cloud
   /prometheus:
     get:
       summary: Get organization metrics
@@ -1225,6 +1229,147 @@ components:
           description: Cost of tier4 inter-region data transfer in ClickHouse Credits (CHCs). Applies to service entities.
           type: number
       type: object
+  x-stackQL-resources:
+    organizations:
+      id: clickhouse.organizations.organizations
+      name: organizations
+      title: Organizations
+      methods:
+        list:
+          operation:
+            $ref: '#/paths/~1v1~1organizations/get'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+            objectKey: $.result
+        get:
+          operation:
+            $ref: '#/paths/~1v1~1organizations~1{organizationId}/get'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+            objectKey: $.result
+        update:
+          config:
+            requestBodyTranslate:
+              algorithm: naive
+          operation:
+            $ref: '#/paths/~1v1~1organizations~1{organizationId}/patch'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+      sqlVerbs:
+        select:
+          - $ref: '#/components/x-stackQL-resources/organizations/methods/get'
+          - $ref: '#/components/x-stackQL-resources/organizations/methods/list'
+        insert: []
+        update:
+          - $ref: '#/components/x-stackQL-resources/organizations/methods/update'
+        delete: []
+        replace: []
+    activities:
+      id: clickhouse.organizations.activities
+      name: activities
+      title: Activities
+      methods:
+        list:
+          operation:
+            $ref: '#/paths/~1activities/get'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+            objectKey: $.result
+        get:
+          operation:
+            $ref: '#/paths/~1activities~1{activityId}/get'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+            objectKey: $.result
+      sqlVerbs:
+        select:
+          - $ref: '#/components/x-stackQL-resources/activities/methods/get'
+          - $ref: '#/components/x-stackQL-resources/activities/methods/list'
+        insert: []
+        update: []
+        delete: []
+        replace: []
+    usage_costs:
+      id: clickhouse.organizations.usage_costs
+      name: usage_costs
+      title: Usage Costs
+      methods:
+        list:
+          operation:
+            $ref: '#/paths/~1usageCost/get'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+            objectKey: $.result.costs
+      sqlVerbs:
+        select:
+          - $ref: '#/components/x-stackQL-resources/usage_costs/methods/list'
+        insert: []
+        update: []
+        delete: []
+        replace: []
+    private_endpoint_configs:
+      id: clickhouse.organizations.private_endpoint_configs
+      name: private_endpoint_configs
+      title: Private Endpoint Configs
+      methods:
+        get:
+          operation:
+            $ref: '#/paths/~1privateEndpointConfig/get'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+            objectKey: $.result
+      sqlVerbs:
+        select:
+          - $ref: '#/components/x-stackQL-resources/private_endpoint_configs/methods/get'
+        insert: []
+        update: []
+        delete: []
+        replace: []
+    byoc_infrastructures:
+      id: clickhouse.organizations.byoc_infrastructures
+      name: byoc_infrastructures
+      title: Byoc Infrastructures
+      methods:
+        create:
+          config:
+            requestBodyTranslate:
+              algorithm: naive
+          operation:
+            $ref: '#/paths/~1byocInfrastructure/post'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+        delete:
+          operation:
+            $ref: '#/paths/~1byocInfrastructure~1{byocInfrastructureId}/delete'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+        update:
+          config:
+            requestBodyTranslate:
+              algorithm: naive
+          operation:
+            $ref: '#/paths/~1byocInfrastructure~1{byocInfrastructureId}/patch'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+      sqlVerbs:
+        select: []
+        insert:
+          - $ref: '#/components/x-stackQL-resources/byoc_infrastructures/methods/create'
+        update:
+          - $ref: '#/components/x-stackQL-resources/byoc_infrastructures/methods/update'
+        delete:
+          - $ref: '#/components/x-stackQL-resources/byoc_infrastructures/methods/delete'
+        replace: []
 servers:
   - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
     variables:
