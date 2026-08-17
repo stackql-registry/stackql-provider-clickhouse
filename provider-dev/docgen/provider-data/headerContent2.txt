@@ -33,23 +33,6 @@ $env:CLICKHOUSE_CLOUD_API_SECRET = '...'
 $env:CLICKHOUSE_ORG_ID = '...'
 ```
 
-The provider config in the registry document is:
-
-```json
-{"auth": {"type": "basic", "username_var": "CLICKHOUSE_CLOUD_API_KEY", "password_var": "CLICKHOUSE_CLOUD_API_SECRET"}}
-```
-
-The env var names above are provider defaults (the same `basic` construct as the `confluent` and `kafka` providers); to use different variable names, pass the auth block on the command line:
-
-```bash
-AUTH='{"clickhouse": {"type": "basic", "username_var": "CH_KEY_ID", "password_var": "CH_KEY_SECRET"}}'
-stackql shell --auth="${AUTH}"
-```
-
-## Column and parameter names
-
-Columns, `WHERE` keys and `INSERT`/`UPDATE` columns are snake_case (`created_at`, `ip_access_list`, `service_id`); the provider translates them to the API's camelCase on the wire. Nested JSON columns keep the wire casing inside the blob (`json_extract(current_scaling, '$.effectiveAutoscalingMode')`), and `EXEC` variables use the wire names (`@serviceId`, `@command`).
-
 ## Organization scope
 
 Every resource except `organizations` is scoped to an organization. The organization ID is a server variable (`organization_id`) resolved from the <CopyableCode code="CLICKHOUSE_ORG_ID" /> environment variable when it is set, so queries need no `WHERE organization_id` clause:
@@ -75,7 +58,9 @@ The vendor labels part of the surface as beta and this provider mirrors the labe
 
 ## Example queries
 
-Service estate inventory - state, footprint and scaling configuration for every service:
+### Service estate inventory
+
+State, footprint and scaling configuration for every service:
 
 ```sql
 SELECT name, state, provider, region,
@@ -87,7 +72,9 @@ FROM clickhouse.services.services
 ORDER BY provider, region, name;
 ```
 
-Daily usage cost by entity (ClickHouse Credits) - the FinOps view:
+### Usage cost by day and entity
+
+Daily usage cost in ClickHouse Credits, one row per entity per day:
 
 ```sql
 SELECT date, entity_type, entity_name, total_chc,
@@ -99,7 +86,9 @@ WHERE from_date = '2026-08-01' AND to_date = '2026-08-31'
 ORDER BY date, entity_name;
 ```
 
-Idle-service detection - stopped or idle services that still carried cost in the window:
+### Idle-service detection
+
+Stopped or idle services that still carried cost in the window:
 
 ```sql
 SELECT s.name, s.state, SUM(c.total_chc) AS chc_in_window
@@ -112,7 +101,9 @@ GROUP BY s.name, s.state
 ORDER BY chc_in_window DESC;
 ```
 
-API keys by age, state and assigned roles:
+### API keys by age and role
+
+Keys with state, expiry, last use and assigned roles:
 
 ```sql
 SELECT name, state, created_at, expire_at, used_at,
@@ -122,7 +113,9 @@ FROM clickhouse.keys.keys
 ORDER BY created_at;
 ```
 
-Member and invitation audit:
+### Member and invitation audit
+
+Members and outstanding invitations in one list:
 
 ```sql
 SELECT name, email, role, joined_at, 'member' AS kind
@@ -132,7 +125,9 @@ SELECT email, email, role, created_at, 'invitation'
 FROM clickhouse.members.invitations;
 ```
 
-Backup configuration coverage across the estate:
+### Backup configuration coverage
+
+Backup period and retention for every service:
 
 ```sql
 SELECT s.name, b.backup_period_in_hours, b.backup_retention_period_in_hours, b.backup_start_time
@@ -141,14 +136,18 @@ JOIN clickhouse.backups.backup_configurations b
   ON b.service_id = s.id;
 ```
 
-Organization quotas - usage against limits:
+### Organization quotas
+
+Usage against limits:
 
 ```sql
 SELECT quota_code, name, value AS quota_limit, usage
 FROM clickhouse.organizations.quotas;
 ```
 
-API key provisioning - organizations on Custom Roles assign roles by ID (`assigned_role_ids`), so the role lookup and the key creation are one statement:
+### API key provisioning
+
+Organizations on Custom Roles assign roles by ID (`assigned_role_ids`), so the role lookup and the key creation are one statement:
 
 ```sql
 INSERT INTO clickhouse.keys.keys (name, assigned_role_ids, state)
@@ -159,7 +158,9 @@ FROM clickhouse.roles.roles
 WHERE name = 'Organization API Reader';
 ```
 
-Service lifecycle - the state command is an `EXEC` method with a `command` of `start`, `stop` or `awake` (`EXEC` variables use the wire names):
+### Service lifecycle
+
+The state command is an `EXEC` method with a `command` of `start`, `stop` or `awake`:
 
 ```sql
 EXEC clickhouse.services.services.update_state
@@ -167,7 +168,9 @@ EXEC clickhouse.services.services.update_state
   @command = 'stop';
 ```
 
-Network access - the service `ipAccessList` `PATCH` takes `add` / `remove` arrays (remove is processed before add), passed through as written:
+### Network access
+
+The service `ip_access_list` update takes `add` / `remove` arrays (remove is processed before add):
 
 ```sql
 UPDATE clickhouse.services.services
@@ -176,7 +179,9 @@ SET ip_access_list = '{"add": [{"source": "203.0.113.0/24", "description": "offi
 WHERE service_id = '<service-uuid>';
 ```
 
-ClickStack dashboards as code - a dashboard `INSERT` with tiles:
+### ClickStack dashboards as code
+
+A dashboard `INSERT` with tiles:
 
 ```sql
 INSERT INTO clickhouse.clickstack.dashboards (service_id, name, tiles, tags)
@@ -186,7 +191,9 @@ SELECT '<service-uuid>', 'Service Overview',
        '["production"]';
 ```
 
-The data platform estate in one query - ClickHouse Cloud services alongside Snowflake warehouses and Databricks clusters:
+### The data platform estate in one query
+
+ClickHouse Cloud services alongside Snowflake warehouses and Databricks clusters:
 
 ```sql
 SELECT 'clickhouse' AS platform, name, state, region
