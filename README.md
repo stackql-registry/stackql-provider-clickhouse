@@ -5,7 +5,7 @@ This repository builds and documents the `clickhouse` provider for StackQL, enab
 ## Design Principles
 
 - **ClickHouse Cloud control plane only.** This provider covers the Cloud management API at `https://api.clickhouse.cloud`. The ClickHouse server HTTP interface (SQL-over-HTTP on any self-managed or Cloud service endpoint) is a distinct surface with disjoint authentication and is reserved as the future sibling provider `clickhouse_server` - see the roadmap note below.
-- **Fixed server, basic auth.** The base URL is the literal `https://api.clickhouse.cloud` with no server variables. Authentication is HTTP Basic with an API key pair: the Key ID is the username and the Key Secret is the password.
+- **Organization-scoped server, basic auth.** Every service spec is generated on the server template `https://api.clickhouse.cloud/v1/organizations/{organizationId}`. The `organizationId` server variable carries `x-stackQL-envVar: CLICKHOUSE_ORG_ID` ([stackql/stackql#707](https://github.com/stackql/stackql/pull/707), stackql >= v0.10.601), so StackQL resolves it from the environment and queries need no `WHERE organizationId` clause; a `WHERE` value still wins, and with the variable unset `organizationId` is a required parameter on every method. The two organization-root operations (`GET /v1/organizations`, `GET`/`PATCH /v1/organizations/{organizationId}`) keep their full path on a path-level server override back to the bare API base. Authentication is HTTP Basic with an API key pair: the Key ID is the username (`CLICKHOUSE_CLOUD_API_KEY`) and the Key Secret is the password (`CLICKHOUSE_CLOUD_API_SECRET`).
 - **`$.result` envelope.** Every JSON response wraps its payload as `{"result": ..., "requestId": ..., "status": ...}`. List and get operations set `stackql_object_key` to `$.result`.
 - **Rate limit as a design input.** The API allows 10 requests per 10-second window per API key. Test suites run serially with deliberate pacing, and wide multi-service queries should account for the limit.
 - **Lifecycle via PATCH.** Service start/stop is `PATCH .../state` with a `command` body field, mapped as an `EXEC` method. Several updates use operation-array semantics (`ipAccessList`, `privateEndpointIds` and `tags` PATCH bodies take `add`/`remove` arrays rather than replacement values) - these wire shapes are documented plainly on the affected `UPDATE` methods.
@@ -25,6 +25,24 @@ Install dependencies:
 
 ```bash
 npm install
+```
+
+### Makefile
+
+Every step below is wrapped as a `make` target (GNU make, bash; runs under Linux, WSL and macOS). `make help` lists them; the two composite targets are:
+
+```bash
+make all      # deps, full pipeline (fetch/pin, inventory, split, mappings, normalize, generate),
+              # offline + integration + meta-route tests, docs generation, website build
+make smoke    # live smoke suite against the dev organization (sources .env if present)
+```
+
+`make all` never bills - the live suites are separate targets (`smoke`, `smoke-service` for the billable service lifecycle, `smoke-public` against the published provider, `smoke-cleanup` to sweep breadcrumbs). Live credentials are read from the environment or a gitignored `.env` file:
+
+```bash
+CLICKHOUSE_CLOUD_API_KEY=...      # Key ID
+CLICKHOUSE_CLOUD_API_SECRET=...   # Key Secret
+CLICKHOUSE_ORG_ID=...             # organization ID (x-stackQL-envVar target)
 ```
 
 ## 0. Download and Pin the Spec
@@ -85,7 +103,7 @@ Decisions taken from the inventory: `roles` and `clickpipes` are dedicated servi
 npm run split -- --provider-name clickhouse --overwrite
 ```
 
-Splits the pinned spec into per-service OpenAPI specs in `provider-dev/source/` using the path rules in `provider-dev/config/service_names.json`. A path with no rule fails the run without writing. Pass `--services` to split a subset (the phase 1 pilots):
+Splits the pinned spec into per-service OpenAPI specs in `provider-dev/source/` using the path rules in `provider-dev/config/service_names.json`. A path with no rule fails the run without writing. After the split every service is rebased onto the organization-scoped server template in `provider-dev/config/servers.json` (the single source of truth for the template, shared with the Makefile): paths lose the `/v1/organizations/{organizationId}` prefix and the `organizationId` path parameter, and the `{organizationId}` server variable carries `x-stackQL-envVar: CLICKHOUSE_ORG_ID`. The two organization-root paths are the exception - they keep their full path and are pinned back to the API base in the post-process step (the normalize step strips path-level servers, so it cannot happen earlier). Pass `--services` to split a subset:
 
 ```bash
 npm run split -- --provider-name clickhouse --services services,keys,organizations --overwrite
@@ -112,17 +130,145 @@ Mapping conventions:
 | PATCH `.../state`, `.../password` | `EXEC` | `services.update_state` (with `@command`), `services.update_password` |
 | Prometheus text endpoints, PEM certificate read, deprecated `.../scaling` | skipped | reason-coded in the inventory |
 
-Pilot mapping results (`services`, `keys`, `organizations` - 42 operations): 17 `SELECT`, 6 `INSERT`, 7 `UPDATE`, 7 `DELETE`, 2 `EXEC`, 3 skipped. 15 resources:
+Mapping results (all nine services, 110 operations): 45 `SELECT`, 15 `INSERT`, 20 `UPDATE`, 16 `DELETE`, 8 `EXEC`, 6 skipped. 34 resources:
 
 - `services`: `services`, `replica_scalings`, `scaling_schedules`, `upgrade_windows`, `clickhouse_settings`, `clickhouse_settings_schemas`, `private_endpoints`, `private_endpoint_configs`, `service_query_endpoints`
-- `keys`: `keys`
 - `organizations`: `organizations`, `activities`, `usage_costs`, `private_endpoint_configs`, `byoc_infrastructures`
+- `keys`: `keys`; `roles`: `roles`; `members`: `members`, `invitations`
+- `backups`: `backups`, `backup_configurations`, `backup_buckets`
+- `clickpipes`: `clickpipes`, `settings`, `scalings`, `cdc_scalings`, `reverse_private_endpoints`
+- `clickstack`: `dashboards`, `alerts`, `sources`, `webhooks`
+- `postgres`: `services`, `configs`, `metrics`, `slow_query_patterns`
 
 `organizations.usage_costs.list` projects `$.result.costs` (the per-entity cost rows) rather than `$.result` (a wrapper carrying `grandTotalCHC` plus the array) so FinOps queries are row-oriented - the one deliberate object-key refinement over the uniform `$.result`.
 
-## Status
+## 4. Normalize the Service Specs
 
-Phase 1 (spec acquisition, endpoint inventory, pilot service mappings) is in progress. Steps below this line are documented as they are completed.
+```bash
+node provider-dev/scripts/pre_normalize.mjs
+npm run normalize -- --api-dir provider-dev/source
+```
+
+`pre_normalize.mjs` applies the ClickHouse-specific adjustments before the generic provider-utils pass: the vendor spec is OpenAPI 3.1.2 and uses type arrays (`type: [string, "null"]` for nullable scalars, `type: [string, integer]` for dual-typed ids - 267 occurrences); StackQL's OpenAPI loader (any-sdk on kin-openapi v0.88, `Type string`) cannot unmarshal them, so each is lowered to its first non-null member with `nullable: true` recorded. The `openapi` version string is set to `3.1.1` because the docgen dereferencer (`@apidevtools/swagger-parser` v12) rejects `3.1.2` by string match. The generic pass then flattens `allOf` and renames `oneOf` (93 and 58 occurrences, mostly ClickPipes and ClickStack polymorphism), so deeply nested objects (tile configs, scaling blocks, `ipAccessList`) land as JSON-blob columns addressed with `json_extract`.
+
+## 5. Generate the Provider
+
+```bash
+make generate
+```
+
+which runs:
+
+```bash
+rm -rf provider-dev/openapi/*
+npm run generate-provider -- \
+  --provider-name clickhouse \
+  --input-dir provider-dev/source \
+  --output-dir provider-dev/openapi/src/clickhouse \
+  --config-path provider-dev/config/all_services.csv \
+  --servers "$(tr -d '\n' < provider-dev/config/servers.json)" \
+  --provider-config '{"auth": {"type": "basic", "username_var": "CLICKHOUSE_CLOUD_API_KEY", "password_var": "CLICKHOUSE_CLOUD_API_SECRET"}}' \
+  --naive-req-body-translate \
+  --overwrite
+node provider-dev/scripts/post_process.mjs
+```
+
+No pagination config is passed - every list endpoint returns the complete bounded collection (confirmed by the inventory). `--naive-req-body-translate` exposes top-level request body properties as columns, so `INSERT INTO clickhouse.keys.keys (name, assignedRoleIds, state) ...` and `EXEC clickhouse.services.services.update_state @serviceId = '...', @command = 'stop'` render the wire bodies as written. `post_process.mjs` pins the two organization-root path items in `organizations.yaml` to `https://api.clickhouse.cloud` with a path-level `servers` override (any-sdk resolves servers operation -> path item -> document) and validates that every other path is org-relative.
+
+### Server parameters
+
+The only server variable is `organizationId`. With `CLICKHOUSE_ORG_ID` exported it is resolved automatically:
+
+```sql
+SELECT name, state, provider, region FROM clickhouse.services.services;
+```
+
+A `WHERE organizationId = '...'` value takes precedence over the environment (one session, several organizations); with the variable unset the parameter is required and listed by `SHOW METHODS`. `SELECT id, name FROM clickhouse.organizations.organizations` needs neither.
+
+### Authentication
+
+Provider config: `{"auth": {"type": "basic", "username_var": "CLICKHOUSE_CLOUD_API_KEY", "password_var": "CLICKHOUSE_CLOUD_API_SECRET"}}` - the plaintext Key ID / Key Secret pair, base64-encoded by StackQL at request time (the jira basic-auth finding, see NOTES.md). The combined pre-encoded form is also accepted at runtime:
+
+```bash
+export CLICKHOUSE_CLOUD_CREDS=$(echo -n "${KEY_ID}:${KEY_SECRET}" | base64)
+stackql shell --auth='{"clickhouse": {"type": "basic", "credentialsenvvar": "CLICKHOUSE_CLOUD_CREDS"}}'
+```
+
+## 6. Test the Provider
+
+Four layers, in order. Every regeneration is followed by the first three before commit (`make test`); the fourth is live.
+
+### Validate offline
+
+```bash
+make test-offline          # node tests/offline_validation.mjs
+```
+
+`SHOW SERVICES` / `SHOW RESOURCES` / `SHOW METHODS` and `DESCRIBE EXTENDED` against the local file registry - asserts the nine services and 34 resources, the verb mapping on `services.services`, that `organizationId` is required only when `CLICKHOUSE_ORG_ID` is unset, that `usage_costs` projects the cost rows, and that the ClickStack dashboard `PUT` requires `name` and `tiles` (full replacement).
+
+### Meta-route test suite
+
+```bash
+make test-meta             # npm run start-server / test-meta-routes -- clickhouse / stop-server
+```
+
+Walks every service, resource and method over a local wire server: 9 services, 34 resources, 104 methods, 45 selectable, no failures.
+
+### Integration tests (mock ClickHouse Cloud API - no organization required)
+
+```bash
+make test-integration      # add -- --verbose for per-query output
+```
+
+Runs the provider against an in-process mock of the ClickHouse Cloud API ([tests/integration/mock_clickhouse_server.mjs](tests/integration/mock_clickhouse_server.mjs)) serving redacted live wire shapes - the `$.result` envelope, status-only `DELETE` responses, the `{requestId, error, status}` error envelope and the rate-limit headers - and enforcing basic auth. The runner materialises a test copy of the registry with the server URLs pointed at the mock (server variables and the `x-stackQL-envVar` extension preserved) and asserts 42 row-level checks: `$.result` unwrapping for list and single reads, `$.result.costs` on `usage_costs`, the basic-auth header, `CLICKHOUSE_ORG_ID` resolution vs a `WHERE` override vs the unset failure mode, the organization-root paths on their path-level server, a full API key `INSERT` / `UPDATE` / `DELETE` lifecycle, the `EXEC` state command wire body (`{"command": "stop"}`), an `ipAccessList` `add`/`remove` array-patch `UPDATE`, a ClickStack dashboard round trip, and the 404 error envelope.
+
+### Smoke tests (live)
+
+```bash
+make smoke                 # reads + API key lifecycle
+make smoke-service         # additionally the billable service create / stop / delete lifecycle
+make smoke-public          # against the published provider (post-publish verification)
+make smoke-cleanup         # sweep stackql-smoke-* keys and services
+```
+
+[tests/smoke_test.py](tests/smoke_test.py) (pystackql) runs against a dedicated dev organization: read smokes (organizations, the services estate inventory, members, invitations, keys, roles, activities, usage cost, backups) and a disposable write lifecycle - an API key `INSERT` (using `assignedRoleIds` from `roles.roles`; organizations migrated to Custom Roles reject the legacy `roles` field), `SELECT`, `UPDATE` (state and `ipAccessList` replacement) and `DELETE`. `--with-service` adds a smallest-footprint service (1 replica x 8 GB, idle after 5 minutes) created, patched, stopped with `EXEC update_state @command = 'stop'`, and deleted within the run. Everything is named `stackql-smoke-<stamp>`; the run sweeps breadcrumbs first, so a failed run cannot leave a billable service behind past the next run. Statements are paced at 1.2 s (under 10 per 10 s); a 429 fails the run. The harness upgrades pystackql's managed stackql binary to >= v0.10.601 (the `x-stackQL-envVar` release) when it is older. Never run this against a production organization.
+
+### CI
+
+[.github/workflows/build-and-test.yml](.github/workflows/build-and-test.yml): pin check + build + generation-drift check, offline validation, integration tests, meta-route tests and docs generation on every push and PR; the secret-gated live smoke suite (reads + key lifecycle, never the service lifecycle) on pushes; and a weekly `spec-drift` job that fetches the served spec, compares it with the pin, and opens a `spec-drift` issue when it moves. The web workflows build and deploy the microsite from `main`.
+
+## 7. Publish the Provider
+
+To publish, push the `clickhouse` dir to `providers/src` in a feature branch of the [`stackql-provider-registry`](https://github.com/stackql/stackql-provider-registry) and follow the [registry release flow](https://github.com/stackql/stackql-provider-registry/blob/dev/docs/build-and-deployment.md). Pull and verify from the dev registry:
+
+```bash
+export DEV_REG="{ \"url\": \"https://registry-dev.stackql.app/providers\" }"
+stackql --registry="${DEV_REG}" shell
+```
+
+```sql
+registry pull clickhouse;
+```
+
+then `make smoke-public`.
+
+## 8. Generate Web Docs
+
+The doc microsite (`website/`) is Docusaurus 3.10 and follows the shared architecture used by the other provider microsites: navbar/footer/theme/plugin configuration lives in [`stackql/docusaurus-config`](https://github.com/stackql/docusaurus-config), vendored into `.shared-config/` at build time. Site-local files are limited to the provider identity (`website/provider.js`: `providerName = 'clickhouse'`, `providerTitle = 'ClickHouse Cloud'`), thin wrappers, the shared components/theme under `src/`, and static assets including `static/CNAME` (`clickhouse-provider.stackql.io`).
+
+```bash
+make docs        # generate-docs from the generated provider + website/scripts/sanitize-docs.mjs
+make website     # yarn install && yarn build (vendors the shared config; needs GitHub access)
+make website-start
+```
+
+`headerContent1.txt` / `headerContent2.txt` in `provider-dev/docgen/provider-data/` supply the landing page: installation, scope and the `clickhouse_server` roadmap, API key creation with role guidance, the env var convention, organization scope, the rate limit, beta labelling and the example queries (estate inventory, usage cost by day and entity, idle-service detection, keys by age, member audit, backup coverage, lifecycle `EXEC`, `ipAccessList` array patch, ClickStack dashboards as code, and the cross-provider data platform estate query). `sanitize-docs.mjs` escapes MDX-hostile description text and applies two clickhouse-specific rewrites: every generated `organizationId` example is annotated "required unless CLICKHOUSE_ORG_ID is set", and `organizations.list` (which addresses the bare API base) loses the parameter that docgen inferred from the document-level server.
+
+To publish, select GitHub Actions as the Pages source and create the DNS record (the served hostname is pinned by `website/static/CNAME`):
+
+| Source Domain | Record Type | Target |
+|---|---|---|
+| clickhouse-provider.stackql.io | CNAME | stackql.github.io. |
 
 ## License
 

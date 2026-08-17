@@ -11,6 +11,11 @@
 //    (string wins for mixed scalars); nullability is recorded as
 //    `nullable: true`, which is inert but keeps the intent visible.
 //
+// 2. `openapi: 3.1.2` -> `3.1.1`. The vendor declares OpenAPI 3.1.2 (an
+//    errata-only patch release); @apidevtools/swagger-parser v12, which the
+//    docgen step dereferences with, accepts 3.1.0 / 3.1.1 but rejects
+//    3.1.2 by string match. The document semantics are unchanged.
+//
 // Fails without writing on any unexpected shape (a type array with no
 // usable member).
 //
@@ -62,6 +67,7 @@ for (const f of files) {
   const doc = yaml.load(fs.readFileSync(fp, 'utf8'));
   const stats = {};
   lowerTypeArrays(doc, stats, errors, f);
+  if (doc.openapi === '3.1.2') { doc.openapi = '3.1.1'; totals['openapi 3.1.2 -> 3.1.1'] = (totals['openapi 3.1.2 -> 3.1.1'] || 0) + 1; }
   for (const [k, v] of Object.entries(stats)) totals[k] = (totals[k] || 0) + v;
   pending.push({ fp, doc, count: Object.values(stats).reduce((a, b) => a + b, 0) });
 }

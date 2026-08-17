@@ -1,4 +1,4 @@
-openapi: 3.1.2
+openapi: 3.1.1
 info:
   title: organizations API
   description: clickhouse organizations API
@@ -1374,5 +1374,5 @@ servers:
   - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
     variables:
       organizationId:
-        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = '<uuid>'. A WHERE value always takes precedence over the environment.
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

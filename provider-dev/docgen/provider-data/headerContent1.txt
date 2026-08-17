@@ -1,0 +1,23 @@
+---
+title: clickhouse
+hide_title: false
+hide_table_of_contents: false
+keywords:
+  - clickhouse
+  - clickhouse cloud
+  - clickstack
+  - clickpipes
+  - stackql
+  - infrastructure-as-code
+  - configuration-as-data
+  - cloud inventory
+  - finops
+description: Query, provision and manage ClickHouse Cloud organizations, services, keys, members, backups, ClickPipes, ClickStack and Managed Postgres using SQL
+custom_edit_url: null
+image: /img/stackql-clickhouse-provider-featured-image.png
+id: 'provider-intro'
+---
+
+import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+
+Query, provision and operate the ClickHouse Cloud control plane using SQL - organizations, services (lifecycle, scaling, settings, passwords), API keys, members and invitations, organization roles, backups and backup configuration, private endpoints, BYOC infrastructure, usage cost, activities, ClickPipes, the ClickStack surface (dashboards, alerts, sources, webhooks) and Managed Postgres services. Usage cost by day and entity, and the service estate inventory across organizations, are the queries this provider exists for.

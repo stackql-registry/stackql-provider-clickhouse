@@ -1,4 +1,4 @@
-openapi: 3.1.2
+openapi: 3.1.1
 info:
   title: roles API
   description: clickhouse roles API
@@ -586,6 +586,6 @@ servers:
         description: >-
           ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID
           environment variable when it is set (x-stackQL-envVar); otherwise it
-          must be supplied on every query as WHERE organizationId = '<uuid>'. A
+          must be supplied on every query as WHERE organizationId = <uuid>. A
           WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID
