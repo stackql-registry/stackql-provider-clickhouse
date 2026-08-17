@@ -40,8 +40,13 @@ jobs:
           echo "STACKQL=$PWD/stackql" >> "$GITHUB_ENV"
           ./stackql --version
 
-      - name: Verify the pinned spec against upstream (fails on drift)
-        run: make fetch-spec
+      # Drift is reported, not fatal, here: the committed pin is what gets
+      # built and tested. The spec-drift job below opens the review issue.
+      - name: Verify the pinned spec against upstream (warns on drift)
+        run: |
+          if ! make fetch-spec; then
+            echo "::warning title=ClickHouse Cloud spec drift::The served spec no longer matches provider-dev/config/spec_pin.json - run 'make refresh-spec && make build && make test' and review the diff. Building from the committed pin."
+          fi
 
       - name: Build provider from the pinned spec
         run: make inventory split mappings pre-normalize normalize generate
