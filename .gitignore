@@ -5,6 +5,7 @@ stackql-zip
 stackql-server.log
 nohup.out
 *.log
+/.stackql
 
 # node
 node_modules/

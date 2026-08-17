@@ -231,6 +231,17 @@ make smoke-cleanup         # sweep stackql-smoke-* keys and services
 
 [tests/smoke_test.py](tests/smoke_test.py) (pystackql) runs against a dedicated dev organization: read smokes (organizations, the services estate inventory, members, invitations, keys, roles, quotas, activities, usage cost, backups) and a disposable write lifecycle - an API key `INSERT` (using `assigned_role_ids` from `roles.roles`; organizations migrated to Custom Roles reject the legacy `roles` field), `SELECT`, `UPDATE` (state and `ip_access_list` replacement) and `DELETE`. `--with-service` adds a smallest-footprint service (1 replica x 8 GB, idle after 5 minutes) created, patched, stopped with `EXEC update_state @command = 'stop'`, and deleted within the run. Everything is named `stackql-smoke-<stamp>`; the run sweeps breadcrumbs first, so a failed run cannot leave a billable service behind past the next run. Statements are paced at 1.2 s (under 10 per 10 s); a 429 fails the run. The harness upgrades pystackql's managed stackql binary to >= v0.10.601 (the `x-stackQL-envVar` release) when it is older. Never run this against a production organization.
 
+### UAT
+
+Test the provider locally:
+
+```bash
+set -a; source .env; set +a
+REG_ROOT="$(pwd)/provider-dev/openapi"
+REG="{\"url\":\"file://${REG_ROOT}\",\"localDocRoot\":\"${REG_ROOT}\",\"verifyConfig\":{\"nopVerify\":true}}"
+stackql --registry="${REG}" shell
+```
+
 ### CI
 
 [.github/workflows/build-and-test.yml](.github/workflows/build-and-test.yml): pin check + build + generation-drift check, offline validation, integration tests, meta-route tests and docs generation on every push and PR; the secret-gated live smoke suite (reads + key lifecycle, never the service lifecycle) on pushes; and a weekly `spec-drift` job that fetches the served spec, compares it with the pin, and opens a `spec-drift` issue when it moves. The web workflows build and deploy the microsite from `main`.
