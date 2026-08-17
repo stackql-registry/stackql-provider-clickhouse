@@ -80,6 +80,11 @@ The following fields are returned by `SELECT` queries:
     <td>parallel view processing. Whether to enable pushing to attached views concurrently instead of sequentially</td>
 </tr>
 <tr>
+    <td><CopyableCode code="kafka_read_committed" /></td>
+    <td><code>boolean</code></td>
+    <td>Kafka Read Committed. Whether Kafka consumers read only committed messages</td>
+</tr>
+<tr>
     <td><CopyableCode code="object_storage_concurrency" /></td>
     <td><code>integer</code></td>
     <td>Object storage concurrency. Number of concurrent file processing threads</td>
@@ -197,6 +202,7 @@ clickhouse_max_threads,
 clickhouse_min_insert_block_size_bytes,
 clickhouse_parallel_distributed_insert_select,
 clickhouse_parallel_view_processing,
+kafka_read_committed,
 object_storage_concurrency,
 object_storage_max_file_count,
 object_storage_max_insert_bytes,
@@ -238,6 +244,7 @@ clickhouse_max_insert_threads = {{ clickhouse_max_insert_threads }},
 clickhouse_min_insert_block_size_bytes = {{ clickhouse_min_insert_block_size_bytes }},
 clickhouse_max_download_threads = {{ clickhouse_max_download_threads }},
 clickhouse_parallel_distributed_insert_select = {{ clickhouse_parallel_distributed_insert_select }},
+kafka_read_committed = {{ kafka_read_committed }},
 object_storage_use_cluster_function = {{ object_storage_use_cluster_function }},
 clickhouse_parallel_view_processing = {{ clickhouse_parallel_view_processing }}
 WHERE 

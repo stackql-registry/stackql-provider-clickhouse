@@ -98,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Current lifecycle state of the ClickPipe. For database pipes: "Provisioning" (initial setup), "Setup" (configuring replication), "Snapshot" (initial data load), "Running" (actively replicating), "Pausing" (transitioning to paused state), "Paused" (temporarily paused), "Modifying" (applying configuration updates), "Resync" (swapping resync tables with original tables), "Failed" (error occurred), "Unknown". For streaming/object storage pipes (Kafka, Kinesis, S3): "Unknown" (initial state), "Provisioning" (setting up resources), "Running" (actively ingesting data), "Stopping" (transitioning to stopped state), "Stopped" (manually stopped, can be restarted), "Completed" (batch ingestion finished for object storage), "Failed" (error occurred, pipe stopped), "InternalError" (internal system error). (Unknown, Provisioning, Running, Stopping, Stopped, Failed, Completed, InternalError, Setup, Snapshot, Paused, Pausing, Modifying, Resync) (example: Running)</td>
+    <td>Current lifecycle state of the ClickPipe. For database pipes: "Provisioning" (initial setup), "Setup" (configuring replication), "Snapshot" (initial data load), "Running" (actively replicating), "Pausing" (transitioning to paused state), "Paused" (temporarily paused), "Modifying" (applying configuration updates), "Resync" (swapping resync tables with original tables), "Failed" (error occurred), "Unknown". For streaming/object storage pipes (Kafka, Kinesis, S3): "Unknown" (initial state), "Provisioning" (setting up resources), "Running" (actively ingesting data), "Stopping" (transitioning to stopped state), "Stopped" (manually stopped, can be restarted), "Completed" (batch ingestion finished for object storage), "Failed" (error occurred, pipe stopped), "InternalError" (internal system error). (Unknown, Provisioning, Running, Degraded, Stopping, Stopped, Failed, Completed, InternalError, Setup, Snapshot, Paused, Pausing, Modifying, Resync) (example: Running)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updatedAt" /></td>
@@ -167,7 +167,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Current lifecycle state of the ClickPipe. For database pipes: "Provisioning" (initial setup), "Setup" (configuring replication), "Snapshot" (initial data load), "Running" (actively replicating), "Pausing" (transitioning to paused state), "Paused" (temporarily paused), "Modifying" (applying configuration updates), "Resync" (swapping resync tables with original tables), "Failed" (error occurred), "Unknown". For streaming/object storage pipes (Kafka, Kinesis, S3): "Unknown" (initial state), "Provisioning" (setting up resources), "Running" (actively ingesting data), "Stopping" (transitioning to stopped state), "Stopped" (manually stopped, can be restarted), "Completed" (batch ingestion finished for object storage), "Failed" (error occurred, pipe stopped), "InternalError" (internal system error). (Unknown, Provisioning, Running, Stopping, Stopped, Failed, Completed, InternalError, Setup, Snapshot, Paused, Pausing, Modifying, Resync) (example: Running)</td>
+    <td>Current lifecycle state of the ClickPipe. For database pipes: "Provisioning" (initial setup), "Setup" (configuring replication), "Snapshot" (initial data load), "Running" (actively replicating), "Pausing" (transitioning to paused state), "Paused" (temporarily paused), "Modifying" (applying configuration updates), "Resync" (swapping resync tables with original tables), "Failed" (error occurred), "Unknown". For streaming/object storage pipes (Kafka, Kinesis, S3): "Unknown" (initial state), "Provisioning" (setting up resources), "Running" (actively ingesting data), "Stopping" (transitioning to stopped state), "Stopped" (manually stopped, can be restarted), "Completed" (batch ingestion finished for object storage), "Failed" (error occurred, pipe stopped), "InternalError" (internal system error). (Unknown, Provisioning, Running, Degraded, Stopping, Stopped, Failed, Completed, InternalError, Setup, Snapshot, Paused, Pausing, Modifying, Resync) (example: Running)</td>
 </tr>
 <tr>
     <td><CopyableCode code="updatedAt" /></td>
@@ -220,7 +220,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickPipeId"><code>clickPipeId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
     <td></td>
-    <td>Update the specified ClickPipe.</td>
+    <td>Update the specified ClickPipe. Source fields not present in the per-source update schemas are immutable after creation. For Kafka sources, values submitted for immutable fields (type, format, brokers, topics, consumerGroup, offset, schemaRegistry, exactlyOnce) are not applied, except schema registry credentials, which are rejected.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -234,7 +234,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
     <td></td>
-    <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Infers the schema (field names and ClickHouse data types) of a streaming ClickPipe source without creating a pipe. Supported for Kafka and Kinesis sources.</td>
+    <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Infers the schema (field names and ClickHouse data types) of a ClickPipe source without creating a pipe. Supported for Kafka, Kinesis, Pub/Sub, and object storage sources. Object storage inference runs on the destination service, which must be running.</td>
 </tr>
 <tr>
     <td><a href="#update_state"><CopyableCode code="update_state" /></a></td>
@@ -501,6 +501,7 @@ status
               sortingKeys: "{{ sortingKeys }}"
               tableEngine: "{{ tableEngine }}"
               partitionKey: "{{ partitionKey }}"
+              partitionByExpr: "{{ partitionByExpr }}"
         mysql:
           type: "{{ type }}"
           credentials:
@@ -621,6 +622,7 @@ status
         clickhouse_min_insert_block_size_bytes: {{ clickhouse_min_insert_block_size_bytes }}
         clickhouse_max_download_threads: {{ clickhouse_max_download_threads }}
         clickhouse_parallel_distributed_insert_select: {{ clickhouse_parallel_distributed_insert_select }}
+        kafka_read_committed: {{ kafka_read_committed }}
         object_storage_use_cluster_function: {{ object_storage_use_cluster_function }}
         clickhouse_parallel_view_processing: {{ clickhouse_parallel_view_processing }}
 `}</CodeBlock>
@@ -639,7 +641,7 @@ status
 >
 <TabItem value="update">
 
-Update the specified ClickPipe.
+Update the specified ClickPipe. Source fields not present in the per-source update schemas are immutable after creation. For Kafka sources, values submitted for immutable fields (type, format, brokers, topics, consumerGroup, offset, schemaRegistry, exactlyOnce) are not applied, except schema registry credentials, which are rejected.
 
 ```sql
 UPDATE clickhouse.clickpipes.clickpipes
@@ -696,7 +698,7 @@ AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID 
 >
 <TabItem value="schema_discovery">
 
-**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Infers the schema (field names and ClickHouse data types) of a streaming ClickPipe source without creating a pipe. Supported for Kafka and Kinesis sources.
+**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Infers the schema (field names and ClickHouse data types) of a ClickPipe source without creating a pipe. Supported for Kafka, Kinesis, Pub/Sub, and object storage sources. Object storage inference runs on the destination service, which must be running.
 
 ```sql
 EXEC clickhouse.clickpipes.clickpipes.schema_discovery 

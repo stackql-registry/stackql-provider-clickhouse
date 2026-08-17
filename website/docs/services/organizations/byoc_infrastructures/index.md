@@ -148,7 +148,7 @@ status
       value: "{{ regionId }}"
       description: |
         Region in which the BYOC infrastructure will be located
-      valid_values: ['ap-northeast-1', 'ap-northeast-2', 'ap-south-1', 'ap-southeast-1', 'ap-southeast-2', 'eu-central-1', 'eu-west-1', 'eu-west-2', 'il-central-1', 'us-east-1', 'us-east-2', 'us-west-2', 'us-east1', 'us-central1', 'europe-west2', 'europe-west4', 'asia-southeast1', 'asia-northeast1', 'eastus', 'eastus2', 'westus3', 'germanywestcentral', 'centralus']
+      valid_values: ['ap-northeast-1', 'ap-northeast-2', 'ap-south-1', 'ap-southeast-1', 'ap-southeast-2', 'ca-central-1', 'eu-central-1', 'eu-west-1', 'eu-west-2', 'il-central-1', 'us-east-1', 'us-east-2', 'us-west-2', 'us-east1', 'us-central1', 'europe-west2', 'europe-west4', 'asia-southeast1', 'asia-northeast1', 'eastus', 'eastus2', 'westus3', 'germanywestcentral', 'centralus']
     - name: accountId
       value: "{{ accountId }}"
       description: |

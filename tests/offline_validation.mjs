@@ -52,22 +52,23 @@ function check(name, cond, note = '') {
   console.log(`  ${cond ? 'PASS' : 'FAIL'}  ${name}${cond ? '' : `  [${String(note).slice(0, 160)}]`}`);
 }
 
-const EXPECTED_SERVICES = ['backups', 'clickpipes', 'clickstack', 'keys', 'members', 'organizations', 'postgres', 'roles', 'services'];
+const EXPECTED_SERVICES = ['backups', 'clickpipes', 'clickstack', 'keys', 'members', 'organizations', 'postgres', 'roles', 'services', 'udfs'];
 const EXPECTED_RESOURCES = {
   services: ['clickhouse_settings', 'clickhouse_settings_schemas', 'private_endpoint_configs', 'private_endpoints', 'replica_scalings', 'scaling_schedules', 'service_query_endpoints', 'services', 'upgrade_windows'],
-  organizations: ['activities', 'byoc_infrastructures', 'organizations', 'private_endpoint_configs', 'usage_costs'],
+  organizations: ['active_balances', 'activities', 'byoc_infrastructures', 'organizations', 'private_endpoint_configs', 'prometheus_scrape_targets', 'quotas', 'usage_costs'],
   keys: ['keys'],
-  clickstack: ['alerts', 'dashboards', 'sources', 'webhooks'],
+  clickstack: ['alerts', 'dashboards', 'roles', 'saved_searches', 'sources', 'webhooks'],
   clickpipes: ['cdc_scalings', 'clickpipes', 'reverse_private_endpoints', 'scalings', 'settings'],
-  postgres: ['configs', 'metrics', 'services', 'slow_query_patterns'],
+  postgres: ['configs', 'logs', 'metrics', 'services', 'slow_query_patterns'],
   members: ['invitations', 'members'],
   backups: ['backup_buckets', 'backup_configurations', 'backups'],
-  roles: ['roles']
+  roles: ['roles'],
+  udfs: ['attachments', 'functions', 'upload_urls', 'versions']
 };
 
 console.log(`stackql: ${bin}`);
 let r = await runSql('SHOW SERVICES IN clickhouse');
-check('SHOW SERVICES (9)', r.rows.length === 9 && EXPECTED_SERVICES.every((s) => r.rows.some((x) => x.name === s)), r.stderr || JSON.stringify(r.rows.map((x) => x.name)));
+check('SHOW SERVICES (10)', r.rows.length === 10 && EXPECTED_SERVICES.every((s) => r.rows.some((x) => x.name === s)), r.stderr || JSON.stringify(r.rows.map((x) => x.name)));
 
 for (const [svc, expected] of Object.entries(EXPECTED_RESOURCES)) {
   r = await runSql(`SHOW RESOURCES IN clickhouse.${svc}`);
@@ -103,6 +104,14 @@ const keyCols = r.rows.map((c) => c.name);
 check('DESCRIBE keys.keys has id, name, state, assignedRoles, expireAt', ['id', 'name', 'state', 'assignedRoles', 'expireAt', 'ipAccessList'].every((c) => keyCols.includes(c)), JSON.stringify(keyCols));
 r = await runSql('DESCRIBE EXTENDED clickhouse.clickstack.dashboards');
 check('DESCRIBE clickstack.dashboards has tiles', r.rows.some((c) => c.name === 'tiles'), JSON.stringify(r.rows.map((c) => c.name)));
+
+// udfs: cursor pagination config present, functions list projects $.result.items
+r = await runSql('SHOW METHODS IN clickhouse.udfs.functions');
+check('udfs.functions methods (list, get, create, delete)', ['list', 'get', 'create', 'delete'].every((m) => r.rows.some((x) => x.MethodName === m)), JSON.stringify(r.rows));
+r = await runSql('DESCRIBE EXTENDED clickhouse.udfs.functions');
+check('DESCRIBE udfs.functions projects UDF rows ($.result.items)', r.rows.some((c) => c.name === 'functionName') && !r.rows.some((c) => c.name === 'pagination'), JSON.stringify(r.rows.map((c) => c.name)));
+r = await runSql('DESCRIBE EXTENDED clickhouse.organizations.prometheus_scrape_targets');
+check('DESCRIBE prometheus_scrape_targets (bare-array wrap) has targets and labels', ['targets', 'labels'].every((c) => r.rows.some((x) => x.name === c)), JSON.stringify(r.rows.map((c) => c.name)));
 
 // EXEC method params surface the body attributes (naive request body translate)
 r = await runSql('SHOW METHODS IN clickhouse.clickstack.dashboards');

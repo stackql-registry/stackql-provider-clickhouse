@@ -223,6 +223,7 @@ class Smoke:
         self.step("invitations", "SELECT id, email, role FROM clickhouse.members.invitations")
         self.step("keys by age", "SELECT id, name, state, createdAt, expireAt, usedAt FROM clickhouse.keys.keys", expect_rows=True)
         self.step("roles", "SELECT id, name FROM clickhouse.roles.roles", expect_rows=True, contains="Admin")
+        self.step("quotas (usage vs limit)", "SELECT quotaCode, name, value, usage FROM clickhouse.organizations.quotas", expect_rows=True, contains="services-per-organization")
         self.step("activities (audit)", "SELECT id, type, actorType, createdAt FROM clickhouse.organizations.activities", expect_rows=True)
         to_d, from_d = date.today(), date.today() - timedelta(days=30)
         self.step(

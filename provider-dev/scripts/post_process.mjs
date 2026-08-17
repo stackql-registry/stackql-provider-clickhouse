@@ -14,6 +14,12 @@
 //    It has to be applied here because the normalize step strips path-level
 //    servers from provider-dev/source.
 //
+// 2. UDF cursor pagination. The udfs service lists (functions, versions,
+//    attachments) page with `cursor` (query) / `$.result.pagination.nextCursor`
+//    (body), the only paginated surface in the API. A document-level
+//    x-stackQL-config pagination block on udfs.yaml lets stackql follow the
+//    cursor; the non-list operations in the service ignore it.
+//
 // Usage: node provider-dev/scripts/post_process.mjs
 
 import fs from 'fs';
@@ -50,10 +56,28 @@ for (const f of fs.readdirSync(servicesDir).filter((x) => x.endsWith('.yaml'))) 
   const srv = d.servers?.[0];
   if (!srv?.variables?.organizationId?.['x-stackQL-envVar']) errors.push(`${f}: top-level server lacks the organizationId x-stackQL-envVar variable`);
 }
+// udfs: cursor pagination config
+const udfsSpecPath = path.join(servicesDir, 'udfs.yaml');
+let udfsDoc = null;
+if (fs.existsSync(udfsSpecPath)) {
+  udfsDoc = yaml.load(fs.readFileSync(udfsSpecPath, 'utf8'));
+  const listOps = Object.entries(udfsDoc.paths || {}).filter(([, item]) => (item.get?.parameters || []).some((p) => p.name === 'cursor'));
+  if (listOps.length === 0) errors.push('udfs.yaml: expected cursor-paginated list operations, found none');
+  udfsDoc['x-stackQL-config'] = {
+    ...(udfsDoc['x-stackQL-config'] || {}),
+    pagination: {
+      requestToken: { key: 'cursor', location: 'query' },
+      responseToken: { key: '$.result.pagination.nextCursor', location: 'body' }
+    }
+  };
+} else {
+  errors.push('udfs.yaml not found - the udfs service is expected from the refreshed spec');
+}
 if (errors.length > 0) {
   console.error(`FAILED with ${errors.length} error(s), nothing written:`);
   for (const e of errors) console.error(`  ${e}`);
   process.exit(1);
 }
 fs.writeFileSync(orgSpecPath, yaml.dump(doc, { lineWidth: -1, noRefs: true }));
-console.log(`post_process: pinned ${applied} organization-root path item(s) to ${API_BASE_URL} in organizations.yaml`);
+fs.writeFileSync(udfsSpecPath, yaml.dump(udfsDoc, { lineWidth: -1, noRefs: true }));
+console.log(`post_process: pinned ${applied} organization-root path item(s) to ${API_BASE_URL} in organizations.yaml; cursor pagination config on udfs.yaml`);

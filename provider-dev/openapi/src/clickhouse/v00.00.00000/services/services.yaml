@@ -2113,6 +2113,7 @@ components:
             - ap-south-1
             - ap-southeast-1
             - ap-southeast-2
+            - ca-central-1
             - eu-central-1
             - eu-west-1
             - eu-west-2
@@ -2438,6 +2439,7 @@ components:
             - ap-south-1
             - ap-southeast-1
             - ap-southeast-2
+            - ca-central-1
             - eu-central-1
             - eu-west-1
             - eu-west-2
@@ -2974,6 +2976,7 @@ components:
             - ap-south-1
             - ap-southeast-1
             - ap-southeast-2
+            - ca-central-1
             - eu-central-1
             - eu-west-1
             - eu-west-2
@@ -3332,6 +3335,7 @@ components:
             - ap-south-1
             - ap-southeast-1
             - ap-southeast-2
+            - ca-central-1
             - eu-central-1
             - eu-west-1
             - eu-west-2
@@ -3710,30 +3714,21 @@ components:
             vertical; in horizontal it equals minReplicaMemoryGb (memory is
             fixed while the replica count scales).
           type: number
-        replicaMemoryGb:
-          description: >-
-            Fixed memory per replica (Gb) during this window. Present only for
-            horizontal entries (equal to minReplicaMemoryGb/maxReplicaMemoryGb);
-            vertical entries omit it.
-          type: number
-        numReplicas:
-          description: >-
-            Fixed replica count during this window. Present only for vertical
-            entries; horizontal entries use minReplicas/maxReplicas instead.
-          type: integer
         minReplicas:
           description: >-
-            Minimum number of replicas during this window. Present only for
-            horizontal entries, where the replica count scales between
-            minReplicas and maxReplicas; vertical entries use numReplicas
-            instead.
+            Minimum number of replicas during this window. For a horizontal
+            entry the replica count scales between minReplicas and maxReplicas;
+            for a vertical entry minReplicas and maxReplicas are equal and
+            report the fixed replica count (both omitted when the entry stored
+            no count).
           type: integer
         maxReplicas:
           description: >-
-            Maximum number of replicas during this window. Present only for
-            horizontal entries, where the replica count scales between
-            minReplicas and maxReplicas; vertical entries use numReplicas
-            instead.
+            Maximum number of replicas during this window. For a horizontal
+            entry the replica count scales between minReplicas and maxReplicas;
+            for a vertical entry minReplicas and maxReplicas are equal and
+            report the fixed replica count (both omitted when the entry stored
+            no count).
           type: integer
         idleScaling:
           description: Whether idle scaling is enabled during this window.

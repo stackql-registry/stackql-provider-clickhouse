@@ -226,7 +226,7 @@ paths:
         - ClickPipes
     patch:
       summary: Update ClickPipe
-      description: Update the specified ClickPipe.
+      description: Update the specified ClickPipe. Source fields not present in the per-source update schemas are immutable after creation. For Kafka sources, values submitted for immutable fields (type, format, brokers, topics, consumerGroup, offset, schemaRegistry, exactlyOnce) are not applied, except schema registry credentials, which are rejected.
       operationId: clickPipeUpdate
       parameters:
         - in: path
@@ -536,7 +536,7 @@ paths:
   /services/{serviceId}/clickpipes/schemaDiscovery:
     post:
       summary: Discover ClickPipe source schema
-      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Infers the schema (field names and ClickHouse data types) of a streaming ClickPipe source without creating a pipe. Supported for Kafka and Kinesis sources.'
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Infers the schema (field names and ClickHouse data types) of a ClickPipe source without creating a pipe. Supported for Kafka, Kinesis, Pub/Sub, and object storage sources. Object storage inference runs on the destination service, which must be running.'
       operationId: clickPipeSchemaDiscovery
       parameters:
         - in: path
@@ -1331,6 +1331,7 @@ components:
             - Unknown
             - Provisioning
             - Running
+            - Degraded
             - Stopping
             - Stopped
             - Failed
@@ -1456,7 +1457,7 @@ components:
                   type: boolean
                   nullable: true
                 startAfter:
-                  description: Start continuous ingestion after this object key. Cannot be provided when skipInitialLoad is true.
+                  description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
                   type: string
                   example: events/2026-06-01/
                   nullable: true
@@ -1636,7 +1637,7 @@ components:
                 credentials:
                   $ref: '#/components/schemas/PLAIN'
                 uri:
-                  description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...).
+                  description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...). Embedded credentials are redacted from API responses, so the returned value can differ from what was submitted.
                   type: string
                   example: mongodb+srv://cluster0.example.mongodb.net/mydb
                   nullable: true
@@ -1780,6 +1781,10 @@ components:
               maximum: 2
               example: 2
               nullable: true
+            kafka_read_committed:
+              description: Kafka Read Committed. Whether Kafka consumers read only committed messages
+              type: boolean
+              example: false
             object_storage_use_cluster_function:
               description: use cluster function. Whether to use ClickHouse cluster function for distributed processing
               type: boolean
@@ -1864,6 +1869,10 @@ components:
           maximum: 2
           example: 2
           nullable: true
+        kafka_read_committed:
+          description: Kafka Read Committed. Whether Kafka consumers read only committed messages
+          type: boolean
+          example: false
         object_storage_use_cluster_function:
           description: use cluster function. Whether to use ClickHouse cluster function for distributed processing
           type: boolean
@@ -1947,6 +1956,10 @@ components:
           maximum: 2
           example: 2
           nullable: true
+        kafka_read_committed:
+          description: Kafka Read Committed. Whether Kafka consumers read only committed messages
+          type: boolean
+          example: false
         object_storage_use_cluster_function:
           description: use cluster function. Whether to use ClickHouse cluster function for distributed processing
           type: boolean
@@ -1970,6 +1983,11 @@ components:
           description: Inferred schema fields with their ClickHouse data types.
           items:
             $ref: '#/components/schemas/ClickPipeSchemaDiscoveryField'
+        meta:
+          type: object
+          description: Source-specific schema discovery metadata.
+          additionalProperties:
+            type: string
       type: object
     ClickPipeScalingPatchRequest:
       properties:
@@ -2397,7 +2415,7 @@ components:
               type: boolean
               nullable: true
             startAfter:
-              description: Start continuous ingestion after this object key. Cannot be provided when skipInitialLoad is true.
+              description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
               type: string
               example: events/2026-06-01/
               nullable: true
@@ -2693,7 +2711,7 @@ components:
         mongodb:
           properties:
             uri:
-              description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...).
+              description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...). Embedded credentials are redacted from API responses, so the returned value can differ from what was submitted.
               type: string
               example: mongodb+srv://cluster0.example.mongodb.net/mydb
             readPreference:
@@ -2952,7 +2970,7 @@ components:
               type: boolean
               nullable: true
             startAfter:
-              description: Start continuous ingestion after this object key. Cannot be provided when skipInitialLoad is true.
+              description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
               type: string
               example: events/2026-06-01/
               nullable: true
@@ -3211,7 +3229,7 @@ components:
             credentials:
               $ref: '#/components/schemas/PLAIN'
             uri:
-              description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...).
+              description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...). Embedded credentials are redacted from API responses, so the returned value can differ from what was submitted.
               type: string
               example: mongodb+srv://cluster0.example.mongodb.net/mydb
             readPreference:
@@ -3349,7 +3367,7 @@ components:
               type: boolean
               nullable: true
             startAfter:
-              description: Start continuous ingestion after this object key. Cannot be provided when skipInitialLoad is true.
+              description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
               type: string
               example: events/2026-06-01/
               nullable: true
@@ -3529,7 +3547,7 @@ components:
             credentials:
               $ref: '#/components/schemas/PLAIN'
             uri:
-              description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...).
+              description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...). Embedded credentials are redacted from API responses, so the returned value can differ from what was submitted.
               type: string
               example: mongodb+srv://cluster0.example.mongodb.net/mydb
               nullable: true
@@ -3776,6 +3794,178 @@ components:
                   type: string
               type: object
           type: object
+        pubsub:
+          properties:
+            format:
+              description: Format of messages in the Pub/Sub topic. GCP Pub/Sub ClickPipes are in limited preview — contact support to enable this feature for your organization.
+              type: string
+              enum:
+                - JSONEachRow
+                - Avro
+                - Protobuf
+              example: JSONEachRow
+            projectId:
+              description: GCP project ID that owns the Pub/Sub topic.
+              type: string
+              example: my-gcp-project
+            topic:
+              description: Pub/Sub topic name (not the fully-qualified path).
+              type: string
+              example: my-topic
+            authentication:
+              description: Authentication method to use with GCP Pub/Sub. Currently only SERVICE_ACCOUNT is supported.
+              type: string
+              enum:
+                - SERVICE_ACCOUNT
+              example: SERVICE_ACCOUNT
+            seekType:
+              description: Starting position strategy for consuming the subscription. The seekTimestamp companion is required only when seekType is "timestamp"; setting it for a mismatched seek type is rejected.
+              type: string
+              enum:
+                - latest
+                - earliest
+                - timestamp
+              example: earliest
+            seekTimestamp:
+              description: RFC 3339 / ISO 8601 timestamp to seek to. Required when seekType is "timestamp"; must be omitted otherwise.
+              type: string
+              format: date-time
+              example: '2026-04-10T12:00:00Z'
+              nullable: true
+            filter:
+              description: Optional Pub/Sub subscription filter expression (CEL). Maximum 256 characters.
+              type: string
+              maxLength: 256
+              nullable: true
+            enableOrdering:
+              description: Whether to enable ordered delivery of messages (requires messages to be published with ordering keys).
+              type: boolean
+              nullable: true
+            ackDeadline:
+              description: Acknowledgement deadline for messages, in seconds. Must be between 10 and 600.
+              type: integer
+              minimum: 10
+              maximum: 600
+              nullable: true
+            serviceAccountKey:
+              $ref: '#/components/schemas/ServiceAccount'
+          required:
+            - format
+            - projectId
+            - topic
+            - authentication
+            - seekType
+            - serviceAccountKey
+          type: object
+        objectStorage:
+          properties:
+            type:
+              description: Type of the ObjectStorage source.
+              type: string
+              enum:
+                - s3
+                - gcs
+                - dospaces
+                - azureblobstorage
+                - cloudflarer2
+                - ovhobjectstorage
+            format:
+              description: Format of the files.
+              type: string
+              enum:
+                - JSONEachRow
+                - JSONAsObject
+                - CSV
+                - CSVWithNames
+                - TabSeparated
+                - TabSeparatedWithNames
+                - Parquet
+                - Avro
+            url:
+              description: 'Provide a path to the file(s) you want to ingest. You can specify multiple files using bash-like wildcards. For more information, see the documentation on using wildcards in path: https://clickhouse.com/docs/en/integrations/clickpipes/object-storage#limitations'
+              type: string
+              example: https://datasets-documentation.s3.eu-west-3.amazonaws.com/http/**.ndjson.gz
+            delimiter:
+              description: Delimiter used in the files.
+              type: string
+              example: ','
+              nullable: true
+            compression:
+              description: Compression algorithm used for the files.
+              type: string
+              enum:
+                - none
+                - gzip
+                - gz
+                - brotli
+                - br
+                - xz
+                - LZMA
+                - zstd
+                - auto
+              example: auto
+              nullable: true
+            isContinuous:
+              description: If set to true, the pipe will continuously read new files from the source. If set to false, the pipe will read the files only once. New files have to be uploaded lexically order.
+              type: boolean
+              nullable: true
+            queueUrl:
+              description: Queue URL for event-based continuous ingestion. For S3, provide an SQS queue URL. For GCS, provide a Pub/Sub subscription (e.g. projects/{project}/subscriptions/{name}). When provided, files are ingested based on event notifications rather than lexicographical order. Only applicable when isContinuous is true and authentication is not public.
+              type: string
+              example: https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue
+              nullable: true
+            skipInitialLoad:
+              description: If set to true, skips the initial load and only ingests files delivered by queue notifications. Only applicable when queueUrl is provided.
+              type: boolean
+              nullable: true
+            startAfter:
+              description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
+              type: string
+              example: events/2026-06-01/
+              nullable: true
+            authentication:
+              description: Authentication method. IAM_USER is for S3, GCS, and DigitalOcean Spaces. IAM_ROLE is for S3 only. SERVICE_ACCOUNT is for GCS only. CONNECTION_STRING is for Azure Blob Storage. PUBLIC uses no authentication.
+              type: string
+              enum:
+                - IAM_ROLE
+                - IAM_USER
+                - CONNECTION_STRING
+                - SERVICE_ACCOUNT
+              nullable: true
+            iamRole:
+              description: 'IAM role to be used with IAM role authentication. Read more in ClickPipes documentation: https://clickhouse.com/docs/en/integrations/clickpipes/object-storage#authentication'
+              type: string
+              example: arn:aws:iam::123456789012:role/MyRole
+              nullable: true
+            connectionString:
+              description: Connection string for Azure Blob Storage authentication. Required when authentication is CONNECTION_STRING.
+              type: string
+              example: DefaultEndpointsProtocol=https;AccountName=myaccount;AccountKey=mykey;EndpointSuffix=core.windows.net
+              nullable: true
+            path:
+              description: 'Path to the file(s) within the Azure container. Used for Azure Blob Storage sources. You can specify multiple files using bash-like wildcards. For more information, see the documentation on using wildcards in path: https://clickhouse.com/docs/en/integrations/clickpipes/object-storage#limitations'
+              type: string
+              example: data/logs/*.json
+              nullable: true
+            azureContainerName:
+              description: Container name for Azure Blob Storage. Required when type is azureblobstorage.
+              type: string
+              example: mycontainer
+              nullable: true
+            accessKey:
+              properties:
+                accessKeyId:
+                  description: IAM access key ID.
+                  type: string
+                secretKey:
+                  description: IAM secret key.
+                  type: string
+              type: object
+            serviceAccountKey:
+              description: Base64-encoded GCP service account JSON key. Required when authentication is SERVICE_ACCOUNT.
+              type: string
+              nullable: true
+          type: object
       type: object
     ClickPipeSchemaDiscoveryField:
       properties:
@@ -3792,6 +3982,11 @@ components:
           type: boolean
           nullable: true
       type: object
+    ClickPipeSchemaDiscoveryMeta:
+      type: object
+      description: Source-specific schema discovery metadata.
+      additionalProperties:
+        type: string
     CustomPrivateDnsMapping:
       properties:
         privateDnsName:
@@ -3957,7 +4152,7 @@ components:
           type: boolean
           nullable: true
         startAfter:
-          description: Start continuous ingestion after this object key. Cannot be provided when skipInitialLoad is true.
+          description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
           type: string
           example: events/2026-06-01/
           nullable: true
@@ -4253,7 +4448,7 @@ components:
     ClickPipeMongoDBSource:
       properties:
         uri:
-          description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...).
+          description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...). Embedded credentials are redacted from API responses, so the returned value can differ from what was submitted.
           type: string
           example: mongodb+srv://cluster0.example.mongodb.net/mydb
         readPreference:
@@ -4506,7 +4701,7 @@ components:
           type: boolean
           nullable: true
         startAfter:
-          description: Start continuous ingestion after this object key. Cannot be provided when skipInitialLoad is true.
+          description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
           type: string
           example: events/2026-06-01/
           nullable: true
@@ -4835,7 +5030,7 @@ components:
         credentials:
           $ref: '#/components/schemas/PLAIN'
         uri:
-          description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...).
+          description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...). Embedded credentials are redacted from API responses, so the returned value can differ from what was submitted.
           type: string
           example: mongodb+srv://cluster0.example.mongodb.net/mydb
         readPreference:
@@ -4943,7 +5138,7 @@ components:
           type: boolean
           nullable: true
         startAfter:
-          description: Start continuous ingestion after this object key. Cannot be provided when skipInitialLoad is true.
+          description: Skip all files up to and including this object key during the initial load. Cannot be provided when skipInitialLoad is true.
           type: string
           example: events/2026-06-01/
           nullable: true
@@ -5180,7 +5375,7 @@ components:
         credentials:
           $ref: '#/components/schemas/PLAIN'
         uri:
-          description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...).
+          description: MongoDB connection URI. Supports both standard URIs (mongodb://...) and SRV URIs (mongodb+srv://...). Embedded credentials are redacted from API responses, so the returned value can differ from what was submitted.
           type: string
           example: mongodb+srv://cluster0.example.mongodb.net/mydb
           nullable: true
@@ -5370,6 +5565,10 @@ components:
           description: 'Custom partitioning column used for parallel snapshotting. Only beneficial for PostgreSQL 13 (no benefit for PG14+, which supports indexed ctid scans). Must be an indexed column of type: `smallint`, `integer`, `bigint`, `timestamp without time zone`, or `timestamp with time zone`. Unrelated to ClickHouse partitioning.'
           type: string
           example: id
+        partitionByExpr:
+          description: ClickHouse PARTITION BY expression applied to the destination table when ClickPipes creates it.
+          type: string
+          example: toYYYYMM(created_at)
       type: object
     ClickPipeMySQLPipeSettings:
       properties:
@@ -5727,6 +5926,11 @@ components:
           description: 'Custom partitioning column used for parallel snapshotting. Only beneficial for PostgreSQL 13 (no benefit for PG14+, which supports indexed ctid scans). Must be an indexed column of type: `smallint`, `integer`, `bigint`, `timestamp without time zone`, or `timestamp with time zone`. Unrelated to ClickHouse partitioning.'
           type: string
           example: id
+          nullable: true
+        partitionByExpr:
+          description: ClickHouse PARTITION BY expression applied to the destination table when ClickPipes creates it.
+          type: string
+          example: toYYYYMM(created_at)
           nullable: true
       type: object
     ClickPipePatchMySQLPipeSettings:

@@ -101,6 +101,11 @@ The following fields are returned by `SELECT` queries:
     <td>Freeform note for the alert. Supports markdown formatting. (example: Threshold raised from 50 to 100 on 2026-01-15. See &#91;runbook&#93;(https:​//wiki.example.com/runbook).)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="numConsecutiveWindows" /></td>
+    <td><code>integer</code></td>
+    <td>Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state.</td>
+</tr>
+<tr>
     <td><CopyableCode code="savedSearchId" /></td>
     <td><code>string</code></td>
     <td>Saved search ID for saved_search alerts. (example: 65f5e4a3b9e77c001a345678)</td>
@@ -128,7 +133,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Current alert state. (ALERT, OK, INSUFFICIENT_DATA, DISABLED) (example: ALERT)</td>
+    <td>Current alert state. (ALERT, OK, INSUFFICIENT_DATA, DISABLED, PENDING) (example: ALERT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="teamId" /></td>
@@ -225,6 +230,11 @@ The following fields are returned by `SELECT` queries:
     <td>Freeform note for the alert. Supports markdown formatting. (example: Threshold raised from 50 to 100 on 2026-01-15. See &#91;runbook&#93;(https:​//wiki.example.com/runbook).)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="numConsecutiveWindows" /></td>
+    <td><code>integer</code></td>
+    <td>Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state.</td>
+</tr>
+<tr>
     <td><CopyableCode code="savedSearchId" /></td>
     <td><code>string</code></td>
     <td>Saved search ID for saved_search alerts. (example: 65f5e4a3b9e77c001a345678)</td>
@@ -252,7 +262,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Current alert state. (ALERT, OK, INSUFFICIENT_DATA, DISABLED) (example: ALERT)</td>
+    <td>Current alert state. (ALERT, OK, INSUFFICIENT_DATA, DISABLED, PENDING) (example: ALERT)</td>
 </tr>
 <tr>
     <td><CopyableCode code="teamId" /></td>
@@ -315,8 +325,8 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
-    <td></td>
-    <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a list of all alerts for the authenticated team</td>
+    <td><a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-offset"><code>offset</code></a></td>
+    <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves alerts for the authenticated team (paginated). Results are capped at `limit` (default and maximum 1000). When `totalCount` exceeds the number of returned items, page with `limit`/`offset` to retrieve them all.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -370,6 +380,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (uuid)</code></td>
     <td>ID of the ClickStack service.</td>
 </tr>
+<tr id="parameter-limit">
+    <td><CopyableCode code="limit" /></td>
+    <td><code>integer</code></td>
+    <td>Maximum number of results to return.</td>
+</tr>
+<tr id="parameter-offset">
+    <td><CopyableCode code="offset" /></td>
+    <td><code>integer</code></td>
+    <td>Number of results to skip before returning.</td>
+</tr>
 </tbody>
 </table>
 
@@ -398,6 +418,7 @@ groupBy,
 interval,
 message,
 note,
+numConsecutiveWindows,
 savedSearchId,
 scheduleOffsetMinutes,
 scheduleStartAt,
@@ -419,7 +440,7 @@ AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID
 </TabItem>
 <TabItem value="list">
 
-**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a list of all alerts for the authenticated team
+**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves alerts for the authenticated team (paginated). Results are capped at `limit` (default and maximum 1000). When `totalCount` exceeds the number of returned items, page with `limit`/`offset` to retrieve them all.
 
 ```sql
 SELECT
@@ -433,6 +454,7 @@ groupBy,
 interval,
 message,
 note,
+numConsecutiveWindows,
 savedSearchId,
 scheduleOffsetMinutes,
 scheduleStartAt,
@@ -448,6 +470,8 @@ updatedAt
 FROM clickhouse.clickstack.alerts
 WHERE serviceId = '{{ serviceId }}' -- required
 AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND limit = '{{ limit }}'
+AND offset = '{{ offset }}'
 ;
 ```
 </TabItem>
@@ -484,6 +508,7 @@ channel,
 name,
 message,
 note,
+numConsecutiveWindows,
 serviceId,
 organizationId
 )
@@ -503,6 +528,7 @@ SELECT
 '{{ name }}',
 '{{ message }}',
 '{{ note }}',
+{{ numConsecutiveWindows }},
 '{{ serviceId }}',
 '{{ organizationId }}'
 RETURNING
@@ -591,6 +617,10 @@ status
       value: "{{ note }}"
       description: |
         Freeform note for the alert. Supports markdown formatting.
+    - name: numConsecutiveWindows
+      value: {{ numConsecutiveWindows }}
+      description: |
+        Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state.
 `}</CodeBlock>
 
 </TabItem>
@@ -626,7 +656,8 @@ thresholdType = '{{ thresholdType }}',
 channel = '{{ channel }}',
 name = '{{ name }}',
 message = '{{ message }}',
-note = '{{ note }}'
+note = '{{ note }}',
+numConsecutiveWindows = {{ numConsecutiveWindows }}
 WHERE 
 serviceId = '{{ serviceId }}' --required
 AND clickStackAlertId = '{{ clickStackAlertId }}' --required

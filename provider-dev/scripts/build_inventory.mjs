@@ -24,7 +24,7 @@ import pluralize from 'pluralize';
 import {
   HTTP_VERBS, pathParams, makeResolver, makeServiceResolver,
   classifyEnvelope, classifyBeta, arrayPatchFields, paginationParams, skipReason,
-  deriveResource, deriveVerb
+  deriveResource, deriveVerb, knownEnvelopeDeviation
 } from './lib/spec_helpers.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -80,7 +80,8 @@ for (const [pathKey, pathItem] of Object.entries(spec.paths || {})) {
     // status-only DELETE bodies and reason-coded non-JSON skips are the only
     // tolerated exceptions
     if (!skip && envelope !== 'result-array' && envelope !== 'result-object'
-        && !(envelope === 'status-only' && verb === 'delete')) {
+        && !(envelope === 'status-only' && verb === 'delete')
+        && !knownEnvelopeDeviation(pathKey, envelope)) {
       envelopeDeviations.push(`${verb.toUpperCase()} ${pathKey}: ${envelope} (${mediaTypes.join(', ')})`);
     }
 

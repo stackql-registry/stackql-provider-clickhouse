@@ -74,6 +74,8 @@ export function classifyEnvelope(op, resolve) {
     return { envelope: 'none', key: '', mediaTypes };
   }
   const s = resolve(schema);
+  // bare JSON array - no envelope at all (see ENVELOPE_DEVIATIONS)
+  if (s && s.type === 'array') return { envelope: 'bare-array', key: '', mediaTypes };
   const props = (s && s.properties) || {};
   if ('result' in props) {
     const r = resolve(props.result);
@@ -82,6 +84,21 @@ export function classifyEnvelope(op, resolve) {
   }
   if ('status' in props && 'requestId' in props) return { envelope: 'status-only', key: '', mediaTypes };
   return { envelope: 'unexpected', key: '', mediaTypes };
+}
+
+// Known, reason-coded deviations from the uniform $.result envelope. Any
+// mapped operation whose envelope is not result-array / result-object (or
+// status-only on DELETE) must match one of these or the inventory fails.
+//   prometheus/discovery - Prometheus HTTP service discovery (http_sd) format
+//     is a bare JSON array of target groups by definition; the provider-utils
+//     normalize pass wraps bare-array responses (x-stackql-bare-array-wrap)
+//     and the generator emits the matching transform + objectKey, so the
+//     mapping carries no object key of its own.
+export const ENVELOPE_DEVIATIONS = [
+  { re: /\/prometheus\/discovery$/, envelope: 'bare-array', reason: 'prometheus_http_sd_bare_array' }
+];
+export function knownEnvelopeDeviation(pathKey, envelope) {
+  return ENVELOPE_DEVIATIONS.find((d) => d.re.test(pathKey) && d.envelope === envelope) || null;
 }
 
 // Beta tiers, mirroring the vendor's own labelling in operation descriptions:
@@ -130,7 +147,7 @@ export function paginationParams(op, pathItem, resolve) {
 export const ACTION_SEGMENTS = new Set(['state', 'password']);
 // POST on these trailing static segments is an action on the parent
 // resource (EXEC), not a create
-export const POST_EXEC_SEGMENTS = new Set(['restoredService', 'readReplica', 'schemaDiscovery']);
+export const POST_EXEC_SEGMENTS = new Set(['restoredService', 'readReplica', 'schemaDiscovery', 'validate']);
 
 // Strips /v1/, then iteratively strips scoping pairs (a static segment
 // followed by a path parameter) while more segments follow: organizations/

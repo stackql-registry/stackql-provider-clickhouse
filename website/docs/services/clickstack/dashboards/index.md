@@ -209,6 +209,13 @@ The following methods are available for this resource:
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes a dashboard</td>
 </tr>
+<tr>
+    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
+    <td></td>
+    <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Validates a dashboard body against the same schema and tile rules used by POST /api/v2/dashboards. The dashboard is **never persisted**. Use this endpoint at plan time (e.g. from a Terraform provider) to check that a dashboard configuration is valid before applying it.</td>
+</tr>
 </tbody>
 </table>
 
@@ -393,6 +400,7 @@ status
             asRatio: {{ asRatio }}
             alignDateRangeToGranularity: {{ alignDateRangeToGranularity }}
             fillNulls: {{ fillNulls }}
+            fitYAxisToData: {{ fitYAxisToData }}
             numberFormat:
               output: "{{ output }}"
               mantissa: {{ mantissa }}
@@ -422,6 +430,17 @@ status
                 - kind: "{{ kind }}"
                   expression: "{{ expression }}"
                   template: "{{ template }}"
+              urlTemplate: "{{ urlTemplate }}"
+            color: "{{ color }}"
+            colorRules:
+              - operator: "{{ operator }}"
+                value: {{ value }}
+                color: "{{ color }}"
+                label: "{{ label }}"
+            backgroundChart:
+              type: "{{ type }}"
+              color: "{{ color }}"
+            limit: {{ limit }}
             where: "{{ where }}"
             whereLanguage: "{{ whereLanguage }}"
             markdown: "{{ markdown }}"
@@ -446,6 +465,7 @@ status
           sourceMetricType: "{{ sourceMetricType }}"
           where: "{{ where }}"
           whereLanguage: "{{ whereLanguage }}"
+          appliesToSourceIds: "{{ appliesToSourceIds }}"
     - name: savedQuery
       value: "{{ savedQuery }}"
       description: |
@@ -532,6 +552,39 @@ DELETE FROM clickhouse.clickstack.dashboards
 WHERE serviceId = '{{ serviceId }}' --required
 AND clickStackDashboardId = '{{ clickStackDashboardId }}' --required
 AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="validate"
+    values={[
+        { label: 'validate', value: 'validate' }
+    ]}
+>
+<TabItem value="validate">
+
+**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Validates a dashboard body against the same schema and tile rules used by POST /api/v2/dashboards. The dashboard is **never persisted**. Use this endpoint at plan time (e.g. from a Terraform provider) to check that a dashboard configuration is valid before applying it.
+
+```sql
+EXEC clickhouse.clickstack.dashboards.validate 
+@serviceId='{{ serviceId }}' --required, 
+@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@@json=
+'{
+"name": "{{ name }}", 
+"tiles": "{{ tiles }}", 
+"tags": "{{ tags }}", 
+"filters": "{{ filters }}", 
+"savedQuery": "{{ savedQuery }}", 
+"savedQueryLanguage": "{{ savedQueryLanguage }}", 
+"savedFilterValues": "{{ savedFilterValues }}", 
+"containers": "{{ containers }}"
+}'
 ;
 ```
 </TabItem>

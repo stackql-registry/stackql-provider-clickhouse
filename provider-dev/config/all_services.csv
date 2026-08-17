@@ -29,13 +29,31 @@ clickstack.yaml,/services/{serviceId}/clickstack/dashboards,clickStackCreateDash
 clickstack.yaml,/services/{serviceId}/clickstack/dashboards/{clickStackDashboardId},clickStackGetDashboard,click_stack_get_dashboard,get,,ClickStack,click_stack,dashboards,get,select,$.result,ClickStack: Get Dashboard
 clickstack.yaml,/services/{serviceId}/clickstack/dashboards/{clickStackDashboardId},clickStackUpdateDashboard,click_stack_update_dashboard,put,,ClickStack,click_stack,dashboards,update,update,,ClickStack: Update Dashboard
 clickstack.yaml,/services/{serviceId}/clickstack/dashboards/{clickStackDashboardId},clickStackDeleteDashboard,click_stack_delete_dashboard,delete,,ClickStack,click_stack,dashboards,delete,delete,,ClickStack: Delete Dashboard
+clickstack.yaml,/services/{serviceId}/clickstack/dashboards/validate,clickStackValidateDashboard,click_stack_validate_dashboard,post,,ClickStack,click_stack,dashboards,validate,exec,,ClickStack: Validate Dashboard
 clickstack.yaml,/services/{serviceId}/clickstack/alerts,clickStackListAlerts,click_stack_list_alerts,get,,ClickStack,click_stack,alerts,list,select,$.result,ClickStack: List Alerts
 clickstack.yaml,/services/{serviceId}/clickstack/alerts,clickStackCreateAlert,click_stack_create_alert,post,,ClickStack,click_stack,alerts,create,insert,,ClickStack: Create Alert
 clickstack.yaml,/services/{serviceId}/clickstack/sources,clickStackListSources,click_stack_list_sources,get,,ClickStack,click_stack,sources,list,select,$.result,ClickStack: List Sources
+clickstack.yaml,/services/{serviceId}/clickstack/sources,clickStackCreateSource,click_stack_create_source,post,,ClickStack,click_stack,sources,create,insert,,ClickStack: Create Source
+clickstack.yaml,/services/{serviceId}/clickstack/sources/{clickStackSourceId},clickStackGetSource,click_stack_get_source,get,,ClickStack,click_stack,sources,get,select,$.result,ClickStack: Get Source
+clickstack.yaml,/services/{serviceId}/clickstack/sources/{clickStackSourceId},clickStackUpdateSource,click_stack_update_source,put,,ClickStack,click_stack,sources,update,update,,ClickStack: Update Source
+clickstack.yaml,/services/{serviceId}/clickstack/sources/{clickStackSourceId},clickStackDeleteSource,click_stack_delete_source,delete,,ClickStack,click_stack,sources,delete,delete,,ClickStack: Delete Source
 clickstack.yaml,/services/{serviceId}/clickstack/alerts/{clickStackAlertId},clickStackGetAlert,click_stack_get_alert,get,,ClickStack,click_stack,alerts,get,select,$.result,ClickStack: Get Alert
 clickstack.yaml,/services/{serviceId}/clickstack/alerts/{clickStackAlertId},clickStackUpdateAlert,click_stack_update_alert,put,,ClickStack,click_stack,alerts,update,update,,ClickStack: Update Alert
 clickstack.yaml,/services/{serviceId}/clickstack/alerts/{clickStackAlertId},clickStackDeleteAlert,click_stack_delete_alert,delete,,ClickStack,click_stack,alerts,delete,delete,,ClickStack: Delete Alert
 clickstack.yaml,/services/{serviceId}/clickstack/webhooks,clickStackListWebhooks,click_stack_list_webhooks,get,,ClickStack,click_stack,webhooks,list,select,$.result,ClickStack: List Webhooks
+clickstack.yaml,/services/{serviceId}/clickstack/webhooks,clickStackCreateWebhook,click_stack_create_webhook,post,,ClickStack,click_stack,webhooks,create,insert,,ClickStack: Create Webhook
+clickstack.yaml,/services/{serviceId}/clickstack/webhooks/{clickStackWebhookId},clickStackUpdateWebhook,click_stack_update_webhook,put,,ClickStack,click_stack,webhooks,update,update,,ClickStack: Update Webhook
+clickstack.yaml,/services/{serviceId}/clickstack/webhooks/{clickStackWebhookId},clickStackDeleteWebhook,click_stack_delete_webhook,delete,,ClickStack,click_stack,webhooks,delete,delete,,ClickStack: Delete Webhook
+clickstack.yaml,/services/{serviceId}/clickstack/roles,clickStackListRoles,click_stack_list_roles,get,,ClickStack,click_stack,roles,list,select,$.result,ClickStack: List Roles
+clickstack.yaml,/services/{serviceId}/clickstack/roles,clickStackCreateRole,click_stack_create_role,post,,ClickStack,click_stack,roles,create,insert,,ClickStack: Create Role
+clickstack.yaml,/services/{serviceId}/clickstack/roles/{clickStackRoleId},clickStackGetRole,click_stack_get_role,get,,ClickStack,click_stack,roles,get,select,$.result,ClickStack: Get Role
+clickstack.yaml,/services/{serviceId}/clickstack/roles/{clickStackRoleId},clickStackUpdateRole,click_stack_update_role,put,,ClickStack,click_stack,roles,update,update,,ClickStack: Update Role
+clickstack.yaml,/services/{serviceId}/clickstack/roles/{clickStackRoleId},clickStackDeleteRole,click_stack_delete_role,delete,,ClickStack,click_stack,roles,delete,delete,,ClickStack: Delete Role
+clickstack.yaml,/services/{serviceId}/clickstack/saved-searches,clickStackListSavedSearches,click_stack_list_saved_searches,get,,ClickStack,click_stack,saved_searches,list,select,$.result,ClickStack: List Saved Searches
+clickstack.yaml,/services/{serviceId}/clickstack/saved-searches,clickStackCreateSavedSearch,click_stack_create_saved_search,post,,ClickStack,click_stack,saved_searches,create,insert,,ClickStack: Create Saved Search
+clickstack.yaml,/services/{serviceId}/clickstack/saved-searches/{clickStackSavedSearchId},clickStackGetSavedSearch,click_stack_get_saved_search,get,,ClickStack,click_stack,saved_searches,get,select,$.result,ClickStack: Get Saved Search
+clickstack.yaml,/services/{serviceId}/clickstack/saved-searches/{clickStackSavedSearchId},clickStackUpdateSavedSearch,click_stack_update_saved_search,put,,ClickStack,click_stack,saved_searches,update,update,,ClickStack: Update Saved Search
+clickstack.yaml,/services/{serviceId}/clickstack/saved-searches/{clickStackSavedSearchId},clickStackDeleteSavedSearch,click_stack_delete_saved_search,delete,,ClickStack,click_stack,saved_searches,delete,delete,,ClickStack: Delete Saved Search
 keys.yaml,/keys,openapiKeyGetList,openapi_key_get_list,get,,OpenAPI,open_api,keys,list,select,$.result,Get list of all keys
 keys.yaml,/keys,openapiKeyCreate,openapi_key_create,post,,OpenAPI,open_api,keys,create,insert,,Create key
 keys.yaml,/keys/{keyId},openapiKeyGet,openapi_key_get,get,,OpenAPI,open_api,keys,get,select,$.result,Get key details
@@ -53,9 +71,13 @@ organizations.yaml,/v1/organizations,organizationGetList,organization_get_list,g
 organizations.yaml,/v1/organizations/{organizationId},organizationGet,organization_get,get,,Organization,organization,organizations,get,select,$.result,Get organization details
 organizations.yaml,/v1/organizations/{organizationId},organizationUpdate,organization_update,patch,,Organization,organization,organizations,update,update,,Update organization details
 organizations.yaml,/prometheus,organizationPrometheusGet,organization_prometheus_get,get,,Prometheus,prometheus,skip_this_resource,,,,Get organization metrics
+organizations.yaml,/prometheus/discovery,organizationPrometheusDiscoveryGet,organization_prometheus_discovery_get,get,PrometheusDiscoveryTargetGroup,Prometheus,prometheus,prometheus_scrape_targets,list,select,,Discover Prometheus scrape targets for an organization
+organizations.yaml,/quotas,organizationQuotasGetList,organization_quotas_get_list,get,,Organization,organization,quotas,list,select,$.result,Get organization quotas
+organizations.yaml,/quotas/{quotaCode},organizationQuotaGet,organization_quota_get,get,,Organization,organization,quotas,get,select,$.result,Get organization quota details
 organizations.yaml,/activities,activityGetList,activity_get_list,get,,Organization,organization,activities,list,select,$.result,List of organization activities
 organizations.yaml,/activities/{activityId},activityGet,activity_get,get,,Organization,organization,activities,get,select,$.result,Organization activity
 organizations.yaml,/usageCost,usageCostGet,usage_cost_get,get,,Billing,billing,usage_costs,list,select,$.result.costs,Get organization usage costs
+organizations.yaml,/activeBalances,activeBalancesGet,active_balances_get,get,,Billing,billing,active_balances,list,select,$.result.prepaidBalances,Get organization active prepaid balances
 organizations.yaml,/privateEndpointConfig,organizationPrivateEndpointConfigGetList,organization_private_endpoint_config_get_list,get,,Organization,organization,private_endpoint_configs,get,select,$.result,Get private endpoint configuration for region within cloud provider for an organization
 organizations.yaml,/byocInfrastructure,organizationByocInfrastructureCreate,organization_byoc_infrastructure_create,post,,Organization,organization,byoc_infrastructures,create,insert,,Create BYOC Infrastructure
 organizations.yaml,/byocInfrastructure/{byocInfrastructureId},organizationByocInfrastructureDelete,organization_byoc_infrastructure_delete,delete,,Organization,organization,byoc_infrastructures,delete,delete,,Remove a BYOC infrastructure
@@ -78,6 +100,7 @@ postgres.yaml,/postgres/{postgresId}/prometheus,postgresInstancePrometheusGet,po
 postgres.yaml,/postgres/{postgresId}/metrics,postgresInstanceMetricsGet,postgres_instance_metrics_get,get,,Postgres,postgres,metrics,get,select,$.result,Get Postgres time-series metrics
 postgres.yaml,/postgres/{postgresId}/slowQueryPatterns,slowQueryPatternsGetList,slow_query_patterns_get_list,get,,Postgres,postgres,slow_query_patterns,list,select,$.result,List Postgres slow query patterns
 postgres.yaml,/postgres/{postgresId}/slowQueryPatterns/{queryId},slowQueryPatternGet,slow_query_pattern_get,get,,Postgres,postgres,slow_query_patterns,get,select,$.result,Get a Postgres slow query pattern with recent executions
+postgres.yaml,/postgres/{postgresId}/logs,postgresLogsGetList,postgres_logs_get_list,get,,Postgres,postgres,logs,list,select,$.result,List Postgres server logs
 roles.yaml,/roles,organizationRolesGetList,organization_roles_get_list,get,,Role Management,role management,roles,list,select,$.result,List all available roles for an organization
 roles.yaml,/roles,organizationRolePost,organization_role_post,post,,Role Management,role management,roles,create,insert,,Create a new role
 roles.yaml,/roles/{roleId},organizationRoleGet,organization_role_get,get,,Role Management,role management,roles,get,select,$.result,Get role details
@@ -109,3 +132,15 @@ services.yaml,/services/{serviceId}/clickhouseSettings,serviceClickhouseSettings
 services.yaml,/services/{serviceId}/clickhouseSettings/schema,serviceClickhouseSettingsSchemaGet,service_clickhouse_settings_schema_get,get,,Service,service,clickhouse_settings_schemas,get,select,$.result,Get ClickHouse settings schema
 services.yaml,/services/{serviceId}/clickhouseSettings/{settingName},serviceClickhouseSettingGet,service_clickhouse_setting_get,get,,Service,service,clickhouse_settings,get,select,$.result,Get ClickHouse setting
 services.yaml,/services/{serviceId}/clickhouseSettings/{settingName},serviceClickhouseSettingDelete,service_clickhouse_setting_delete,delete,,Service,service,clickhouse_settings,delete,delete,,Reset ClickHouse setting to default
+udfs.yaml,/udfs/{functionName}/attachments/{serviceId},udfAttach,udf_attach,put,,UDF,udf,attachments,update,update,,Attach UDF to service
+udfs.yaml,/udfs/{functionName}/attachments/{serviceId},udfAttachmentGet,udf_attachment_get,get,,UDF,udf,attachments,get,select,$.result,Get UDF attachment
+udfs.yaml,/udfs/{functionName}/attachments/{serviceId},udfDetach,udf_detach,delete,,UDF,udf,attachments,delete,delete,,Detach UDF from service
+udfs.yaml,/udfs/{functionName}/attachments,udfAttachmentList,udf_attachment_list,get,,UDF,udf,attachments,list,select,$.result.items,List UDF attachments
+udfs.yaml,/udfs,udfCreate,udf_create,post,,UDF,udf,functions,create,insert,,Create UDF
+udfs.yaml,/udfs,udfList,udf_list,get,,UDF,udf,functions,list,select,$.result.items,List UDFs
+udfs.yaml,/udfs/{functionName},udfDelete,udf_delete,delete,,UDF,udf,functions,delete,delete,,Delete UDF
+udfs.yaml,/udfs/{functionName},udfGet,udf_get,get,,UDF,udf,functions,get,select,$.result,Get UDF
+udfs.yaml,/udfUploads/url,udfUploadSessionCreate,udf_upload_session_create,post,,UDF,udf,upload_urls,create,insert,,Create UDF upload URL
+udfs.yaml,/udfs/{functionName}/versions,udfVersionCreate,udf_version_create,post,,UDF,udf,versions,create,insert,,Create UDF version
+udfs.yaml,/udfs/{functionName}/versions,udfVersionList,udf_version_list,get,,UDF,udf,versions,list,select,$.result.items,List UDF versions
+udfs.yaml,/udfs/{functionName}/versions/{version},udfVersionDelete,udf_version_delete,delete,,UDF,udf,versions,delete,delete,,Delete UDF version

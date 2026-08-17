@@ -18,7 +18,7 @@ clickstack service documentation.
 
 :::info[Service Summary]
 
-total resources: __4__  
+total resources: __6__  
 
 :::
 
@@ -26,9 +26,11 @@ total resources: __4__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/clickstack/alerts/">alerts</a><br />
-<a href="/services/clickstack/dashboards/">dashboards</a>
+<a href="/services/clickstack/dashboards/">dashboards</a><br />
+<a href="/services/clickstack/roles/">roles</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/clickstack/saved_searches/">saved_searches</a><br />
 <a href="/services/clickstack/sources/">sources</a><br />
 <a href="/services/clickstack/webhooks/">webhooks</a>
 </div>

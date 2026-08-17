@@ -18,7 +18,7 @@ postgres service documentation.
 
 :::info[Service Summary]
 
-total resources: __4__  
+total resources: __5__  
 
 :::
 
@@ -26,6 +26,7 @@ total resources: __4__
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/postgres/configs/">configs</a><br />
+<a href="/services/postgres/logs/">logs</a><br />
 <a href="/services/postgres/metrics/">metrics</a>
 </div>
 <div class="providerDocColumn">

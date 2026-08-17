@@ -39,7 +39,7 @@ import yaml from 'js-yaml';
 import pluralize from 'pluralize';
 import {
   HTTP_VERBS, camelToSnake, pathParams, makeResolver,
-  classifyEnvelope, skipReason, scopedSegments,
+  classifyEnvelope, skipReason, scopedSegments, knownEnvelopeDeviation,
   ACTION_SEGMENTS, POST_EXEC_SEGMENTS, deriveResource
 } from './lib/spec_helpers.mjs';
 
@@ -60,7 +60,13 @@ const RESOURCE_RULES = [
   { service: 'clickpipes', re: /\/clickpipesCdcScaling$/, resource: 'cdc_scalings' },
   // clickhouse.postgres.postgres reads poorly; the entity is a service
   { service: 'postgres', re: /\/postgres(\/\{\})?$/, resource: 'services' },
-  { service: 'postgres', re: /\/postgres\/\{\}\/(restoredService|readReplica|password|state)$/, resource: 'services' }
+  { service: 'postgres', re: /\/postgres\/\{\}\/(restoredService|readReplica|password|state)$/, resource: 'services' },
+  // Prometheus HTTP service discovery targets (bare-array deviation, see
+  // ENVELOPE_DEVIATIONS) - "prometheus_discoveries" reads poorly
+  { service: 'organizations', re: /\/prometheus\/discovery$/, resource: 'prometheus_scrape_targets' },
+  // clickhouse.udfs.udfs reads poorly; the entity is a user-defined function
+  { service: 'udfs', re: /\/udfs(\/\{\})?$/, resource: 'functions' },
+  { service: 'udfs', re: /\/udfUploads\/url$/, resource: 'upload_urls' }
 ];
 
 // Method-name / verb / objectKey overrides for cases the generic rules
@@ -73,7 +79,16 @@ const METHOD_RULES = [
   // "List ClickHouse settings" returns the settings map as a result object,
   // not a result array; it is still the collection read, and calling it get
   // would collide with the single-setting read on {settingName}
-  { verb: 'get', re: /\/clickhouseSettings$/, method: 'list', sqlVerb: 'select', objectKey: '$.result' }
+  { verb: 'get', re: /\/clickhouseSettings$/, method: 'list', sqlVerb: 'select', objectKey: '$.result' },
+  // active prepaid balances: $.result is {totalRemainingPrepaidCredits,
+  // prepaidBalances[]} - project the balances (same reasoning as usage cost)
+  { verb: 'get', re: /\/activeBalances$/, method: 'list', sqlVerb: 'select', objectKey: '$.result.prepaidBalances' },
+  // UDF lists are cursor-paginated: $.result is {items[], pagination{nextCursor}};
+  // project the items - the udfs service carries the pagination config
+  // (post_process.mjs) so stackql follows nextCursor
+  { verb: 'get', re: /\/udfs$/, method: 'list', sqlVerb: 'select', objectKey: '$.result.items' },
+  { verb: 'get', re: /\/udfs\/\{\}\/versions$/, method: 'list', sqlVerb: 'select', objectKey: '$.result.items' },
+  { verb: 'get', re: /\/udfs\/\{\}\/attachments$/, method: 'list', sqlVerb: 'select', objectKey: '$.result.items' }
 ];
 
 function normalizePath(pathKey) {
@@ -139,6 +154,9 @@ function mapOperation(filename, pathKey, verb) {
 
   if (verb === 'get') {
     if (envelope === 'result-array') return { resource, method: 'list', sqlVerb: 'select', objectKey: '$.result' };
+    // bare-array deviation: no object key here - the normalize pass wraps
+    // the response and the generator emits the transform + objectKey
+    if (envelope === 'bare-array' && knownEnvelopeDeviation(pathKey, envelope)) return { resource, method: 'list', sqlVerb: 'select', objectKey: '' };
     if (lastSegIsParam) return { resource, method: 'get', sqlVerb: 'select', objectKey: '$.result' };
     // singleton reads (configs, windows, schedules, schemas, settings maps)
     return { resource, method: 'get', sqlVerb: 'select', objectKey: '$.result' };

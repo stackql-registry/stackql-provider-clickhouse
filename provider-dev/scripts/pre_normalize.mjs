@@ -11,6 +11,11 @@
 //    (string wins for mixed scalars); nullability is recorded as
 //    `nullable: true`, which is inert but keeps the intent visible.
 //
+// 1b. Numeric `exclusiveMinimum` / `exclusiveMaximum` (3.1: a number) ->
+//    the 3.0 form (`minimum`/`maximum` plus a boolean flag). kin-openapi
+//    v0.88 declares the flags as *bool and fails to unmarshal a number
+//    (surfaced by the UDF schemas: `limit` with `exclusiveMinimum: 0`).
+//
 // 2. `openapi: 3.1.2` -> `3.1.1`. The vendor declares OpenAPI 3.1.2 (an
 //    errata-only patch release); @apidevtools/swagger-parser v12, which the
 //    docgen step dereferences with, accepts 3.1.0 / 3.1.1 but rejects
@@ -38,6 +43,13 @@ function lowerTypeArrays(node, stats, errors, trail = '$') {
     return;
   }
   if (!node || typeof node !== 'object') return;
+  for (const [excl, bound] of [['exclusiveMinimum', 'minimum'], ['exclusiveMaximum', 'maximum']]) {
+    if (typeof node[excl] === 'number') {
+      node[bound] = node[excl];
+      node[excl] = true;
+      stats[excl] = (stats[excl] || 0) + 1;
+    }
+  }
   if (Array.isArray(node.type)) {
     const members = node.type.filter((t) => t !== 'null');
     const pick = SCALAR_PREFERENCE.find((t) => members.includes(t));
@@ -79,5 +91,5 @@ if (errors.length > 0) {
 if (!dryRun) {
   for (const { fp, doc } of pending) fs.writeFileSync(fp, yaml.dump(doc, { lineWidth: -1, noRefs: true }));
 }
-console.log(`pre_normalize: lowered ${Object.values(totals).reduce((a, b) => a + b, 0)} OpenAPI 3.1 type arrays across ${files.length} service specs${dryRun ? ' (dry run)' : ''}`);
+console.log(`pre_normalize: lowered ${Object.values(totals).reduce((a, b) => a + b, 0)} OpenAPI 3.1 constructs across ${files.length} service specs${dryRun ? ' (dry run)' : ''}`);
 for (const [k, v] of Object.entries(totals).sort()) console.log(`  ${k}: ${v}`);

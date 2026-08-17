@@ -71,12 +71,12 @@ npm run build-inventory
 
 Builds `provider-dev/config/endpoint_inventory.csv` from the pinned spec: one row per operation with the response envelope check, request body and array-operation (add/remove) PATCH fields, the vendor's beta tier, pagination-style query parameters, the proposed service from the path rules in `provider-dev/config/service_names.json`, a draft resource and StackQL verb, and a skip reason where applicable. The script fails without writing if any path lacks a service rule or a mapped operation deviates from the `$.result` envelope.
 
-Inventory results for the pinned spec (110 operations):
+Inventory results for the pinned spec (145 operations, spec refreshed 2026-08-17; the previous pin of 2026-07-12 carried 110):
 
-- **Disposition**: 104 mapped; 6 skipped with reason codes (4 `prometheus_text_metrics` - the Prometheus scrape endpoints return `text/plain`; 1 `non_json_response_pem` - the Postgres CA certificate read returns `application/x-pem-file`; 1 `deprecated_superseded` - `PATCH .../scaling`, replaced by `PATCH .../replicaScaling`)
-- **Envelope**: uniform - every mapped JSON response wraps its payload in `$.result` (16 collection reads as `result-array`, 73 single reads and writes as `result-object`); the 16 `status-only` responses are all `DELETE` operations returning `{status, requestId}`, which need no object key
-- **Pagination**: none - no list endpoint carries paging parameters or returns a cursor; collections are bounded and complete. The single exception is `GET .../postgres/{postgresId}/slowQueryPatterns`, which takes optional `limit`/`offset` query parameters (parameter-driven windowing, usable in the `WHERE` clause; no traversal to configure)
-- **Beta**: 43 operations carry the vendor's beta labelling, in two tiers mirrored in the inventory - 33 `beta-stable` ("API contract is stable": ClickStack, Postgres, backup bucket, ClickPipes schema discovery) and 10 `beta-evolving` ("contract may change": `clickhouseSettings`, `scalingSchedule`, Postgres prometheus)
+- **Disposition**: 139 mapped; 6 skipped with reason codes (4 `prometheus_text_metrics` - the Prometheus scrape endpoints return `text/plain`; 1 `non_json_response_pem` - the Postgres CA certificate read returns `application/x-pem-file`; 1 `deprecated_superseded` - `PATCH .../scaling`, replaced by `PATCH .../replicaScaling`)
+- **Envelope**: uniform with one reason-coded exception - every mapped JSON response wraps its payload in `$.result` (20 collection reads as `result-array`, 96 single reads and writes as `result-object`); the 23 `status-only` responses are all `DELETE` operations returning `{status, requestId}`, which need no object key. The exception is `GET .../prometheus/discovery`, a bare JSON array by definition (Prometheus HTTP service discovery format), recorded in `ENVELOPE_DEVIATIONS` and wrapped by the normalize pass
+- **Pagination**: one cursor-paginated surface - the UDF lists (`/udfs`, `.../versions`, `.../attachments`) take `cursor`/`limit` and return `$.result.pagination.nextCursor`; the `udfs` service carries a document-level `x-stackQL-config` pagination block (post-process step) so StackQL follows the cursor. Every other collection is bounded and complete; `limit`/`offset` windowing parameters on `activeBalances`, the ClickStack alert/webhook/saved-search lists, Postgres `slowQueryPatterns` and `logs` are plain query parameters usable in the `WHERE` clause (no traversal to configure)
+- **Beta**: 78 operations carry the vendor's beta labelling, in two tiers mirrored in the inventory - 53 `beta-stable` ("API contract is stable": ClickStack, Postgres, backup bucket, ClickPipes schema discovery, quotas) and 25 `beta-evolving` ("contract may change": `clickhouseSettings`, `scalingSchedule`, Postgres prometheus, UDFs, Prometheus discovery, active balances)
 - **Array-operation PATCH semantics**: the service `PATCH` takes `add`/`remove` arrays for `ipAccessList`, `privateEndpointIds` and `tags`; the organization `PATCH` takes them for `privateEndpoints` (vendor-deprecated in favour of the service-level field). The API key `PATCH` `ipAccessList` is plain replacement.
 
 ### Service Split
@@ -85,17 +85,18 @@ The split is recorded as ordered path rules in `provider-dev/config/service_name
 
 | Service | Surface | Mapped ops |
 |---|---|---|
+| `clickstack` | dashboards (incl. validate), alerts, sources, webhooks, roles, saved searches | 32 |
 | `services` | services, state, replica scaling, password, private endpoints, query endpoint, scaling schedule, upgrade window, ClickHouse settings | 24 |
 | `clickpipes` | ClickPipes, settings, scaling, state, CDC scaling, schema discovery, reverse private endpoints | 17 |
-| `postgres` | Managed Postgres services, config, metrics, slow query patterns | 15 |
-| `clickstack` | dashboards, alerts, sources, webhooks | 12 |
-| `organizations` | organizations, activities, usage cost, org private endpoint config, BYOC infrastructure | 10 |
+| `postgres` | Managed Postgres services, config, metrics, slow query patterns, logs | 16 |
+| `organizations` | organizations, activities, usage cost, active balances, quotas, Prometheus scrape targets, org private endpoint config, BYOC infrastructure | 15 |
+| `udfs` | user-defined functions, versions, service attachments, upload URLs | 12 |
 | `backups` | backups, backup configuration, backup bucket | 8 |
 | `members` | members, invitations | 8 |
 | `roles` | organization RBAC roles | 5 |
 | `keys` | API keys | 5 |
 
-Decisions taken from the inventory: `roles` and `clickpipes` are dedicated services (surfaces not in the original candidate list; roles are referenced by both keys and members, so neither absorbs them); there is no `network` service (the only org-level private endpoint resource is a single deprecated GET, folded into `organizations`); BYOC infrastructure folds into `organizations` (three write-only operations, no reads); ClickStack is a dedicated service with unprefixed resource names (`clickhouse.clickstack.dashboards`).
+Decisions taken from the inventory: `roles`, `clickpipes` and (from the 2026-08-17 refresh) `udfs` are dedicated services (surfaces not in the original candidate list; roles are referenced by both keys and members, so neither absorbs them); there is no `network` service (the only org-level private endpoint resource is a single deprecated GET, folded into `organizations`); BYOC infrastructure folds into `organizations` (three write-only operations, no reads); ClickStack is a dedicated service with unprefixed resource names (`clickhouse.clickstack.dashboards`).
 
 ## 2. Split into Service Specs
 
@@ -130,17 +131,18 @@ Mapping conventions:
 | PATCH `.../state`, `.../password` | `EXEC` | `services.update_state` (with `@command`), `services.update_password` |
 | Prometheus text endpoints, PEM certificate read, deprecated `.../scaling` | skipped | reason-coded in the inventory |
 
-Mapping results (all nine services, 110 operations): 45 `SELECT`, 15 `INSERT`, 20 `UPDATE`, 16 `DELETE`, 8 `EXEC`, 6 skipped. 34 resources:
+Mapping results (all ten services, 145 operations): 60 `SELECT`, 22 `INSERT`, 25 `UPDATE`, 23 `DELETE`, 9 `EXEC`, 6 skipped. 44 resources:
 
 - `services`: `services`, `replica_scalings`, `scaling_schedules`, `upgrade_windows`, `clickhouse_settings`, `clickhouse_settings_schemas`, `private_endpoints`, `private_endpoint_configs`, `service_query_endpoints`
-- `organizations`: `organizations`, `activities`, `usage_costs`, `private_endpoint_configs`, `byoc_infrastructures`
+- `organizations`: `organizations`, `activities`, `usage_costs`, `active_balances`, `quotas`, `prometheus_scrape_targets`, `private_endpoint_configs`, `byoc_infrastructures`
 - `keys`: `keys`; `roles`: `roles`; `members`: `members`, `invitations`
 - `backups`: `backups`, `backup_configurations`, `backup_buckets`
 - `clickpipes`: `clickpipes`, `settings`, `scalings`, `cdc_scalings`, `reverse_private_endpoints`
-- `clickstack`: `dashboards`, `alerts`, `sources`, `webhooks`
-- `postgres`: `services`, `configs`, `metrics`, `slow_query_patterns`
+- `clickstack`: `dashboards`, `alerts`, `sources`, `webhooks`, `roles`, `saved_searches`
+- `postgres`: `services`, `configs`, `metrics`, `slow_query_patterns`, `logs`
+- `udfs`: `functions`, `versions`, `attachments`, `upload_urls`
 
-`organizations.usage_costs.list` projects `$.result.costs` (the per-entity cost rows) rather than `$.result` (a wrapper carrying `grandTotalCHC` plus the array) so FinOps queries are row-oriented - the one deliberate object-key refinement over the uniform `$.result`.
+`organizations.usage_costs.list` projects `$.result.costs` (the per-entity cost rows) rather than `$.result` (a wrapper carrying `grandTotalCHC` plus the array) so FinOps queries are row-oriented; `active_balances.list` (`$.result.prepaidBalances`) and the three UDF lists (`$.result.items`) follow the same rule. `dashboards.validate` is the one `POST` action mapped as `EXEC` outside the state/password/restore family.
 
 ## 4. Normalize the Service Specs
 
@@ -149,7 +151,7 @@ node provider-dev/scripts/pre_normalize.mjs
 npm run normalize -- --api-dir provider-dev/source
 ```
 
-`pre_normalize.mjs` applies the ClickHouse-specific adjustments before the generic provider-utils pass: the vendor spec is OpenAPI 3.1.2 and uses type arrays (`type: [string, "null"]` for nullable scalars, `type: [string, integer]` for dual-typed ids - 267 occurrences); StackQL's OpenAPI loader (any-sdk on kin-openapi v0.88, `Type string`) cannot unmarshal them, so each is lowered to its first non-null member with `nullable: true` recorded. The `openapi` version string is set to `3.1.1` because the docgen dereferencer (`@apidevtools/swagger-parser` v12) rejects `3.1.2` by string match. The generic pass then flattens `allOf` and renames `oneOf` (93 and 58 occurrences, mostly ClickPipes and ClickStack polymorphism), so deeply nested objects (tile configs, scaling blocks, `ipAccessList`) land as JSON-blob columns addressed with `json_extract`.
+`pre_normalize.mjs` applies the ClickHouse-specific adjustments before the generic provider-utils pass: the vendor spec is OpenAPI 3.1.2 and uses type arrays (`type: [string, "null"]` for nullable scalars, `type: [string, integer]` for dual-typed ids - 270 occurrences) and numeric `exclusiveMinimum` (25); StackQL's OpenAPI loader (any-sdk on kin-openapi v0.88, `Type string`, `ExclusiveMin bool`) cannot unmarshal either, so type arrays are lowered to their first non-null member with `nullable: true` recorded, and numeric exclusive bounds become `minimum` plus the boolean flag. The `openapi` version string is set to `3.1.1` because the docgen dereferencer (`@apidevtools/swagger-parser` v12) rejects `3.1.2` by string match. The generic pass then flattens `allOf` and renames `oneOf`/`anyOf` (112, 67 and 7 occurrences, mostly ClickPipes and ClickStack polymorphism), wraps the one bare-array response, so deeply nested objects (tile configs, scaling blocks, `ipAccessList`) land as JSON-blob columns addressed with `json_extract`.
 
 ## 5. Generate the Provider
 
@@ -173,7 +175,7 @@ npm run generate-provider -- \
 node provider-dev/scripts/post_process.mjs
 ```
 
-No pagination config is passed - every list endpoint returns the complete bounded collection (confirmed by the inventory). `--naive-req-body-translate` exposes top-level request body properties as columns, so `INSERT INTO clickhouse.keys.keys (name, assignedRoleIds, state) ...` and `EXEC clickhouse.services.services.update_state @serviceId = '...', @command = 'stop'` render the wire bodies as written. `post_process.mjs` pins the two organization-root path items in `organizations.yaml` to `https://api.clickhouse.cloud` with a path-level `servers` override (any-sdk resolves servers operation -> path item -> document) and validates that every other path is org-relative.
+No pagination config is passed on the command line - every list endpoint outside the UDF surface returns the complete bounded collection (confirmed by the inventory); the UDF cursor pagination is added to `udfs.yaml` by the post-process step. `--naive-req-body-translate` exposes top-level request body properties as columns, so `INSERT INTO clickhouse.keys.keys (name, assignedRoleIds, state) ...` and `EXEC clickhouse.services.services.update_state @serviceId = '...', @command = 'stop'` render the wire bodies as written. `post_process.mjs` pins the two organization-root path items in `organizations.yaml` to `https://api.clickhouse.cloud` with a path-level `servers` override (any-sdk resolves servers operation -> path item -> document), adds the UDF cursor pagination config (`cursor` query token / `$.result.pagination.nextCursor`) to `udfs.yaml`, and validates that every other path is org-relative.
 
 ### Server parameters
 
@@ -204,7 +206,7 @@ Four layers, in order. Every regeneration is followed by the first three before 
 make test-offline          # node tests/offline_validation.mjs
 ```
 
-`SHOW SERVICES` / `SHOW RESOURCES` / `SHOW METHODS` and `DESCRIBE EXTENDED` against the local file registry - asserts the nine services and 34 resources, the verb mapping on `services.services`, that `organizationId` is required only when `CLICKHOUSE_ORG_ID` is unset, that `usage_costs` projects the cost rows, and that the ClickStack dashboard `PUT` requires `name` and `tiles` (full replacement).
+`SHOW SERVICES` / `SHOW RESOURCES` / `SHOW METHODS` and `DESCRIBE EXTENDED` against the local file registry - asserts the ten services and 44 resources, the UDF pagination projection, the bare-array wrap on `prometheus_scrape_targets`, the verb mapping on `services.services`, that `organizationId` is required only when `CLICKHOUSE_ORG_ID` is unset, that `usage_costs` projects the cost rows, and that the ClickStack dashboard `PUT` requires `name` and `tiles` (full replacement).
 
 ### Meta-route test suite
 
@@ -212,7 +214,7 @@ make test-offline          # node tests/offline_validation.mjs
 make test-meta             # npm run start-server / test-meta-routes -- clickhouse / stop-server
 ```
 
-Walks every service, resource and method over a local wire server: 9 services, 34 resources, 104 methods, 45 selectable, no failures.
+Walks every service, resource and method over a local wire server: 10 services, 44 resources, 139 methods, 60 selectable, no failures.
 
 ### Integration tests (mock ClickHouse Cloud API - no organization required)
 
@@ -231,7 +233,7 @@ make smoke-public          # against the published provider (post-publish verifi
 make smoke-cleanup         # sweep stackql-smoke-* keys and services
 ```
 
-[tests/smoke_test.py](tests/smoke_test.py) (pystackql) runs against a dedicated dev organization: read smokes (organizations, the services estate inventory, members, invitations, keys, roles, activities, usage cost, backups) and a disposable write lifecycle - an API key `INSERT` (using `assignedRoleIds` from `roles.roles`; organizations migrated to Custom Roles reject the legacy `roles` field), `SELECT`, `UPDATE` (state and `ipAccessList` replacement) and `DELETE`. `--with-service` adds a smallest-footprint service (1 replica x 8 GB, idle after 5 minutes) created, patched, stopped with `EXEC update_state @command = 'stop'`, and deleted within the run. Everything is named `stackql-smoke-<stamp>`; the run sweeps breadcrumbs first, so a failed run cannot leave a billable service behind past the next run. Statements are paced at 1.2 s (under 10 per 10 s); a 429 fails the run. The harness upgrades pystackql's managed stackql binary to >= v0.10.601 (the `x-stackQL-envVar` release) when it is older. Never run this against a production organization.
+[tests/smoke_test.py](tests/smoke_test.py) (pystackql) runs against a dedicated dev organization: read smokes (organizations, the services estate inventory, members, invitations, keys, roles, quotas, activities, usage cost, backups) and a disposable write lifecycle - an API key `INSERT` (using `assignedRoleIds` from `roles.roles`; organizations migrated to Custom Roles reject the legacy `roles` field), `SELECT`, `UPDATE` (state and `ipAccessList` replacement) and `DELETE`. `--with-service` adds a smallest-footprint service (1 replica x 8 GB, idle after 5 minutes) created, patched, stopped with `EXEC update_state @command = 'stop'`, and deleted within the run. Everything is named `stackql-smoke-<stamp>`; the run sweeps breadcrumbs first, so a failed run cannot leave a billable service behind past the next run. Statements are paced at 1.2 s (under 10 per 10 s); a 429 fails the run. The harness upgrades pystackql's managed stackql binary to >= v0.10.601 (the `x-stackQL-envVar` release) when it is older. Never run this against a production organization.
 
 ### CI
 

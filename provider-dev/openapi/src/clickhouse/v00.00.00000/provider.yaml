@@ -83,6 +83,15 @@ providerServices:
     title: services API
     version: v00.00.00000
     description: clickhouse services API
+  udfs:
+    id: udfs:v00.00.00000
+    name: udfs
+    preferred: true
+    service:
+      $ref: clickhouse/v00.00.00000/services/udfs.yaml
+    title: udfs API
+    version: v00.00.00000
+    description: clickhouse udfs API
 config:
   auth:
     type: basic

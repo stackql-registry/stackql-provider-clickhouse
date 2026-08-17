@@ -63,7 +63,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="connectionString" /></td>
     <td><code>string</code></td>
-    <td>Connection string to the Postgres service</td>
+    <td>Connection string to the Postgres service. Embeds the service password, so it is only returned when the service is created or its password is reset. Omitted from every other response when Postgres credential redaction is enabled for the organization. Not guaranteed to be present — treat as optional.</td>
 </tr>
 <tr>
     <td><CopyableCode code="createdAt" /></td>
@@ -88,7 +88,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="password" /></td>
     <td><code>string</code></td>
-    <td>Password for the Postgres service</td>
+    <td>Password for the Postgres service. Only returned when the service is created or its password is reset. Omitted from every other response when Postgres credential redaction is enabled for the organization. Not guaranteed to be present — treat as optional.</td>
 </tr>
 <tr>
     <td><CopyableCode code="postgresVersion" /></td>
@@ -113,7 +113,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Current state of the service (creating, restarting, running, replaying_wal, restoring_backup, finalizing_restore, unavailable, deleting) (title: Postgres Service State)</td>
+    <td>Current state of the service (creating, restarting, running, replaying_wal, restoring_backup, finalizing_restore, unavailable, stopped, deleting) (title: Postgres Service State)</td>
 </tr>
 <tr>
     <td><CopyableCode code="storageSize" /></td>
@@ -192,7 +192,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="state" /></td>
     <td><code>string</code></td>
-    <td>Current state of the service (creating, restarting, running, replaying_wal, restoring_backup, finalizing_restore, unavailable, deleting) (title: Postgres Service State)</td>
+    <td>Current state of the service (creating, restarting, running, replaying_wal, restoring_backup, finalizing_restore, unavailable, stopped, deleting) (title: Postgres Service State)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>

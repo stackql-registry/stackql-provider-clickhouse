@@ -133,7 +133,7 @@ const calls = (mark, method, p) => log.slice(mark).filter((e) => e.method === me
 try {
   // --- meta sanity
   let r = await runSql(`SHOW SERVICES IN clickhouse`);
-  check('show services (9)', r.rows && r.rows.length === 9, r.err || `got ${r.rows?.length}`);
+  check('show services (10)', r.rows && r.rows.length === 10, r.err || `got ${r.rows?.length}`);
   r = await runSql(`SHOW METHODS IN clickhouse.services.services`);
   check('show methods: organizationId not required when CLICKHOUSE_ORG_ID is set',
     r.rows && r.rows.length === 7 && !r.rows.some((m) => String(m.RequiredParams).includes('organizationId')), r.err || JSON.stringify(r.rows));

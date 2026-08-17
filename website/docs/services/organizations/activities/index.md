@@ -96,14 +96,34 @@ The following fields are returned by `SELECT` queries:
     <td>Scope of the activity: service ID this activity is related to.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="targetActorIds" /></td>
+    <td><code>array</code></td>
+    <td>For 'organization_member_update_roles' and 'organization_member_remove_roles' activities: IDs of the affected actors (e.g. 'user/&lt;id&gt;').</td>
+</tr>
+<tr>
     <td><CopyableCode code="targetKeyId" /></td>
     <td><code>string</code></td>
     <td>For 'openapi_key_update' activities: the ID of the API key that was updated.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="targetResourceIds" /></td>
+    <td><code>array</code></td>
+    <td>For 'role_resources_delete' activities: IDs of the deleted resources the roles referenced.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetRoleIds" /></td>
+    <td><code>array</code></td>
+    <td>For role and actor-role activities: IDs of the affected roles.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetRoleNames" /></td>
+    <td><code>array</code></td>
+    <td>For role and actor-role activities: names of the affected roles, when recorded.</td>
+</tr>
+<tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Type of the activity. (create_organization, organization_update_name, transfer_service_in, transfer_service_out, save_payment_method, marketplace_subscription, migrate_marketplace_billing_details_in, migrate_marketplace_billing_details_out, organization_update_tier, organization_invite_create, organization_invite_delete, organization_member_join, organization_member_add, organization_member_leave, organization_member_delete, organization_member_update_role, organization_member_update_mfa_method, user_login, user_login_failed, user_logout, key_create, key_delete, openapi_key_update, service_create, service_start, service_stop, service_awaken, service_idle, service_running, service_partially_running, service_delete, service_update_name, service_update_ip_access_list, service_update_autoscaling_memory, service_update_autoscaling_idling, service_update_password, service_update_autoscaling_replicas, service_update_max_allowable_replicas, service_update_backup_configuration, service_restore_backup, service_update_release_channel, service_update_gpt_usage_consent, service_update_private_endpoints, service_import_to_organization, service_export_from_organization, service_maintenance_start, service_maintenance_end, service_update_core_dump, backup_delete)</td>
+    <td>Type of the activity. (create_organization, delete_organization, organization_update_name, transfer_service_in, transfer_service_out, save_payment_method, marketplace_subscription, migrate_marketplace_billing_details_in, migrate_marketplace_billing_details_out, organization_update_tier, organization_invite_create, organization_invite_delete, organization_member_join, organization_member_add, organization_member_leave, organization_member_delete, organization_member_update_role, organization_member_update_roles, organization_member_update_mfa_method, organization_saml_connection_create, organization_saml_connection_update, user_login, user_login_failed, user_logout, key_create, key_delete, openapi_key_update, service_create, service_start, service_stop, service_awaken, service_idle, service_running, service_partially_running, service_delete, service_update_name, service_update_ip_access_list, service_update_autoscaling_memory, service_update_autoscaling_idling, service_update_password, service_update_autoscaling_replicas, service_update_max_allowable_replicas, service_update_backup_configuration, service_restore_backup, service_update_release_channel, service_update_gpt_usage_consent, service_update_private_endpoints, service_import_to_organization, service_export_from_organization, service_maintenance_start, service_maintenance_end, service_update_core_dump, service_update_autoscaling_schedule, service_update_query_endpoints, service_update_direct_connection, service_update_sql_console_jwt_auth, service_update_snapshot_configuration, service_update_collector_ip_access_list, service_update_mysql_interface, service_update_upgrade_window, service_delete_upgrade_window, service_trigger_failover, service_trigger_recovery, service_mcp_enabled, service_mcp_disabled, service_upgrade, service_scaled_down_for_tier_change, service_encryption_key_check_failed, service_encryption_key_rotation_failed, service_encryption_key_rotated, service_stop_encryption_key_inaccessible, service_restart_encryption_key_rotation, backup_delete, backup_bucket_create, backup_bucket_update, backup_bucket_delete, backup_bucket_archive, warehouse_update_name, warehouse_update_release_channel, role_create, role_update, role_delete, role_resources_delete, organization_member_remove_roles, scim_user_profile_update, scim_group_create, scim_group_update, scim_group_delete, organization_saml_connection_delete, datadog_integration_create, datadog_integration_delete, organization_update_spend_alert, organization_update_core_dumps, organization_update_private_endpoints, organization_update_pci_compliance, organization_update_hipaa_status, transfer_credits_in, transfer_credits_out, promo_code_claim, schema_advisor_seed, schema_advisor_generate_plan, schema_advisor_approve_plan, schema_advisor_start_deployment, schema_advisor_start_benchmark, schema_advisor_run_benchmark, schema_advisor_start_promotion, schema_advisor_exchange_tables, schema_advisor_drop_sandbox, udf_create, udf_update, udf_delete, udf_version_create, udf_version_delete, udf_attach, udf_detach, udf_update_services, udf_redeploy, udf_rebuild)</td>
 </tr>
 <tr>
     <td><CopyableCode code="userAgent" /></td>
@@ -170,14 +190,34 @@ The following fields are returned by `SELECT` queries:
     <td>Scope of the activity: service ID this activity is related to.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="targetActorIds" /></td>
+    <td><code>array</code></td>
+    <td>For 'organization_member_update_roles' and 'organization_member_remove_roles' activities: IDs of the affected actors (e.g. 'user/&lt;id&gt;').</td>
+</tr>
+<tr>
     <td><CopyableCode code="targetKeyId" /></td>
     <td><code>string</code></td>
     <td>For 'openapi_key_update' activities: the ID of the API key that was updated.</td>
 </tr>
 <tr>
+    <td><CopyableCode code="targetResourceIds" /></td>
+    <td><code>array</code></td>
+    <td>For 'role_resources_delete' activities: IDs of the deleted resources the roles referenced.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetRoleIds" /></td>
+    <td><code>array</code></td>
+    <td>For role and actor-role activities: IDs of the affected roles.</td>
+</tr>
+<tr>
+    <td><CopyableCode code="targetRoleNames" /></td>
+    <td><code>array</code></td>
+    <td>For role and actor-role activities: names of the affected roles, when recorded.</td>
+</tr>
+<tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
-    <td>Type of the activity. (create_organization, organization_update_name, transfer_service_in, transfer_service_out, save_payment_method, marketplace_subscription, migrate_marketplace_billing_details_in, migrate_marketplace_billing_details_out, organization_update_tier, organization_invite_create, organization_invite_delete, organization_member_join, organization_member_add, organization_member_leave, organization_member_delete, organization_member_update_role, organization_member_update_mfa_method, user_login, user_login_failed, user_logout, key_create, key_delete, openapi_key_update, service_create, service_start, service_stop, service_awaken, service_idle, service_running, service_partially_running, service_delete, service_update_name, service_update_ip_access_list, service_update_autoscaling_memory, service_update_autoscaling_idling, service_update_password, service_update_autoscaling_replicas, service_update_max_allowable_replicas, service_update_backup_configuration, service_restore_backup, service_update_release_channel, service_update_gpt_usage_consent, service_update_private_endpoints, service_import_to_organization, service_export_from_organization, service_maintenance_start, service_maintenance_end, service_update_core_dump, backup_delete)</td>
+    <td>Type of the activity. (create_organization, delete_organization, organization_update_name, transfer_service_in, transfer_service_out, save_payment_method, marketplace_subscription, migrate_marketplace_billing_details_in, migrate_marketplace_billing_details_out, organization_update_tier, organization_invite_create, organization_invite_delete, organization_member_join, organization_member_add, organization_member_leave, organization_member_delete, organization_member_update_role, organization_member_update_roles, organization_member_update_mfa_method, organization_saml_connection_create, organization_saml_connection_update, user_login, user_login_failed, user_logout, key_create, key_delete, openapi_key_update, service_create, service_start, service_stop, service_awaken, service_idle, service_running, service_partially_running, service_delete, service_update_name, service_update_ip_access_list, service_update_autoscaling_memory, service_update_autoscaling_idling, service_update_password, service_update_autoscaling_replicas, service_update_max_allowable_replicas, service_update_backup_configuration, service_restore_backup, service_update_release_channel, service_update_gpt_usage_consent, service_update_private_endpoints, service_import_to_organization, service_export_from_organization, service_maintenance_start, service_maintenance_end, service_update_core_dump, service_update_autoscaling_schedule, service_update_query_endpoints, service_update_direct_connection, service_update_sql_console_jwt_auth, service_update_snapshot_configuration, service_update_collector_ip_access_list, service_update_mysql_interface, service_update_upgrade_window, service_delete_upgrade_window, service_trigger_failover, service_trigger_recovery, service_mcp_enabled, service_mcp_disabled, service_upgrade, service_scaled_down_for_tier_change, service_encryption_key_check_failed, service_encryption_key_rotation_failed, service_encryption_key_rotated, service_stop_encryption_key_inaccessible, service_restart_encryption_key_rotation, backup_delete, backup_bucket_create, backup_bucket_update, backup_bucket_delete, backup_bucket_archive, warehouse_update_name, warehouse_update_release_channel, role_create, role_update, role_delete, role_resources_delete, organization_member_remove_roles, scim_user_profile_update, scim_group_create, scim_group_update, scim_group_delete, organization_saml_connection_delete, datadog_integration_create, datadog_integration_delete, organization_update_spend_alert, organization_update_core_dumps, organization_update_private_endpoints, organization_update_pci_compliance, organization_update_hipaa_status, transfer_credits_in, transfer_credits_out, promo_code_claim, schema_advisor_seed, schema_advisor_generate_plan, schema_advisor_approve_plan, schema_advisor_start_deployment, schema_advisor_start_benchmark, schema_advisor_run_benchmark, schema_advisor_start_promotion, schema_advisor_exchange_tables, schema_advisor_drop_sandbox, udf_create, udf_update, udf_delete, udf_version_create, udf_version_delete, udf_attach, udf_detach, udf_update_services, udf_redeploy, udf_rebuild)</td>
 </tr>
 <tr>
     <td><CopyableCode code="userAgent" /></td>
@@ -281,7 +321,11 @@ createdAt,
 keyUpdateType,
 organizationId,
 serviceId,
+targetActorIds,
 targetKeyId,
+targetResourceIds,
+targetRoleIds,
+targetRoleNames,
 type,
 userAgent
 FROM clickhouse.organizations.activities
@@ -305,7 +349,11 @@ createdAt,
 keyUpdateType,
 organizationId,
 serviceId,
+targetActorIds,
 targetKeyId,
+targetResourceIds,
+targetRoleIds,
+targetRoleNames,
 type,
 userAgent
 FROM clickhouse.organizations.activities

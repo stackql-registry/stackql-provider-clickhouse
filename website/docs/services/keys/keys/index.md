@@ -98,7 +98,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="usedAt" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key was used last time. If not present the key was never used. ISO-8601.</td>
+    <td>Timestamp the key was used last time, with one-minute precision. If not present the key was never used. ISO-8601.</td>
 </tr>
 </tbody>
 </table>
@@ -162,7 +162,7 @@ The following fields are returned by `SELECT` queries:
 <tr>
     <td><CopyableCode code="usedAt" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key was used last time. If not present the key was never used. ISO-8601.</td>
+    <td>Timestamp the key was used last time, with one-minute precision. If not present the key was never used. ISO-8601.</td>
 </tr>
 </tbody>
 </table>

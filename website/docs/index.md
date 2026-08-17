@@ -25,8 +25,8 @@ Query, provision and operate the ClickHouse Cloud control plane using SQL - orga
 
 :::info[Provider Summary] 
 
-total services: __9__  
-total resources: __43__  
+total services: __10__  
+total resources: __54__  
 
 :::
 
@@ -237,5 +237,6 @@ WHERE deployment_name = '<workspace>';
 <a href="/services/postgres/">postgres</a><br />
 <a href="/services/roles/">roles</a><br />
 <a href="/services/services/">services</a><br />
+<a href="/services/udfs/">udfs</a><br />
 </div>
 </div>

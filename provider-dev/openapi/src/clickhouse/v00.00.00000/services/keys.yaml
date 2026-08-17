@@ -416,8 +416,8 @@ components:
           nullable: true
         usedAt:
           description: >-
-            Timestamp the key was used last time. If not present the key was
-            never used. ISO-8601.
+            Timestamp the key was used last time, with one-minute precision. If
+            not present the key was never used. ISO-8601.
           type: string
           format: date-time
         ipAccessList:
