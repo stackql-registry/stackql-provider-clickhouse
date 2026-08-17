@@ -60,14 +60,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-byocInfrastructureId"><code>byocInfrastructureId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-byoc_infrastructure_id"><code>byoc_infrastructure_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Update configuration of the BYOC infrastructure. Returns the modified infrastructure</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-byocInfrastructureId"><code>byocInfrastructureId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-byoc_infrastructure_id"><code>byoc_infrastructure_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Removes a BYOC Infrastructure from the organization</td>
 </tr>
@@ -87,10 +87,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-byocInfrastructureId">
-    <td><CopyableCode code="byocInfrastructureId" /></td>
+<tr id="parameter-byoc_infrastructure_id">
+    <td><CopyableCode code="byoc_infrastructure_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested BYOC Infrastructure</td>
+    <td>ID of the requested BYOC Infrastructure (wire: byocInfrastructureId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
@@ -115,22 +115,22 @@ Create a new BYOC Infrastructure in the organization. Returns the configuration 
 
 ```sql
 INSERT INTO clickhouse.organizations.byoc_infrastructures (
-regionId,
-accountId,
-availabilityZoneSuffixes,
-vpcCidrRange,
-displayName,
+region_id,
+account_id,
+availability_zone_suffixes,
+vpc_cidr_range,
+display_name,
 organization_id
 )
 SELECT 
-'{{ regionId }}',
-'{{ accountId }}',
-'{{ availabilityZoneSuffixes }}',
-'{{ vpcCidrRange }}',
-'{{ displayName }}',
+'{{ region_id }}',
+'{{ account_id }}',
+'{{ availability_zone_suffixes }}',
+'{{ vpc_cidr_range }}',
+'{{ display_name }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -144,26 +144,26 @@ status
     - name: organization_id
       value: "{{ organization_id }}"
       description: Required parameter for the byoc_infrastructures resource.
-    - name: regionId
-      value: "{{ regionId }}"
+    - name: region_id
+      value: "{{ region_id }}"
       description: |
         Region in which the BYOC infrastructure will be located
       valid_values: ['ap-northeast-1', 'ap-northeast-2', 'ap-south-1', 'ap-southeast-1', 'ap-southeast-2', 'ca-central-1', 'eu-central-1', 'eu-west-1', 'eu-west-2', 'il-central-1', 'us-east-1', 'us-east-2', 'us-west-2', 'us-east1', 'us-central1', 'europe-west2', 'europe-west4', 'asia-southeast1', 'asia-northeast1', 'eastus', 'eastus2', 'westus3', 'germanywestcentral', 'centralus']
-    - name: accountId
-      value: "{{ accountId }}"
+    - name: account_id
+      value: "{{ account_id }}"
       description: |
         Cloud account ID the BYOC infrastructure is configured for
-    - name: availabilityZoneSuffixes
+    - name: availability_zone_suffixes
       value:
-        - "{{ availabilityZoneSuffixes }}"
+        - "{{ availability_zone_suffixes }}"
       description: |
         List of availability zone suffixes
-    - name: vpcCidrRange
-      value: "{{ vpcCidrRange }}"
+    - name: vpc_cidr_range
+      value: "{{ vpc_cidr_range }}"
       description: |
         CIDR range for VPC
-    - name: displayName
-      value: "{{ displayName }}"
+    - name: display_name
+      value: "{{ display_name }}"
       description: |
         Human readable name for infrastructure
 `}</CodeBlock>
@@ -187,12 +187,12 @@ Update configuration of the BYOC infrastructure. Returns the modified infrastruc
 ```sql
 UPDATE clickhouse.organizations.byoc_infrastructures
 SET 
-displayName = '{{ displayName }}'
+display_name = '{{ display_name }}'
 WHERE 
-byocInfrastructureId = '{{ byocInfrastructureId }}' --required
+byoc_infrastructure_id = '{{ byoc_infrastructure_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -214,7 +214,7 @@ Removes a BYOC Infrastructure from the organization
 
 ```sql
 DELETE FROM clickhouse.organizations.byoc_infrastructures
-WHERE byocInfrastructureId = '{{ byocInfrastructureId }}' --required
+WHERE byoc_infrastructure_id = '{{ byoc_infrastructure_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

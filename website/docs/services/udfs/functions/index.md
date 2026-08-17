@@ -53,24 +53,34 @@ Successful response.
 </thead>
 <tbody>
 <tr>
+    <td><CopyableCode code="function_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the UDF. Unique within the organization. (wire: functionName)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="return_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the returned value, or null when unnamed. (wire: returnName)</td>
+</tr>
+<tr>
     <td><CopyableCode code="arguments" /></td>
     <td><code>array</code></td>
     <td>Arguments passed to the UDF command.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="commandReadTimeout" /></td>
+    <td><CopyableCode code="command_read_timeout" /></td>
     <td><code>integer</code></td>
-    <td>Command stdout read timeout in milliseconds.</td>
+    <td>Command stdout read timeout in milliseconds. (wire: commandReadTimeout)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="commandWriteTimeout" /></td>
+    <td><CopyableCode code="command_write_timeout" /></td>
     <td><code>integer</code></td>
-    <td>Command stdin write timeout in milliseconds.</td>
+    <td>Command stdin write timeout in milliseconds. (wire: commandWriteTimeout)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp.</td>
+    <td>Creation timestamp. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="error" /></td>
@@ -83,34 +93,24 @@ Successful response.
     <td>Input and output format used by the UDF command.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="functionName" /></td>
-    <td><code>string</code></td>
-    <td>Name of the UDF. Unique within the organization.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="maxCommandExecutionTime" /></td>
+    <td><CopyableCode code="max_command_execution_time" /></td>
     <td><code>integer</code></td>
-    <td>Maximum command execution time in seconds for executable_pool UDFs.</td>
+    <td>Maximum command execution time in seconds for executable_pool UDFs. (wire: maxCommandExecutionTime)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="memoryLimitMib" /></td>
+    <td><CopyableCode code="memory_limit_mib" /></td>
     <td><code>integer</code></td>
-    <td>Maximum memory, in MiB, available to each UDF sandbox process. Null uses the sandbox default.</td>
+    <td>Maximum memory, in MiB, available to each UDF sandbox process. Null uses the sandbox default. (wire: memoryLimitMib)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="poolSize" /></td>
+    <td><CopyableCode code="pool_size" /></td>
     <td><code>integer</code></td>
-    <td>Command pool size for executable_pool UDFs.</td>
+    <td>Command pool size for executable_pool UDFs. (wire: poolSize)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="returnName" /></td>
+    <td><CopyableCode code="return_type" /></td>
     <td><code>string</code></td>
-    <td>Name of the returned value, or null when unnamed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="returnType" /></td>
-    <td><code>string</code></td>
-    <td>ClickHouse data type of the returned value.</td>
+    <td>ClickHouse data type of the returned value. (wire: returnType)</td>
 </tr>
 <tr>
     <td><CopyableCode code="runtime" /></td>
@@ -118,19 +118,19 @@ Successful response.
     <td>Runtime used to execute the UDF command. (python3.11, native)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sandboxType" /></td>
+    <td><CopyableCode code="sandbox_type" /></td>
     <td><code>string</code></td>
-    <td>Sandbox isolation level. (basic, netenable)</td>
+    <td>Sandbox isolation level. (basic, netenable) (wire: sandboxType)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sandboxVersion" /></td>
+    <td><CopyableCode code="sandbox_version" /></td>
     <td><code>string</code></td>
-    <td>Sandbox runtime version. (v1, v2, v3)</td>
+    <td>Sandbox runtime version. (v1, v2, v3) (wire: sandboxVersion)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sendChunkHeader" /></td>
+    <td><CopyableCode code="send_chunk_header" /></td>
     <td><code>boolean</code></td>
-    <td>Whether ClickHouse sends a row-count chunk header.</td>
+    <td>Whether ClickHouse sends a row-count chunk header. (wire: sendChunkHeader)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -143,9 +143,9 @@ Successful response.
     <td>Executable UDF type. (executable, executable_pool)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last-update timestamp.</td>
+    <td>Last-update timestamp. (wire: updatedAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="version" /></td>
@@ -169,24 +169,34 @@ Successful response.
 </thead>
 <tbody>
 <tr>
+    <td><CopyableCode code="function_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the UDF. Unique within the organization. (wire: functionName)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="return_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the returned value, or null when unnamed. (wire: returnName)</td>
+</tr>
+<tr>
     <td><CopyableCode code="arguments" /></td>
     <td><code>array</code></td>
     <td>Arguments passed to the UDF command.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="commandReadTimeout" /></td>
+    <td><CopyableCode code="command_read_timeout" /></td>
     <td><code>integer</code></td>
-    <td>Command stdout read timeout in milliseconds.</td>
+    <td>Command stdout read timeout in milliseconds. (wire: commandReadTimeout)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="commandWriteTimeout" /></td>
+    <td><CopyableCode code="command_write_timeout" /></td>
     <td><code>integer</code></td>
-    <td>Command stdin write timeout in milliseconds.</td>
+    <td>Command stdin write timeout in milliseconds. (wire: commandWriteTimeout)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp.</td>
+    <td>Creation timestamp. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="error" /></td>
@@ -199,34 +209,24 @@ Successful response.
     <td>Input and output format used by the UDF command.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="functionName" /></td>
-    <td><code>string</code></td>
-    <td>Name of the UDF. Unique within the organization.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="maxCommandExecutionTime" /></td>
+    <td><CopyableCode code="max_command_execution_time" /></td>
     <td><code>integer</code></td>
-    <td>Maximum command execution time in seconds for executable_pool UDFs.</td>
+    <td>Maximum command execution time in seconds for executable_pool UDFs. (wire: maxCommandExecutionTime)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="memoryLimitMib" /></td>
+    <td><CopyableCode code="memory_limit_mib" /></td>
     <td><code>integer</code></td>
-    <td>Maximum memory, in MiB, available to each UDF sandbox process. Null uses the sandbox default.</td>
+    <td>Maximum memory, in MiB, available to each UDF sandbox process. Null uses the sandbox default. (wire: memoryLimitMib)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="poolSize" /></td>
+    <td><CopyableCode code="pool_size" /></td>
     <td><code>integer</code></td>
-    <td>Command pool size for executable_pool UDFs.</td>
+    <td>Command pool size for executable_pool UDFs. (wire: poolSize)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="returnName" /></td>
+    <td><CopyableCode code="return_type" /></td>
     <td><code>string</code></td>
-    <td>Name of the returned value, or null when unnamed.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="returnType" /></td>
-    <td><code>string</code></td>
-    <td>ClickHouse data type of the returned value.</td>
+    <td>ClickHouse data type of the returned value. (wire: returnType)</td>
 </tr>
 <tr>
     <td><CopyableCode code="runtime" /></td>
@@ -234,19 +234,19 @@ Successful response.
     <td>Runtime used to execute the UDF command. (python3.11, native)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sandboxType" /></td>
+    <td><CopyableCode code="sandbox_type" /></td>
     <td><code>string</code></td>
-    <td>Sandbox isolation level. (basic, netenable)</td>
+    <td>Sandbox isolation level. (basic, netenable) (wire: sandboxType)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sandboxVersion" /></td>
+    <td><CopyableCode code="sandbox_version" /></td>
     <td><code>string</code></td>
-    <td>Sandbox runtime version. (v1, v2, v3)</td>
+    <td>Sandbox runtime version. (v1, v2, v3) (wire: sandboxVersion)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sendChunkHeader" /></td>
+    <td><CopyableCode code="send_chunk_header" /></td>
     <td><code>boolean</code></td>
-    <td>Whether ClickHouse sends a row-count chunk header.</td>
+    <td>Whether ClickHouse sends a row-count chunk header. (wire: sendChunkHeader)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -259,9 +259,9 @@ Successful response.
     <td>Executable UDF type. (executable, executable_pool)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last-update timestamp.</td>
+    <td>Last-update timestamp. (wire: updatedAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="version" /></td>
@@ -291,7 +291,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-function_name"><code>function_name</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns the latest version of a UDF.</td>
 </tr>
@@ -305,14 +305,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-uploadId"><code>uploadId</code></a>, <a href="#parameter-runtime"><code>runtime</code></a>, <a href="#parameter-arguments"><code>arguments</code></a>, <a href="#parameter-returnType"><code>returnType</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-functionName"><code>functionName</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-upload_id"><code>upload_id</code></a>, <a href="#parameter-runtime"><code>runtime</code></a>, <a href="#parameter-arguments"><code>arguments</code></a>, <a href="#parameter-return_type"><code>return_type</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-function_name"><code>function_name</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Creates a new UDF. See &#91;User-defined functions in Cloud&#93;(https:​//clickhouse.com/docs/products/cloud/features/sql-console-features/user-defined-functions).</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-function_name"><code>function_name</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Deletes every version of a UDF and detaches it from all services. Removal from services completes asynchronously.</td>
 </tr>
@@ -332,10 +332,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-functionName">
-    <td><CopyableCode code="functionName" /></td>
+<tr id="parameter-function_name">
+    <td><CopyableCode code="function_name" /></td>
     <td><code>string</code></td>
-    <td>Name of the UDF.</td>
+    <td>Name of the UDF. (wire: functionName)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
@@ -370,28 +370,28 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 
 ```sql
 SELECT
+function_name,
+return_name,
 arguments,
-commandReadTimeout,
-commandWriteTimeout,
-createdAt,
+command_read_timeout,
+command_write_timeout,
+created_at,
 error,
 format,
-functionName,
-maxCommandExecutionTime,
-memoryLimitMib,
-poolSize,
-returnName,
-returnType,
+max_command_execution_time,
+memory_limit_mib,
+pool_size,
+return_type,
 runtime,
-sandboxType,
-sandboxVersion,
-sendChunkHeader,
+sandbox_type,
+sandbox_version,
+send_chunk_header,
 status,
 type,
-updatedAt,
+updated_at,
 version
 FROM clickhouse.udfs.functions
-WHERE functionName = '{{ functionName }}' -- required
+WHERE function_name = '{{ function_name }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -402,25 +402,25 @@ AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_
 
 ```sql
 SELECT
+function_name,
+return_name,
 arguments,
-commandReadTimeout,
-commandWriteTimeout,
-createdAt,
+command_read_timeout,
+command_write_timeout,
+created_at,
 error,
 format,
-functionName,
-maxCommandExecutionTime,
-memoryLimitMib,
-poolSize,
-returnName,
-returnType,
+max_command_execution_time,
+memory_limit_mib,
+pool_size,
+return_type,
 runtime,
-sandboxType,
-sandboxVersion,
-sendChunkHeader,
+sandbox_type,
+sandbox_version,
+send_chunk_header,
 status,
 type,
-updatedAt,
+updated_at,
 version
 FROM clickhouse.udfs.functions
 WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
@@ -447,44 +447,44 @@ AND limit = '{{ limit }}'
 
 ```sql
 INSERT INTO clickhouse.udfs.functions (
-uploadId,
+upload_id,
 runtime,
 arguments,
-returnType,
-returnName,
-commandReadTimeout,
-commandWriteTimeout,
-memoryLimitMib,
-sendChunkHeader,
+return_type,
+return_name,
+command_read_timeout,
+command_write_timeout,
+memory_limit_mib,
+send_chunk_header,
 format,
-sandboxType,
-sandboxVersion,
+sandbox_type,
+sandbox_version,
 type,
-poolSize,
-maxCommandExecutionTime,
-functionName,
+pool_size,
+max_command_execution_time,
+function_name,
 organization_id
 )
 SELECT 
-'{{ uploadId }}' /* required */,
+'{{ upload_id }}' /* required */,
 '{{ runtime }}' /* required */,
 '{{ arguments }}' /* required */,
-'{{ returnType }}' /* required */,
-'{{ returnName }}',
-{{ commandReadTimeout }},
-{{ commandWriteTimeout }},
-'{{ memoryLimitMib }}',
-{{ sendChunkHeader }},
+'{{ return_type }}' /* required */,
+'{{ return_name }}',
+{{ command_read_timeout }},
+{{ command_write_timeout }},
+'{{ memory_limit_mib }}',
+{{ send_chunk_header }},
 '{{ format }}',
-'{{ sandboxType }}',
-'{{ sandboxVersion }}',
+'{{ sandbox_type }}',
+'{{ sandbox_version }}',
 '{{ type }}' /* required */,
-'{{ poolSize }}',
-'{{ maxCommandExecutionTime }}',
-'{{ functionName }}' /* required */,
+'{{ pool_size }}',
+'{{ max_command_execution_time }}',
+'{{ function_name }}' /* required */,
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -498,8 +498,8 @@ status
     - name: organization_id
       value: "{{ organization_id }}"
       description: Required parameter for the functions resource.
-    - name: uploadId
-      value: "{{ uploadId }}"
+    - name: upload_id
+      value: "{{ upload_id }}"
       description: |
         Identifier of the uploaded source archive.
     - name: runtime
@@ -509,44 +509,44 @@ status
       value:
         - name: "{{ name }}"
           type: "{{ type }}"
-    - name: returnType
-      value: "{{ returnType }}"
-    - name: returnName
-      value: "{{ returnName }}"
+    - name: return_type
+      value: "{{ return_type }}"
+    - name: return_name
+      value: "{{ return_name }}"
       default: null
-    - name: commandReadTimeout
-      value: {{ commandReadTimeout }}
+    - name: command_read_timeout
+      value: {{ command_read_timeout }}
       default: 10000
-    - name: commandWriteTimeout
-      value: {{ commandWriteTimeout }}
+    - name: command_write_timeout
+      value: {{ command_write_timeout }}
       default: 10000
-    - name: memoryLimitMib
-      value: "{{ memoryLimitMib }}"
+    - name: memory_limit_mib
+      value: "{{ memory_limit_mib }}"
       default: null
-    - name: sendChunkHeader
-      value: {{ sendChunkHeader }}
+    - name: send_chunk_header
+      value: {{ send_chunk_header }}
       default: false
     - name: format
       value: "{{ format }}"
       default: TabSeparated
-    - name: sandboxType
-      value: "{{ sandboxType }}"
+    - name: sandbox_type
+      value: "{{ sandbox_type }}"
       valid_values: ['basic', 'netenable']
       default: basic
-    - name: sandboxVersion
-      value: "{{ sandboxVersion }}"
+    - name: sandbox_version
+      value: "{{ sandbox_version }}"
       valid_values: ['v1', 'v2', 'v3']
       default: v2
     - name: type
       value: "{{ type }}"
-    - name: poolSize
-      value: "{{ poolSize }}"
+    - name: pool_size
+      value: "{{ pool_size }}"
       default: null
-    - name: maxCommandExecutionTime
-      value: "{{ maxCommandExecutionTime }}"
+    - name: max_command_execution_time
+      value: "{{ max_command_execution_time }}"
       default: 10
-    - name: functionName
-      value: "{{ functionName }}"
+    - name: function_name
+      value: "{{ function_name }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -567,7 +567,7 @@ status
 
 ```sql
 DELETE FROM clickhouse.udfs.functions
-WHERE functionName = '{{ functionName }}' --required
+WHERE function_name = '{{ function_name }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

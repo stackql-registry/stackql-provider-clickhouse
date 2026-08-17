@@ -56,14 +56,14 @@ The following fields are returned by `SELECT` queries:
     <td>Unique invitation ID.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="assignedRoles" /></td>
+    <td><CopyableCode code="assigned_roles" /></td>
     <td><code>array</code></td>
-    <td>Custom roles and System roles that will be assigned to the user when they accept the invitation</td>
+    <td>Custom roles and System roles that will be assigned to the user when they accept the invitation (wire: assignedRoles)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Invitation creation timestamp. ISO-8601.</td>
+    <td>Invitation creation timestamp. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="email" /></td>
@@ -71,9 +71,9 @@ The following fields are returned by `SELECT` queries:
     <td>Email of the invited user. Only a user with this email can join using the invitation. The email is stored in a lowercase form.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="expireAt" /></td>
+    <td><CopyableCode code="expire_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the invitation expires. ISO-8601.</td>
+    <td>Timestamp the invitation expires. ISO-8601. (wire: expireAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="role" /></td>
@@ -100,14 +100,14 @@ The following fields are returned by `SELECT` queries:
     <td>Unique invitation ID.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="assignedRoles" /></td>
+    <td><CopyableCode code="assigned_roles" /></td>
     <td><code>array</code></td>
-    <td>Custom roles and System roles that will be assigned to the user when they accept the invitation</td>
+    <td>Custom roles and System roles that will be assigned to the user when they accept the invitation (wire: assignedRoles)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Invitation creation timestamp. ISO-8601.</td>
+    <td>Invitation creation timestamp. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="email" /></td>
@@ -115,9 +115,9 @@ The following fields are returned by `SELECT` queries:
     <td>Email of the invited user. Only a user with this email can join using the invitation. The email is stored in a lowercase form.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="expireAt" /></td>
+    <td><CopyableCode code="expire_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the invitation expires. ISO-8601.</td>
+    <td>Timestamp the invitation expires. ISO-8601. (wire: expireAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="role" /></td>
@@ -147,7 +147,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-invitationId"><code>invitationId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-invitation_id"><code>invitation_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns details for a single organization invitation.</td>
 </tr>
@@ -168,7 +168,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-invitationId"><code>invitationId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-invitation_id"><code>invitation_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Deletes a single organization invitation.</td>
 </tr>
@@ -188,10 +188,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-invitationId">
-    <td><CopyableCode code="invitationId" /></td>
+<tr id="parameter-invitation_id">
+    <td><CopyableCode code="invitation_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested organization.</td>
+    <td>ID of the requested organization. (wire: invitationId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
@@ -217,13 +217,13 @@ Returns details for a single organization invitation.
 ```sql
 SELECT
 id,
-assignedRoles,
-createdAt,
+assigned_roles,
+created_at,
 email,
-expireAt,
+expire_at,
 role
 FROM clickhouse.members.invitations
-WHERE invitationId = '{{ invitationId }}' -- required
+WHERE invitation_id = '{{ invitation_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -235,10 +235,10 @@ Returns list of all organization invitations.
 ```sql
 SELECT
 id,
-assignedRoles,
-createdAt,
+assigned_roles,
+created_at,
 email,
-expireAt,
+expire_at,
 role
 FROM clickhouse.members.invitations
 WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
@@ -265,16 +265,16 @@ Creates organization invitation.
 INSERT INTO clickhouse.members.invitations (
 email,
 role,
-assignedRoleIds,
+assigned_role_ids,
 organization_id
 )
 SELECT 
 '{{ email }}',
 '{{ role }}',
-'{{ assignedRoleIds }}',
+'{{ assigned_role_ids }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -297,9 +297,9 @@ status
       description: |
         DEPRECATED. Use \`assignedRoleIds\` instead. Role to assign to the invited user in the organization.
       valid_values: ['admin', 'developer']
-    - name: assignedRoleIds
+    - name: assigned_role_ids
       value:
-        - "{{ assignedRoleIds }}"
+        - "{{ assigned_role_ids }}"
       description: |
         List of role IDs to assign to the invited user when they accept the invitation
 `}</CodeBlock>
@@ -322,7 +322,7 @@ Deletes a single organization invitation.
 
 ```sql
 DELETE FROM clickhouse.members.invitations
-WHERE invitationId = '{{ invitationId }}' --required
+WHERE invitation_id = '{{ invitation_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

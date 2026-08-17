@@ -61,29 +61,29 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the key</td>
 </tr>
 <tr>
-    <td><CopyableCode code="assignedRoles" /></td>
+    <td><CopyableCode code="assigned_roles" /></td>
     <td><code>array</code></td>
-    <td>Custom roles and System roles assigned to this API key</td>
+    <td>Custom roles and System roles assigned to this API key (wire: assignedRoles)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key was created. ISO-8601.</td>
+    <td>Timestamp the key was created. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="expireAt" /></td>
+    <td><CopyableCode code="expire_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601.</td>
+    <td>Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601. (wire: expireAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="ipAccessList" /></td>
+    <td><CopyableCode code="ip_access_list" /></td>
     <td><code>array</code></td>
-    <td>List of IP addresses allowed to access the API using this key</td>
+    <td>List of IP addresses allowed to access the API using this key (wire: ipAccessList)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="keySuffix" /></td>
+    <td><CopyableCode code="key_suffix" /></td>
     <td><code>string</code></td>
-    <td>Last 4 letters of the key.</td>
+    <td>Last 4 letters of the key. (wire: keySuffix)</td>
 </tr>
 <tr>
     <td><CopyableCode code="roles" /></td>
@@ -96,9 +96,9 @@ The following fields are returned by `SELECT` queries:
     <td>State of the key: 'enabled', 'disabled'. (enabled, disabled)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="usedAt" /></td>
+    <td><CopyableCode code="used_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key was used last time, with one-minute precision. If not present the key was never used. ISO-8601.</td>
+    <td>Timestamp the key was used last time, with one-minute precision. If not present the key was never used. ISO-8601. (wire: usedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -125,29 +125,29 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the key</td>
 </tr>
 <tr>
-    <td><CopyableCode code="assignedRoles" /></td>
+    <td><CopyableCode code="assigned_roles" /></td>
     <td><code>array</code></td>
-    <td>Custom roles and System roles assigned to this API key</td>
+    <td>Custom roles and System roles assigned to this API key (wire: assignedRoles)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key was created. ISO-8601.</td>
+    <td>Timestamp the key was created. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="expireAt" /></td>
+    <td><CopyableCode code="expire_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601.</td>
+    <td>Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601. (wire: expireAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="ipAccessList" /></td>
+    <td><CopyableCode code="ip_access_list" /></td>
     <td><code>array</code></td>
-    <td>List of IP addresses allowed to access the API using this key</td>
+    <td>List of IP addresses allowed to access the API using this key (wire: ipAccessList)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="keySuffix" /></td>
+    <td><CopyableCode code="key_suffix" /></td>
     <td><code>string</code></td>
-    <td>Last 4 letters of the key.</td>
+    <td>Last 4 letters of the key. (wire: keySuffix)</td>
 </tr>
 <tr>
     <td><CopyableCode code="roles" /></td>
@@ -160,9 +160,9 @@ The following fields are returned by `SELECT` queries:
     <td>State of the key: 'enabled', 'disabled'. (enabled, disabled)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="usedAt" /></td>
+    <td><CopyableCode code="used_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the key was used last time, with one-minute precision. If not present the key was never used. ISO-8601.</td>
+    <td>Timestamp the key was used last time, with one-minute precision. If not present the key was never used. ISO-8601. (wire: usedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -187,7 +187,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-keyId"><code>keyId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-key_id"><code>key_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns a single key details.</td>
 </tr>
@@ -208,14 +208,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-keyId"><code>keyId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-key_id"><code>key_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Updates API key properties.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-keyId"><code>keyId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-key_id"><code>key_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Deletes API key. Only a key not used to authenticate the active request can be deleted.</td>
 </tr>
@@ -235,10 +235,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-keyId">
-    <td><CopyableCode code="keyId" /></td>
+<tr id="parameter-key_id">
+    <td><CopyableCode code="key_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the key to delete.</td>
+    <td>ID of the key to delete. (wire: keyId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
@@ -265,16 +265,16 @@ Returns a single key details.
 SELECT
 id,
 name,
-assignedRoles,
-createdAt,
-expireAt,
-ipAccessList,
-keySuffix,
+assigned_roles,
+created_at,
+expire_at,
+ip_access_list,
+key_suffix,
 roles,
 state,
-usedAt
+used_at
 FROM clickhouse.keys.keys
-WHERE keyId = '{{ keyId }}' -- required
+WHERE key_id = '{{ key_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -287,14 +287,14 @@ Returns a list of all keys in the organization.
 SELECT
 id,
 name,
-assignedRoles,
-createdAt,
-expireAt,
-ipAccessList,
-keySuffix,
+assigned_roles,
+created_at,
+expire_at,
+ip_access_list,
+key_suffix,
 roles,
 state,
-usedAt
+used_at
 FROM clickhouse.keys.keys
 WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
@@ -319,25 +319,25 @@ Creates new API key.
 ```sql
 INSERT INTO clickhouse.keys.keys (
 name,
-expireAt,
+expire_at,
 state,
-hashData,
+hash_data,
 roles,
-assignedRoleIds,
-ipAccessList,
+assigned_role_ids,
+ip_access_list,
 organization_id
 )
 SELECT 
 '{{ name }}',
-'{{ expireAt }}',
+'{{ expire_at }}',
 '{{ state }}',
-'{{ hashData }}',
+'{{ hash_data }}',
 '{{ roles }}',
-'{{ assignedRoleIds }}',
-'{{ ipAccessList }}',
+'{{ assigned_role_ids }}',
+'{{ ip_access_list }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -355,8 +355,8 @@ status
       value: "{{ name }}"
       description: |
         Name of the key.
-    - name: expireAt
-      value: "{{ expireAt }}"
+    - name: expire_at
+      value: "{{ expire_at }}"
       description: |
         Timestamp the key expires. If not present, \`null\` or is empty the key never expires. ISO-8601.
     - name: state
@@ -364,7 +364,7 @@ status
       description: |
         Initial state of the key: 'enabled', 'disabled'. If not provided the new key will be 'enabled'.
       valid_values: ['enabled', 'disabled']
-    - name: hashData
+    - name: hash_data
       value:
         keyIdHash: "{{ keyIdHash }}"
         keyIdSuffix: "{{ keyIdSuffix }}"
@@ -374,12 +374,12 @@ status
         - "{{ roles }}"
       description: |
         DEPRECATED. Use \`assignedRoleIds\` instead. List of roles assigned to the key. Contains at least 1 element.
-    - name: assignedRoleIds
+    - name: assigned_role_ids
       value:
-        - "{{ assignedRoleIds }}"
+        - "{{ assigned_role_ids }}"
       description: |
         Array of role UUIDs to assign to the API key
-    - name: ipAccessList
+    - name: ip_access_list
       description: |
         List of IP addresses allowed to access the API using this key
       value:
@@ -408,15 +408,15 @@ UPDATE clickhouse.keys.keys
 SET 
 name = '{{ name }}',
 roles = '{{ roles }}',
-assignedRoleIds = '{{ assignedRoleIds }}',
-expireAt = '{{ expireAt }}',
+assigned_role_ids = '{{ assigned_role_ids }}',
+expire_at = '{{ expire_at }}',
 state = '{{ state }}',
-ipAccessList = '{{ ipAccessList }}'
+ip_access_list = '{{ ip_access_list }}'
 WHERE 
-keyId = '{{ keyId }}' --required
+key_id = '{{ key_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -438,7 +438,7 @@ Deletes API key. Only a key not used to authenticate the active request can be d
 
 ```sql
 DELETE FROM clickhouse.keys.keys
-WHERE keyId = '{{ keyId }}' --required
+WHERE key_id = '{{ key_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

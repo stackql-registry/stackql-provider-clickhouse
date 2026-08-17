@@ -61,9 +61,9 @@ The following fields are returned by `SELECT` queries:
     <td>Role name. (example: Read Only)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp. (example: 2025-01-01T00:00:00.000Z)</td>
+    <td>Creation timestamp. (example: 2025-01-01T00:00:00.000Z) (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -71,9 +71,9 @@ The following fields are returned by `SELECT` queries:
     <td>Human-readable role description. (example: Read-only access to all resources)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="isPredefined" /></td>
+    <td><CopyableCode code="is_predefined" /></td>
     <td><code>boolean</code></td>
-    <td>Whether this is an immutable predefined/system role.</td>
+    <td>Whether this is an immutable predefined/system role. (wire: isPredefined)</td>
 </tr>
 <tr>
     <td><CopyableCode code="permissions" /></td>
@@ -81,9 +81,9 @@ The following fields are returned by `SELECT` queries:
     <td>The CASL permissions granted by this role.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last update timestamp. (example: 2025-06-15T10:30:00.000Z)</td>
+    <td>Last update timestamp. (example: 2025-06-15T10:30:00.000Z) (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -110,9 +110,9 @@ The following fields are returned by `SELECT` queries:
     <td>Role name. (example: Read Only)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp. (example: 2025-01-01T00:00:00.000Z)</td>
+    <td>Creation timestamp. (example: 2025-01-01T00:00:00.000Z) (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -120,9 +120,9 @@ The following fields are returned by `SELECT` queries:
     <td>Human-readable role description. (example: Read-only access to all resources)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="isPredefined" /></td>
+    <td><CopyableCode code="is_predefined" /></td>
     <td><code>boolean</code></td>
-    <td>Whether this is an immutable predefined/system role.</td>
+    <td>Whether this is an immutable predefined/system role. (wire: isPredefined)</td>
 </tr>
 <tr>
     <td><CopyableCode code="permissions" /></td>
@@ -130,9 +130,9 @@ The following fields are returned by `SELECT` queries:
     <td>The CASL permissions granted by this role.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last update timestamp. (example: 2025-06-15T10:30:00.000Z)</td>
+    <td>Last update timestamp. (example: 2025-06-15T10:30:00.000Z) (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -157,35 +157,35 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackRoleId"><code>clickStackRoleId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_role_id"><code>click_stack_role_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a specific role by ID.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves all roles for the authenticated team, including predefined roles.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-permissions"><code>permissions</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-permissions"><code>permissions</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Creates a new custom role for the team.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackRoleId"><code>clickStackRoleId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-permissions"><code>permissions</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_role_id"><code>click_stack_role_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-permissions"><code>permissions</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Updates a custom role's permissions, name, and description. Predefined roles cannot be modified.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackRoleId"><code>clickStackRoleId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_role_id"><code>click_stack_role_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes a custom role. Predefined roles, the team default user role, and roles assigned to users cannot be deleted.</td>
 </tr>
@@ -205,20 +205,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-clickStackRoleId">
-    <td><CopyableCode code="clickStackRoleId" /></td>
+<tr id="parameter-click_stack_role_id">
+    <td><CopyableCode code="click_stack_role_id" /></td>
     <td><code>string</code></td>
-    <td>id parameter</td>
+    <td>id parameter (wire: clickStackRoleId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the ClickStack service.</td>
+    <td>ID of the ClickStack service. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -240,14 +240,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 SELECT
 id,
 name,
-createdAt,
+created_at,
 description,
-isPredefined,
+is_predefined,
 permissions,
-updatedAt
+updated_at
 FROM clickhouse.clickstack.roles
-WHERE serviceId = '{{ serviceId }}' -- required
-AND clickStackRoleId = '{{ clickStackRoleId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
+AND click_stack_role_id = '{{ click_stack_role_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -260,13 +260,13 @@ AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_
 SELECT
 id,
 name,
-createdAt,
+created_at,
 description,
-isPredefined,
+is_predefined,
 permissions,
-updatedAt
+updated_at
 FROM clickhouse.clickstack.roles
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -292,17 +292,17 @@ INSERT INTO clickhouse.clickstack.roles (
 name,
 description,
 permissions,
-serviceId,
+service_id,
 organization_id
 )
 SELECT 
 '{{ name }}' /* required */,
 '{{ description }}',
 '{{ permissions }}' /* required */,
-'{{ serviceId }}',
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -313,8 +313,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: roles
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the roles resource.
     - name: organization_id
       value: "{{ organization_id }}"
@@ -361,12 +361,12 @@ name = '{{ name }}',
 description = '{{ description }}',
 permissions = '{{ permissions }}'
 WHERE 
-serviceId = '{{ serviceId }}' --required
-AND clickStackRoleId = '{{ clickStackRoleId }}' --required
+service_id = '{{ service_id }}' --required
+AND click_stack_role_id = '{{ click_stack_role_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND permissions = '{{ permissions }}' --required
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -388,8 +388,8 @@ status;
 
 ```sql
 DELETE FROM clickhouse.clickstack.roles
-WHERE serviceId = '{{ serviceId }}' --required
-AND clickStackRoleId = '{{ clickStackRoleId }}' --required
+WHERE service_id = '{{ service_id }}' --required
+AND click_stack_role_id = '{{ click_stack_role_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

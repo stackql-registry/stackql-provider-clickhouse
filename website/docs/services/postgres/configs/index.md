@@ -50,14 +50,14 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="pgBouncerConfig" /></td>
+    <td><CopyableCode code="pg_bouncer_config" /></td>
     <td><code>object</code></td>
-    <td>PgBouncer &#91;runtime configuration&#93;(https:​//www.pgbouncer.org/config.html) configuration. (title: PgBouncer Configuration)</td>
+    <td>PgBouncer &#91;runtime configuration&#93;(https:​//www.pgbouncer.org/config.html) configuration. (title: PgBouncer Configuration) (wire: pgBouncerConfig)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="pgConfig" /></td>
+    <td><CopyableCode code="pg_config" /></td>
     <td><code>object</code></td>
-    <td>Postgres &#91;runtime configuration&#93;(https:​//www.postgresql.org/docs/current/runtime-config.html) configuration. (title: Postgres Configuration)</td>
+    <td>Postgres &#91;runtime configuration&#93;(https:​//www.postgresql.org/docs/current/runtime-config.html) configuration. (title: Postgres Configuration) (wire: pgConfig)</td>
 </tr>
 </tbody>
 </table>
@@ -82,21 +82,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns the configuration data for a Postgres service and its PgBouncer service.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-pgConfig"><code>pgConfig</code></a>, <a href="#parameter-pgBouncerConfig"><code>pgBouncerConfig</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-pg_config"><code>pg_config</code></a>, <a href="#parameter-pg_bouncer_config"><code>pg_bouncer_config</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Replace the existing Postgres service and pgBouncer configuration.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-pgConfig"><code>pgConfig</code></a>, <a href="#parameter-pgBouncerConfig"><code>pgBouncerConfig</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-pg_config"><code>pg_config</code></a>, <a href="#parameter-pg_bouncer_config"><code>pg_bouncer_config</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Update the existing Postgres service and pgBouncer configuration.</td>
 </tr>
@@ -121,10 +121,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-postgresId">
-    <td><CopyableCode code="postgresId" /></td>
+<tr id="parameter-postgres_id">
+    <td><CopyableCode code="postgres_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested Postgres service.</td>
+    <td>ID of the requested Postgres service. (wire: postgresId)</td>
 </tr>
 </tbody>
 </table>
@@ -143,10 +143,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 
 ```sql
 SELECT
-pgBouncerConfig,
-pgConfig
+pg_bouncer_config,
+pg_config
 FROM clickhouse.postgres.configs
-WHERE postgresId = '{{ postgresId }}' -- required
+WHERE postgres_id = '{{ postgres_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -169,18 +169,18 @@ AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_
 
 ```sql
 INSERT INTO clickhouse.postgres.configs (
-pgConfig,
-pgBouncerConfig,
-postgresId,
+pg_config,
+pg_bouncer_config,
+postgres_id,
 organization_id
 )
 SELECT 
-'{{ pgConfig }}' /* required */,
-'{{ pgBouncerConfig }}' /* required */,
-'{{ postgresId }}',
+'{{ pg_config }}' /* required */,
+'{{ pg_bouncer_config }}' /* required */,
+'{{ postgres_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -191,13 +191,13 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: configs
   props:
-    - name: postgresId
-      value: "{{ postgresId }}"
+    - name: postgres_id
+      value: "{{ postgres_id }}"
       description: Required parameter for the configs resource.
     - name: organization_id
       value: "{{ organization_id }}"
       description: Required parameter for the configs resource.
-    - name: pgConfig
+    - name: pg_config
       description: |
         Postgres [runtime configuration](https://www.postgresql.org/docs/current/runtime-config.html) configuration.
       value:
@@ -232,8 +232,8 @@ status
         autovacuum_vacuum_insert_scale_factor: "{{ autovacuum_vacuum_insert_scale_factor }}"
         autovacuum_vacuum_cost_limit: "{{ autovacuum_vacuum_cost_limit }}"
         autovacuum_vacuum_cost_delay: "{{ autovacuum_vacuum_cost_delay }}"
-    - name: pgBouncerConfig
-      value: "{{ pgBouncerConfig }}"
+    - name: pg_bouncer_config
+      value: "{{ pg_bouncer_config }}"
       description: |
         PgBouncer [runtime configuration](https://www.pgbouncer.org/config.html) configuration.
 `}</CodeBlock>
@@ -257,15 +257,15 @@ status
 ```sql
 UPDATE clickhouse.postgres.configs
 SET 
-pgConfig = '{{ pgConfig }}',
-pgBouncerConfig = '{{ pgBouncerConfig }}'
+pg_config = '{{ pg_config }}',
+pg_bouncer_config = '{{ pg_bouncer_config }}'
 WHERE 
-postgresId = '{{ postgresId }}' --required
+postgres_id = '{{ postgres_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
-AND pgConfig = '{{ pgConfig }}' --required
-AND pgBouncerConfig = '{{ pgBouncerConfig }}' --required
+AND pg_config = '{{ pg_config }}' --required
+AND pg_bouncer_config = '{{ pg_bouncer_config }}' --required
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```

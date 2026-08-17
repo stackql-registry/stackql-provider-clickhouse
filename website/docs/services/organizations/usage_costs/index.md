@@ -50,9 +50,24 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="dataWarehouseId" /></td>
+    <td><CopyableCode code="data_warehouse_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the dataWarehouse this entity belongs to (or is).</td>
+    <td>ID of the dataWarehouse this entity belongs to (or is). (wire: dataWarehouseId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="entity_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>Unique ID of the entity. (wire: entityId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="service_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the service this entity belongs to (or is). Set to null for dataWarehouse entities. (wire: serviceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="entity_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the entity. (wire: entityName)</td>
 </tr>
 <tr>
     <td><CopyableCode code="date" /></td>
@@ -60,19 +75,9 @@ The following fields are returned by `SELECT` queries:
     <td>Date of the usage. ISO-8601 date, based on the UTC timezone.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="entityId" /></td>
-    <td><code>string (uuid)</code></td>
-    <td>Unique ID of the entity.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="entityName" /></td>
+    <td><CopyableCode code="entity_type" /></td>
     <td><code>string</code></td>
-    <td>Name of the entity.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="entityType" /></td>
-    <td><code>string</code></td>
-    <td>Type of the entity. (datawarehouse, service, clickpipe)</td>
+    <td>Type of the entity. (datawarehouse, service, clickpipe) (wire: entityType)</td>
 </tr>
 <tr>
     <td><CopyableCode code="locked" /></td>
@@ -85,14 +90,9 @@ The following fields are returned by `SELECT` queries:
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string (uuid)</code></td>
-    <td>ID of the service this entity belongs to (or is). Set to null for dataWarehouse entities.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalCHC" /></td>
+    <td><CopyableCode code="total_chc" /></td>
     <td><code>number</code></td>
-    <td>Total cost of usage in ClickHouse Credits (CHCs) for this entity.</td>
+    <td>Total cost of usage in ClickHouse Credits (CHCs) for this entity. (wire: totalCHC)</td>
 </tr>
 </tbody>
 </table>
@@ -174,15 +174,15 @@ Returns a grand total and a list of daily, per-entity organization usage cost re
 
 ```sql
 SELECT
-dataWarehouseId,
+data_warehouse_id,
+entity_id,
+service_id,
+entity_name,
 date,
-entityId,
-entityName,
-entityType,
+entity_type,
 locked,
 metrics,
-serviceId,
-totalCHC
+total_chc
 FROM clickhouse.organizations.usage_costs
 WHERE from_date = '{{ from_date }}' -- required
 AND to_date = '{{ to_date }}' -- required

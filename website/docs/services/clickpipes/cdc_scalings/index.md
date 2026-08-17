@@ -50,14 +50,14 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="replicaCpuMillicores" /></td>
+    <td><CopyableCode code="replica_cpu_millicores" /></td>
     <td><code>integer</code></td>
-    <td>CPU in millicores for DB ClickPipes.</td>
+    <td>CPU in millicores for DB ClickPipes. (wire: replicaCpuMillicores)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="replicaMemoryGb" /></td>
+    <td><CopyableCode code="replica_memory_gb" /></td>
     <td><code>number</code></td>
-    <td>Memory in GiB for DB ClickPipes. Must be 4× the CPU core count.</td>
+    <td>Memory in GiB for DB ClickPipes. Must be 4× the CPU core count. (wire: replicaMemoryGb)</td>
 </tr>
 </tbody>
 </table>
@@ -82,14 +82,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Get scaling settings for database ClickPipes (PostgreSQL, MySQL, MongoDB, BigQuery).&lt;br /&gt;&lt;br /&gt;The infrastructure is shared between all database ClickPipes in the service, both for initial load and CDC. For billing purposes, 2 CPU cores and 8 GB of RAM &#91;correspond&#93;(https:​//clickhouse.com/docs/cloud/manage/billing/overview#clickpipes-for-postgres-cdc) to one compute unit.&lt;br /&gt;&lt;br /&gt;**Note:** For Kafka, Kinesis, and object storage pipes (S3, GCS, Azure Blob), see &#91;Get ClickPipe&#93;(#tag/ClickPipes/operation/clickPipeGet).&lt;br /&gt;&lt;br /&gt;**This endpoint becomes available once at least one database ClickPipe was provisioned.**</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Update scaling settings for database ClickPipes (PostgreSQL, MySQL, MongoDB, BigQuery).&lt;br /&gt;&lt;br /&gt;The infrastructure is shared between all database ClickPipes in the service, both for initial load and CDC. Scaling settings may take a few minutes to fully propagate.&lt;br /&gt;&lt;br /&gt;For billing purposes, 2 CPU cores and 8 GB of RAM &#91;correspond&#93;(https:​//clickhouse.com/docs/cloud/manage/billing/overview#clickpipes-for-postgres-cdc) to one compute unit. If your organization tier changes, database ClickPipes will be &#91;rescaled&#93;(https:​//clickhouse.com/docs/cloud/manage/billing/overview#compute) appropriately.&lt;br /&gt;&lt;br /&gt;**Note:** For Kafka, Kinesis, and object storage pipes (S3, GCS, Azure Blob), see &#91;Get ClickPipe&#93;(#tag/ClickPipes/operation/clickPipeGet).&lt;br /&gt;&lt;br /&gt;**This endpoint becomes available once at least one database ClickPipe was provisioned.**</td>
 </tr>
@@ -114,10 +114,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the service that owns the ClickPipe.</td>
+    <td>ID of the service that owns the ClickPipe. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -136,10 +136,10 @@ Get scaling settings for database ClickPipes (PostgreSQL, MySQL, MongoDB, BigQue
 
 ```sql
 SELECT
-replicaCpuMillicores,
-replicaMemoryGb
+replica_cpu_millicores,
+replica_memory_gb
 FROM clickhouse.clickpipes.cdc_scalings
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -162,13 +162,13 @@ Update scaling settings for database ClickPipes (PostgreSQL, MySQL, MongoDB, Big
 ```sql
 UPDATE clickhouse.clickpipes.cdc_scalings
 SET 
-replicaCpuMillicores = {{ replicaCpuMillicores }},
-replicaMemoryGb = {{ replicaMemoryGb }}
+replica_cpu_millicores = {{ replica_cpu_millicores }},
+replica_memory_gb = {{ replica_memory_gb }}
 WHERE 
-serviceId = '{{ serviceId }}' --required
+service_id = '{{ service_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```

@@ -101,7 +101,7 @@ organization_id
 SELECT 
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;

@@ -61,9 +61,14 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the ClickPipe. (example: my_postgres_pipe)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="service_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the service this ClickPipe belongs to. (wire: serviceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp of the ClickPipe in ISO 8601 format.</td>
+    <td>Creation timestamp of the ClickPipe in ISO 8601 format. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="destination" /></td>
@@ -71,19 +76,14 @@ The following fields are returned by `SELECT` queries:
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="fieldMappings" /></td>
+    <td><CopyableCode code="field_mappings" /></td>
     <td><code>array</code></td>
-    <td>Field mappings of the ClickPipe. Note that all destination columns must be included in the mappings.</td>
+    <td>Field mappings of the ClickPipe. Note that all destination columns must be included in the mappings. (wire: fieldMappings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scaling" /></td>
     <td><code>object</code></td>
     <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string (uuid)</code></td>
-    <td>ID of the service this ClickPipe belongs to.</td>
 </tr>
 <tr>
     <td><CopyableCode code="settings" /></td>
@@ -101,9 +101,9 @@ The following fields are returned by `SELECT` queries:
     <td>Current lifecycle state of the ClickPipe. For database pipes: "Provisioning" (initial setup), "Setup" (configuring replication), "Snapshot" (initial data load), "Running" (actively replicating), "Pausing" (transitioning to paused state), "Paused" (temporarily paused), "Modifying" (applying configuration updates), "Resync" (swapping resync tables with original tables), "Failed" (error occurred), "Unknown". For streaming/object storage pipes (Kafka, Kinesis, S3): "Unknown" (initial state), "Provisioning" (setting up resources), "Running" (actively ingesting data), "Stopping" (transitioning to stopped state), "Stopped" (manually stopped, can be restarted), "Completed" (batch ingestion finished for object storage), "Failed" (error occurred, pipe stopped), "InternalError" (internal system error). (Unknown, Provisioning, Running, Degraded, Stopping, Stopped, Failed, Completed, InternalError, Setup, Snapshot, Paused, Pausing, Modifying, Resync) (example: Running)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last update timestamp of the ClickPipe in ISO 8601 format.</td>
+    <td>Last update timestamp of the ClickPipe in ISO 8601 format. (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -130,9 +130,14 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the ClickPipe. (example: my_postgres_pipe)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="service_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the service this ClickPipe belongs to. (wire: serviceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp of the ClickPipe in ISO 8601 format.</td>
+    <td>Creation timestamp of the ClickPipe in ISO 8601 format. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="destination" /></td>
@@ -140,19 +145,14 @@ The following fields are returned by `SELECT` queries:
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="fieldMappings" /></td>
+    <td><CopyableCode code="field_mappings" /></td>
     <td><code>array</code></td>
-    <td>Field mappings of the ClickPipe. Note that all destination columns must be included in the mappings.</td>
+    <td>Field mappings of the ClickPipe. Note that all destination columns must be included in the mappings. (wire: fieldMappings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scaling" /></td>
     <td><code>object</code></td>
     <td></td>
-</tr>
-<tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string (uuid)</code></td>
-    <td>ID of the service this ClickPipe belongs to.</td>
 </tr>
 <tr>
     <td><CopyableCode code="settings" /></td>
@@ -170,9 +170,9 @@ The following fields are returned by `SELECT` queries:
     <td>Current lifecycle state of the ClickPipe. For database pipes: "Provisioning" (initial setup), "Setup" (configuring replication), "Snapshot" (initial data load), "Running" (actively replicating), "Pausing" (transitioning to paused state), "Paused" (temporarily paused), "Modifying" (applying configuration updates), "Resync" (swapping resync tables with original tables), "Failed" (error occurred), "Unknown". For streaming/object storage pipes (Kafka, Kinesis, S3): "Unknown" (initial state), "Provisioning" (setting up resources), "Running" (actively ingesting data), "Stopping" (transitioning to stopped state), "Stopped" (manually stopped, can be restarted), "Completed" (batch ingestion finished for object storage), "Failed" (error occurred, pipe stopped), "InternalError" (internal system error). (Unknown, Provisioning, Running, Degraded, Stopping, Stopped, Failed, Completed, InternalError, Setup, Snapshot, Paused, Pausing, Modifying, Resync) (example: Running)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last update timestamp of the ClickPipe in ISO 8601 format.</td>
+    <td>Last update timestamp of the ClickPipe in ISO 8601 format. (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -197,35 +197,35 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickPipeId"><code>clickPipeId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_pipe_id"><code>click_pipe_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns the specified ClickPipe.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns a list of ClickPipes.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Create a new ClickPipe.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickPipeId"><code>clickPipeId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_pipe_id"><code>click_pipe_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Update the specified ClickPipe. Source fields not present in the per-source update schemas are immutable after creation. For Kafka sources, values submitted for immutable fields (type, format, brokers, topics, consumerGroup, offset, schemaRegistry, exactlyOnce) are not applied, except schema registry credentials, which are rejected.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickPipeId"><code>clickPipeId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_pipe_id"><code>click_pipe_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Delete the specified ClickPipe.</td>
 </tr>
@@ -264,6 +264,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (uuid)</code></td>
     <td>ID of the ClickPipe to update state.</td>
 </tr>
+<tr id="parameter-click_pipe_id">
+    <td><CopyableCode code="click_pipe_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the ClickPipe to delete. (wire: clickPipeId)</td>
+</tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
@@ -273,6 +278,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><CopyableCode code="serviceId" /></td>
     <td><code>string (uuid)</code></td>
     <td>ID of the service that owns the ClickPipe.</td>
+</tr>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the service that owns the ClickPipe. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -294,18 +304,18 @@ Returns the specified ClickPipe.
 SELECT
 id,
 name,
-createdAt,
+service_id,
+created_at,
 destination,
-fieldMappings,
+field_mappings,
 scaling,
-serviceId,
 settings,
 source,
 state,
-updatedAt
+updated_at
 FROM clickhouse.clickpipes.clickpipes
-WHERE serviceId = '{{ serviceId }}' -- required
-AND clickPipeId = '{{ clickPipeId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
+AND click_pipe_id = '{{ click_pipe_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -318,17 +328,17 @@ Returns a list of ClickPipes.
 SELECT
 id,
 name,
-createdAt,
+service_id,
+created_at,
 destination,
-fieldMappings,
+field_mappings,
 scaling,
-serviceId,
 settings,
 source,
 state,
-updatedAt
+updated_at
 FROM clickhouse.clickpipes.clickpipes
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -354,23 +364,23 @@ INSERT INTO clickhouse.clickpipes.clickpipes (
 name,
 source,
 destination,
-fieldMappings,
+field_mappings,
 scaling,
 settings,
-serviceId,
+service_id,
 organization_id
 )
 SELECT 
 '{{ name }}',
 '{{ source }}',
 '{{ destination }}',
-'{{ fieldMappings }}',
+'{{ field_mappings }}',
 '{{ scaling }}',
 '{{ settings }}',
-'{{ serviceId }}',
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -381,8 +391,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: clickpipes
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the clickpipes resource.
     - name: organization_id
       value: "{{ organization_id }}"
@@ -598,7 +608,7 @@ status
             type: "{{ type }}"
         roles:
           - "{{ roles }}"
-    - name: fieldMappings
+    - name: field_mappings
       description: |
         Field mappings of the ClickPipe. Note that all destination columns must be included in the mappings.
       value:
@@ -649,14 +659,14 @@ SET
 name = '{{ name }}',
 source = '{{ source }}',
 destination = '{{ destination }}',
-fieldMappings = '{{ fieldMappings }}',
+field_mappings = '{{ field_mappings }}',
 settings = '{{ settings }}'
 WHERE 
-serviceId = '{{ serviceId }}' --required
-AND clickPipeId = '{{ clickPipeId }}' --required
+service_id = '{{ service_id }}' --required
+AND click_pipe_id = '{{ click_pipe_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -678,8 +688,8 @@ Delete the specified ClickPipe.
 
 ```sql
 DELETE FROM clickhouse.clickpipes.clickpipes
-WHERE serviceId = '{{ serviceId }}' --required
-AND clickPipeId = '{{ clickPipeId }}' --required
+WHERE service_id = '{{ service_id }}' --required
+AND click_pipe_id = '{{ click_pipe_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -688,6 +698,8 @@ AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_I
 
 
 ## Lifecycle Methods
+
+EXEC variables use wire (API) names.
 
 <Tabs
     defaultValue="schema_discovery"

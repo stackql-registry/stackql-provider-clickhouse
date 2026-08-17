@@ -50,9 +50,9 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="endpointServiceId" /></td>
+    <td><CopyableCode code="endpoint_service_id" /></td>
     <td><code>string</code></td>
-    <td>Unique identifier of the interface endpoint you created in your VPC with the AWS(Service Name) or GCP(Target Service) resource</td>
+    <td>Unique identifier of the interface endpoint you created in your VPC with the AWS(Service Name) or GCP(Target Service) resource (wire: endpointServiceId)</td>
 </tr>
 </tbody>
 </table>
@@ -129,7 +129,7 @@ Deprecated. Please follow [documentation](https://clickhouse.com/docs/manage/sec
 
 ```sql
 SELECT
-endpointServiceId
+endpoint_service_id
 FROM clickhouse.organizations.private_endpoint_configs
 WHERE cloud_provider = '{{ cloud_provider }}' -- required
 AND region_id = '{{ region_id }}' -- required

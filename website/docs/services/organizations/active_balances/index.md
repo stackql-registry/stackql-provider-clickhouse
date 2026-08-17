@@ -55,29 +55,29 @@ The following fields are returned by `SELECT` queries:
     <td>Unique ID of the prepaid balance.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="amountSpent" /></td>
+    <td><CopyableCode code="amount_spent" /></td>
     <td><code>number</code></td>
-    <td>Credits spent from this balance, in ClickHouse Credits (CHCs).</td>
+    <td>Credits spent from this balance, in ClickHouse Credits (CHCs). (wire: amountSpent)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="expirationDate" /></td>
+    <td><CopyableCode code="expiration_date" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Date the balance expires. ISO-8601, based on the UTC timezone.</td>
+    <td>Date the balance expires. ISO-8601, based on the UTC timezone. (wire: expirationDate)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="remainingPrepaidCredits" /></td>
+    <td><CopyableCode code="remaining_prepaid_credits" /></td>
     <td><code>number</code></td>
-    <td>Remaining credits available on this balance, in ClickHouse Credits (CHCs).</td>
+    <td>Remaining credits available on this balance, in ClickHouse Credits (CHCs). (wire: remainingPrepaidCredits)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="startDate" /></td>
+    <td><CopyableCode code="start_date" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Date the balance became active. ISO-8601, based on the UTC timezone.</td>
+    <td>Date the balance became active. ISO-8601, based on the UTC timezone. (wire: startDate)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="totalAmount" /></td>
+    <td><CopyableCode code="total_amount" /></td>
     <td><code>number</code></td>
-    <td>Total credits granted on this balance, in ClickHouse Credits (CHCs).</td>
+    <td>Total credits granted on this balance, in ClickHouse Credits (CHCs). (wire: totalAmount)</td>
 </tr>
 </tbody>
 </table>
@@ -155,11 +155,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ```sql
 SELECT
 id,
-amountSpent,
-expirationDate,
-remainingPrepaidCredits,
-startDate,
-totalAmount
+amount_spent,
+expiration_date,
+remaining_prepaid_credits,
+start_date,
+total_amount
 FROM clickhouse.organizations.active_balances
 WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 AND limit = '{{ limit }}'

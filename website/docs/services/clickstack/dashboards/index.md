@@ -71,19 +71,19 @@ The following fields are returned by `SELECT` queries:
     <td>Dashboard filter keys added to the dashboard and applied to all tiles</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedFilterValues" /></td>
+    <td><CopyableCode code="saved_filter_values" /></td>
     <td><code>array</code></td>
-    <td>Optional default dashboard filter values restored when loading the dashboard.</td>
+    <td>Optional default dashboard filter values restored when loading the dashboard. (wire: savedFilterValues)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedQuery" /></td>
+    <td><CopyableCode code="saved_query" /></td>
     <td><code>string</code></td>
-    <td>Optional default dashboard query restored when loading the dashboard. (example: service.name = 'api')</td>
+    <td>Optional default dashboard query restored when loading the dashboard. (example: service.name = 'api') (wire: savedQuery)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedQueryLanguage" /></td>
+    <td><CopyableCode code="saved_query_language" /></td>
     <td><code>string</code></td>
-    <td>Query language used by savedQuery. (sql, lucene) (example: sql)</td>
+    <td>Query language used by savedQuery. (sql, lucene) (example: sql) (wire: savedQueryLanguage)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -130,19 +130,19 @@ The following fields are returned by `SELECT` queries:
     <td>Dashboard filter keys added to the dashboard and applied to all tiles</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedFilterValues" /></td>
+    <td><CopyableCode code="saved_filter_values" /></td>
     <td><code>array</code></td>
-    <td>Optional default dashboard filter values restored when loading the dashboard.</td>
+    <td>Optional default dashboard filter values restored when loading the dashboard. (wire: savedFilterValues)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedQuery" /></td>
+    <td><CopyableCode code="saved_query" /></td>
     <td><code>string</code></td>
-    <td>Optional default dashboard query restored when loading the dashboard. (example: service.name = 'api')</td>
+    <td>Optional default dashboard query restored when loading the dashboard. (example: service.name = 'api') (wire: savedQuery)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedQueryLanguage" /></td>
+    <td><CopyableCode code="saved_query_language" /></td>
     <td><code>string</code></td>
-    <td>Query language used by savedQuery. (sql, lucene) (example: sql)</td>
+    <td>Query language used by savedQuery. (sql, lucene) (example: sql) (wire: savedQueryLanguage)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -177,35 +177,35 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_dashboard_id"><code>click_stack_dashboard_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a specific dashboard by ID</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a list of all dashboards for the authenticated team</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Creates a new dashboard</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_dashboard_id"><code>click_stack_dashboard_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Updates an existing dashboard.  **Concurrency:** This endpoint does not support optimistic concurrency control. Concurrent PUT requests for the same dashboard may silently overwrite each other, which can leave orphan tile-to-container references on layout-shape edits. Clients should serialize edits to a given dashboard.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_dashboard_id"><code>click_stack_dashboard_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes a dashboard</td>
 </tr>
@@ -232,10 +232,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-clickStackDashboardId">
-    <td><CopyableCode code="clickStackDashboardId" /></td>
+<tr id="parameter-click_stack_dashboard_id">
+    <td><CopyableCode code="click_stack_dashboard_id" /></td>
     <td><code>string</code></td>
-    <td>ClickStack Dashboard ID</td>
+    <td>ClickStack Dashboard ID (wire: clickStackDashboardId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
@@ -246,6 +246,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><CopyableCode code="serviceId" /></td>
     <td><code>string (uuid)</code></td>
     <td>ID of the ClickStack service.</td>
+</tr>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the ClickStack service. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -269,14 +274,14 @@ id,
 name,
 containers,
 filters,
-savedFilterValues,
-savedQuery,
-savedQueryLanguage,
+saved_filter_values,
+saved_query,
+saved_query_language,
 tags,
 tiles
 FROM clickhouse.clickstack.dashboards
-WHERE serviceId = '{{ serviceId }}' -- required
-AND clickStackDashboardId = '{{ clickStackDashboardId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
+AND click_stack_dashboard_id = '{{ click_stack_dashboard_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -291,13 +296,13 @@ id,
 name,
 containers,
 filters,
-savedFilterValues,
-savedQuery,
-savedQueryLanguage,
+saved_filter_values,
+saved_query,
+saved_query_language,
 tags,
 tiles
 FROM clickhouse.clickstack.dashboards
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -324,11 +329,11 @@ name,
 tiles,
 tags,
 filters,
-savedQuery,
-savedQueryLanguage,
-savedFilterValues,
+saved_query,
+saved_query_language,
+saved_filter_values,
 containers,
-serviceId,
+service_id,
 organization_id
 )
 SELECT 
@@ -336,14 +341,14 @@ SELECT
 '{{ tiles }}' /* required */,
 '{{ tags }}',
 '{{ filters }}',
-'{{ savedQuery }}',
-'{{ savedQueryLanguage }}',
-'{{ savedFilterValues }}',
+'{{ saved_query }}',
+'{{ saved_query_language }}',
+'{{ saved_filter_values }}',
 '{{ containers }}',
-'{{ serviceId }}',
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -354,8 +359,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dashboards
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the dashboards resource.
     - name: organization_id
       value: "{{ organization_id }}"
@@ -466,16 +471,16 @@ status
           where: "{{ where }}"
           whereLanguage: "{{ whereLanguage }}"
           appliesToSourceIds: "{{ appliesToSourceIds }}"
-    - name: savedQuery
-      value: "{{ savedQuery }}"
+    - name: saved_query
+      value: "{{ saved_query }}"
       description: |
         Optional default dashboard query to persist on the dashboard.
-    - name: savedQueryLanguage
-      value: "{{ savedQueryLanguage }}"
+    - name: saved_query_language
+      value: "{{ saved_query_language }}"
       description: |
         Query language used by savedQuery.
       valid_values: ['sql', 'lucene']
-    - name: savedFilterValues
+    - name: saved_filter_values
       description: |
         Optional default dashboard filter values to persist on the dashboard.
       value:
@@ -516,18 +521,18 @@ name = '{{ name }}',
 tiles = '{{ tiles }}',
 tags = '{{ tags }}',
 filters = '{{ filters }}',
-savedQuery = '{{ savedQuery }}',
-savedQueryLanguage = '{{ savedQueryLanguage }}',
-savedFilterValues = '{{ savedFilterValues }}',
+saved_query = '{{ saved_query }}',
+saved_query_language = '{{ saved_query_language }}',
+saved_filter_values = '{{ saved_filter_values }}',
 containers = '{{ containers }}'
 WHERE 
-serviceId = '{{ serviceId }}' --required
-AND clickStackDashboardId = '{{ clickStackDashboardId }}' --required
+service_id = '{{ service_id }}' --required
+AND click_stack_dashboard_id = '{{ click_stack_dashboard_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND name = '{{ name }}' --required
 AND tiles = '{{ tiles }}' --required
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -549,8 +554,8 @@ status;
 
 ```sql
 DELETE FROM clickhouse.clickstack.dashboards
-WHERE serviceId = '{{ serviceId }}' --required
-AND clickStackDashboardId = '{{ clickStackDashboardId }}' --required
+WHERE service_id = '{{ service_id }}' --required
+AND click_stack_dashboard_id = '{{ click_stack_dashboard_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -559,6 +564,8 @@ AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_I
 
 
 ## Lifecycle Methods
+
+EXEC variables use wire (API) names.
 
 <Tabs
     defaultValue="validate"

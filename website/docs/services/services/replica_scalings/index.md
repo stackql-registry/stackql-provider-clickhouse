@@ -53,7 +53,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Updates minimum and maximum memory limits per replica and idle mode scaling behavior for the service. Supports both vertical autoscaling (fixed replica count, variable memory) and horizontal autoscaling (variable replica count, fixed memory). The memory settings are available only for "production" services and must be a multiple of 4 starting from 8GB. For vertical autoscaling, please contact support to enable adjustment of numReplicas. For horizontal autoscaling (autoscalingMode "horizontal" with minReplicas/maxReplicas), contact support to enable the feature for your organization.</td>
 </tr>
@@ -78,10 +78,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the service to update scaling parameters.</td>
+    <td>ID of the service to update scaling parameters. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -101,19 +101,19 @@ Updates minimum and maximum memory limits per replica and idle mode scaling beha
 ```sql
 UPDATE clickhouse.services.replica_scalings
 SET 
-minReplicaMemoryGb = {{ minReplicaMemoryGb }},
-maxReplicaMemoryGb = {{ maxReplicaMemoryGb }},
-autoscalingMode = '{{ autoscalingMode }}',
-numReplicas = {{ numReplicas }},
-minReplicas = {{ minReplicas }},
-maxReplicas = {{ maxReplicas }},
-idleScaling = {{ idleScaling }},
-idleTimeoutMinutes = {{ idleTimeoutMinutes }}
+min_replica_memory_gb = {{ min_replica_memory_gb }},
+max_replica_memory_gb = {{ max_replica_memory_gb }},
+autoscaling_mode = '{{ autoscaling_mode }}',
+num_replicas = {{ num_replicas }},
+min_replicas = {{ min_replicas }},
+max_replicas = {{ max_replicas }},
+idle_scaling = {{ idle_scaling }},
+idle_timeout_minutes = {{ idle_timeout_minutes }}
 WHERE 
-serviceId = '{{ serviceId }}' --required
+service_id = '{{ service_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```

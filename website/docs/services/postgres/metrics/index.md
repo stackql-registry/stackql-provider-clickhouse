@@ -77,7 +77,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-from_date"><code>from_date</code></a>, <a href="#parameter-to_date"><code>to_date</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-from_date"><code>from_date</code></a>, <a href="#parameter-to_date"><code>to_date</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-bucket_size_seconds"><code>bucket_size_seconds</code></a></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns bucketed time-series metrics for a PostgreSQL service over the requested window (CPU, memory, disk, network, connections, cache hit ratio, throughput, transactions, and more). Use this to chart or analyze how a service behaved over time.</td>
 </tr>
@@ -107,10 +107,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-postgresId">
-    <td><CopyableCode code="postgresId" /></td>
+<tr id="parameter-postgres_id">
+    <td><CopyableCode code="postgres_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the Postgres service.</td>
+    <td>ID of the Postgres service. (wire: postgresId)</td>
 </tr>
 <tr id="parameter-to_date">
     <td><CopyableCode code="to_date" /></td>
@@ -141,7 +141,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 SELECT
 metrics
 FROM clickhouse.postgres.metrics
-WHERE postgresId = '{{ postgresId }}' -- required
+WHERE postgres_id = '{{ postgres_id }}' -- required
 AND from_date = '{{ from_date }}' -- required
 AND to_date = '{{ to_date }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set

@@ -55,14 +55,14 @@ The following fields are returned by `SELECT` queries:
     <td>The id of the service query endpoint</td>
 </tr>
 <tr>
-    <td><CopyableCode code="allowedOrigins" /></td>
+    <td><CopyableCode code="allowed_origins" /></td>
     <td><code>string</code></td>
-    <td>The allowed origins as comma separated list of domains</td>
+    <td>The allowed origins as comma separated list of domains (wire: allowedOrigins)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="openApiKeys" /></td>
+    <td><CopyableCode code="open_api_keys" /></td>
     <td><code>array</code></td>
-    <td>List of OpenAPI keys that can access the service query endpoint</td>
+    <td>List of OpenAPI keys that can access the service query endpoint (wire: openApiKeys)</td>
 </tr>
 <tr>
     <td><CopyableCode code="roles" /></td>
@@ -92,21 +92,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Get the configuration for the service query endpoint that allows executing queries via API.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Create the service query endpoint that allows executing queries via API.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Removes the service query endpoint.</td>
 </tr>
@@ -131,10 +131,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested service.</td>
+    <td>ID of the requested service. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -154,11 +154,11 @@ Get the configuration for the service query endpoint that allows executing queri
 ```sql
 SELECT
 id,
-allowedOrigins,
-openApiKeys,
+allowed_origins,
+open_api_keys,
 roles
 FROM clickhouse.services.service_query_endpoints
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -182,19 +182,19 @@ Create the service query endpoint that allows executing queries via API.
 ```sql
 INSERT INTO clickhouse.services.service_query_endpoints (
 roles,
-openApiKeys,
-allowedOrigins,
-serviceId,
+open_api_keys,
+allowed_origins,
+service_id,
 organization_id
 )
 SELECT 
 '{{ roles }}',
-'{{ openApiKeys }}',
-'{{ allowedOrigins }}',
-'{{ serviceId }}',
+'{{ open_api_keys }}',
+'{{ allowed_origins }}',
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -205,8 +205,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: service_query_endpoints
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the service_query_endpoints resource.
     - name: organization_id
       value: "{{ organization_id }}"
@@ -216,13 +216,13 @@ status
         - "{{ roles }}"
       description: |
         The roles
-    - name: openApiKeys
+    - name: open_api_keys
       value:
-        - "{{ openApiKeys }}"
+        - "{{ open_api_keys }}"
       description: |
         The version of the service query endpoint
-    - name: allowedOrigins
-      value: "{{ allowedOrigins }}"
+    - name: allowed_origins
+      value: "{{ allowed_origins }}"
       description: |
         The allowed origins as comma separated list of domains
 `}</CodeBlock>
@@ -245,7 +245,7 @@ Removes the service query endpoint.
 
 ```sql
 DELETE FROM clickhouse.services.service_query_endpoints
-WHERE serviceId = '{{ serviceId }}' --required
+WHERE service_id = '{{ service_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

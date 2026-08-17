@@ -61,19 +61,24 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the role</td>
 </tr>
 <tr>
+    <td><CopyableCode code="owner_id" /></td>
+    <td><code>string</code></td>
+    <td>Owner resource ID (e.g., organization/uuid) (wire: ownerId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tenant_id" /></td>
+    <td><code>string</code></td>
+    <td>Tenant resource ID (e.g., organization/uuid) (wire: tenantId)</td>
+</tr>
+<tr>
     <td><CopyableCode code="actors" /></td>
     <td><code>array</code></td>
     <td>List of actor resource IDs assigned to this role (e.g., user/uuid, apiKey/uuid)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp when the role was created. ISO-8601.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ownerId" /></td>
-    <td><code>string</code></td>
-    <td>Owner resource ID (e.g., organization/uuid)</td>
+    <td>Timestamp when the role was created. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="policies" /></td>
@@ -81,19 +86,14 @@ The following fields are returned by `SELECT` queries:
     <td>List of policies associated with this role</td>
 </tr>
 <tr>
-    <td><CopyableCode code="tenantId" /></td>
-    <td><code>string</code></td>
-    <td>Tenant resource ID (e.g., organization/uuid)</td>
-</tr>
-<tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
     <td>Whether this is a system role or a custom role (system, custom)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp when the role was last updated. ISO-8601.</td>
+    <td>Timestamp when the role was last updated. ISO-8601. (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -120,19 +120,24 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the role</td>
 </tr>
 <tr>
+    <td><CopyableCode code="owner_id" /></td>
+    <td><code>string</code></td>
+    <td>Owner resource ID (e.g., organization/uuid) (wire: ownerId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tenant_id" /></td>
+    <td><code>string</code></td>
+    <td>Tenant resource ID (e.g., organization/uuid) (wire: tenantId)</td>
+</tr>
+<tr>
     <td><CopyableCode code="actors" /></td>
     <td><code>array</code></td>
     <td>List of actor resource IDs assigned to this role (e.g., user/uuid, apiKey/uuid)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp when the role was created. ISO-8601.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="ownerId" /></td>
-    <td><code>string</code></td>
-    <td>Owner resource ID (e.g., organization/uuid)</td>
+    <td>Timestamp when the role was created. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="policies" /></td>
@@ -140,19 +145,14 @@ The following fields are returned by `SELECT` queries:
     <td>List of policies associated with this role</td>
 </tr>
 <tr>
-    <td><CopyableCode code="tenantId" /></td>
-    <td><code>string</code></td>
-    <td>Tenant resource ID (e.g., organization/uuid)</td>
-</tr>
-<tr>
     <td><CopyableCode code="type" /></td>
     <td><code>string</code></td>
     <td>Whether this is a system role or a custom role (system, custom)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp when the role was last updated. ISO-8601.</td>
+    <td>Timestamp when the role was last updated. ISO-8601. (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -177,7 +177,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-roleId"><code>roleId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-role_id"><code>role_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns details for a specific role.</td>
 </tr>
@@ -198,14 +198,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-roleId"><code>roleId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-role_id"><code>role_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Updates an existing custom role. System roles cannot be updated. All fields are optional - only provided fields will be updated.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-roleId"><code>roleId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-role_id"><code>role_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Deletes an existing custom role. System roles cannot be deleted. This operation will remove the role and all its associated policies.</td>
 </tr>
@@ -230,10 +230,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-roleId">
-    <td><CopyableCode code="roleId" /></td>
+<tr id="parameter-role_id">
+    <td><CopyableCode code="role_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested role.</td>
+    <td>ID of the requested role. (wire: roleId)</td>
 </tr>
 </tbody>
 </table>
@@ -255,15 +255,15 @@ Returns details for a specific role.
 SELECT
 id,
 name,
+owner_id,
+tenant_id,
 actors,
-createdAt,
-ownerId,
+created_at,
 policies,
-tenantId,
 type,
-updatedAt
+updated_at
 FROM clickhouse.roles.roles
-WHERE roleId = '{{ roleId }}' -- required
+WHERE role_id = '{{ role_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -276,13 +276,13 @@ Returns all available roles (system + custom) for an organization.
 SELECT
 id,
 name,
+owner_id,
+tenant_id,
 actors,
-createdAt,
-ownerId,
+created_at,
 policies,
-tenantId,
 type,
-updatedAt
+updated_at
 FROM clickhouse.roles.roles
 WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
@@ -317,7 +317,7 @@ SELECT
 '{{ policies }}' /* required */,
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -376,10 +376,10 @@ name = '{{ name }}',
 actors = '{{ actors }}',
 policies = '{{ policies }}'
 WHERE 
-roleId = '{{ roleId }}' --required
+role_id = '{{ role_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -401,7 +401,7 @@ Deletes an existing custom role. System roles cannot be deleted. This operation 
 
 ```sql
 DELETE FROM clickhouse.roles.roles
-WHERE roleId = '{{ roleId }}' --required
+WHERE role_id = '{{ role_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

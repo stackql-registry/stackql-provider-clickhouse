@@ -56,9 +56,14 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the member as set a personal user profile.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="assignedRoles" /></td>
+    <td><CopyableCode code="user_id" /></td>
+    <td><code>string</code></td>
+    <td>Unique user ID. If a user is a member in multiple organizations this ID will stay the same. (wire: userId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="assigned_roles" /></td>
     <td><code>array</code></td>
-    <td>Custom roles and System roles assigned to this member</td>
+    <td>Custom roles and System roles assigned to this member (wire: assignedRoles)</td>
 </tr>
 <tr>
     <td><CopyableCode code="email" /></td>
@@ -66,19 +71,14 @@ The following fields are returned by `SELECT` queries:
     <td>Email of the member as set in personal user profile.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="joinedAt" /></td>
+    <td><CopyableCode code="joined_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the member joined the organization. ISO-8601.</td>
+    <td>Timestamp the member joined the organization. ISO-8601. (wire: joinedAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="role" /></td>
     <td><code>string</code></td>
     <td>DEPRECATED. Use `assignedRoles` instead. Role of the member in the organization. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect current role assignments. (admin, developer)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="userId" /></td>
-    <td><code>string</code></td>
-    <td>Unique user ID. If a user is a member in multiple organizations this ID will stay the same.</td>
 </tr>
 </tbody>
 </table>
@@ -100,9 +100,14 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the member as set a personal user profile.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="assignedRoles" /></td>
+    <td><CopyableCode code="user_id" /></td>
+    <td><code>string</code></td>
+    <td>Unique user ID. If a user is a member in multiple organizations this ID will stay the same. (wire: userId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="assigned_roles" /></td>
     <td><code>array</code></td>
-    <td>Custom roles and System roles assigned to this member</td>
+    <td>Custom roles and System roles assigned to this member (wire: assignedRoles)</td>
 </tr>
 <tr>
     <td><CopyableCode code="email" /></td>
@@ -110,19 +115,14 @@ The following fields are returned by `SELECT` queries:
     <td>Email of the member as set in personal user profile.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="joinedAt" /></td>
+    <td><CopyableCode code="joined_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Timestamp the member joined the organization. ISO-8601.</td>
+    <td>Timestamp the member joined the organization. ISO-8601. (wire: joinedAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="role" /></td>
     <td><code>string</code></td>
     <td>DEPRECATED. Use `assignedRoles` instead. Role of the member in the organization. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect current role assignments. (admin, developer)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="userId" /></td>
-    <td><code>string</code></td>
-    <td>Unique user ID. If a user is a member in multiple organizations this ID will stay the same.</td>
 </tr>
 </tbody>
 </table>
@@ -147,7 +147,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-user_id"><code>user_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns a single organization member details.</td>
 </tr>
@@ -161,14 +161,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-user_id"><code>user_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Updates organization member role.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-userId"><code>userId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-user_id"><code>user_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Removes a user from the organization</td>
 </tr>
@@ -193,10 +193,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-userId">
-    <td><CopyableCode code="userId" /></td>
+<tr id="parameter-user_id">
+    <td><CopyableCode code="user_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested user.</td>
+    <td>ID of the requested user. (wire: userId)</td>
 </tr>
 </tbody>
 </table>
@@ -217,13 +217,13 @@ Returns a single organization member details.
 ```sql
 SELECT
 name,
-assignedRoles,
+user_id,
+assigned_roles,
 email,
-joinedAt,
-role,
-userId
+joined_at,
+role
 FROM clickhouse.members.members
-WHERE userId = '{{ userId }}' -- required
+WHERE user_id = '{{ user_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -235,11 +235,11 @@ Returns a list of all members in the organization.
 ```sql
 SELECT
 name,
-assignedRoles,
+user_id,
+assigned_roles,
 email,
-joinedAt,
-role,
-userId
+joined_at,
+role
 FROM clickhouse.members.members
 WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
@@ -264,12 +264,12 @@ Updates organization member role.
 UPDATE clickhouse.members.members
 SET 
 role = '{{ role }}',
-assignedRoleIds = '{{ assignedRoleIds }}'
+assigned_role_ids = '{{ assigned_role_ids }}'
 WHERE 
-userId = '{{ userId }}' --required
+user_id = '{{ user_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -291,7 +291,7 @@ Removes a user from the organization
 
 ```sql
 DELETE FROM clickhouse.members.members
-WHERE userId = '{{ userId }}' --required
+WHERE user_id = '{{ user_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

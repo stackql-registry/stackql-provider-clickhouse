@@ -61,9 +61,29 @@ The following fields are returned by `SELECT` queries:
     <td>Display name for the source. (example: Logs)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="bodyExpression" /></td>
+    <td><CopyableCode code="log_source_id" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the log message body. (example: Body)</td>
+    <td>HyperDX Source for logs associated with traces. Optional (example: 507f1f77bcf86cd799439011) (wire: logSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metric_source_id" /></td>
+    <td><code>string</code></td>
+    <td>HyperDX Source for metrics associated with logs. Optional (example: 507f1f77bcf86cd799439013) (wire: metricSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="session_source_id" /></td>
+    <td><code>string</code></td>
+    <td>HyperDX Source for sessions associated with traces. Optional (example: 507f1f77bcf86cd799439031) (wire: sessionSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="trace_source_id" /></td>
+    <td><code>string</code></td>
+    <td>HyperDX Source for traces associated with logs. Optional (example: 507f1f77bcf86cd799439014) (wire: traceSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="body_expression" /></td>
+    <td><code>string</code></td>
+    <td>Expression to extract the log message body. (example: Body) (wire: bodyExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="connection" /></td>
@@ -71,9 +91,9 @@ The following fields are returned by `SELECT` queries:
     <td>ID of the ClickHouse connection used by this source. (example: 507f1f77bcf86cd799439012)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="defaultTableSelectExpression" /></td>
+    <td><CopyableCode code="default_table_select_expression" /></td>
     <td><code>string</code></td>
-    <td>Default columns selected in search results (this can be customized per search later) (example: Timestamp, ServiceName, SeverityText, Body)</td>
+    <td>Default columns selected in search results (this can be customized per search later) (example: Timestamp, ServiceName, SeverityText, Body) (wire: defaultTableSelectExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -81,29 +101,29 @@ The following fields are returned by `SELECT` queries:
     <td>When true, the source is hidden from source selectors in the UI. Defaults to false.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="displayedTimestampValueExpression" /></td>
+    <td><CopyableCode code="displayed_timestamp_value_expression" /></td>
     <td><code>string</code></td>
-    <td>This DateTime column is used to display and order search results. (example: TimestampTime)</td>
+    <td>This DateTime column is used to display and order search results. (example: TimestampTime) (wire: displayedTimestampValueExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="durationExpression" /></td>
+    <td><CopyableCode code="duration_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract span duration. (example: Duration)</td>
+    <td>Expression to extract span duration. (example: Duration) (wire: durationExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="durationPrecision" /></td>
+    <td><CopyableCode code="duration_precision" /></td>
     <td><code>integer</code></td>
-    <td>Number of decimal digits in the duration value (e.g., 3 for milliseconds, 6 for microseconds, 9 for nanoseconds).</td>
+    <td>Number of decimal digits in the duration value (e.g., 3 for milliseconds, 6 for microseconds, 9 for nanoseconds). (wire: durationPrecision)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="eventAttributesExpression" /></td>
+    <td><CopyableCode code="event_attributes_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract event-level attributes. (example: LogAttributes)</td>
+    <td>Expression to extract event-level attributes. (example: LogAttributes) (wire: eventAttributesExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="filterSettings" /></td>
+    <td><CopyableCode code="filter_settings" /></td>
     <td><code>object</code></td>
-    <td></td>
+    <td> (wire: filterSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="from" /></td>
@@ -111,19 +131,19 @@ The following fields are returned by `SELECT` queries:
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="highlightedRowAttributeExpressions" /></td>
+    <td><CopyableCode code="highlighted_row_attribute_expressions" /></td>
     <td><code>array</code></td>
-    <td>Expressions defining row-level attributes which are displayed in the row side panel for the selected row.</td>
+    <td>Expressions defining row-level attributes which are displayed in the row side panel for the selected row. (wire: highlightedRowAttributeExpressions)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="highlightedTraceAttributeExpressions" /></td>
+    <td><CopyableCode code="highlighted_trace_attribute_expressions" /></td>
     <td><code>array</code></td>
-    <td>Expressions defining trace-level attributes which are displayed in the trace view for the selected trace.</td>
+    <td>Expressions defining trace-level attributes which are displayed in the trace view for the selected trace. (wire: highlightedTraceAttributeExpressions)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="implicitColumnExpression" /></td>
+    <td><CopyableCode code="implicit_column_expression" /></td>
     <td><code>string</code></td>
-    <td>Column used for full text search if no property is specified in a Lucene-based search. Typically the message body of a log. (example: Body)</td>
+    <td>Column used for full text search if no property is specified in a Lucene-based search. Typically the message body of a log. (example: Body) (wire: implicitColumnExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
@@ -131,49 +151,39 @@ The following fields are returned by `SELECT` queries:
     <td>Source kind discriminator. Must be "log" for log sources. (log) (example: log)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="knownColumnsListExpression" /></td>
+    <td><CopyableCode code="known_columns_list_expression" /></td>
     <td><code>string</code></td>
-    <td>For Distributed table sources whose target tables have non-matching column sets. A list of columns supported across all target tables, used instead of SELECT * when fetching full row data. Leave blank to select all columns. (example: Timestamp, Body, ServiceName)</td>
+    <td>For Distributed table sources whose target tables have non-matching column sets. A list of columns supported across all target tables, used instead of SELECT * when fetching full row data. Leave blank to select all columns. (example: Timestamp, Body, ServiceName) (wire: knownColumnsListExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="logSourceId" /></td>
-    <td><code>string</code></td>
-    <td>HyperDX Source for logs associated with traces. Optional (example: 507f1f77bcf86cd799439011)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="materializedViews" /></td>
+    <td><CopyableCode code="materialized_views" /></td>
     <td><code>array</code></td>
-    <td>Configure materialized views for query optimization. These pre-aggregated views can significantly improve query performance on aggregation queries.</td>
+    <td>Configure materialized views for query optimization. These pre-aggregated views can significantly improve query performance on aggregation queries. (wire: materializedViews)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="metadataMaterializedViews" /></td>
+    <td><CopyableCode code="metadata_materialized_views" /></td>
     <td><code>object</code></td>
-    <td></td>
+    <td> (wire: metadataMaterializedViews)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="metricSourceId" /></td>
-    <td><code>string</code></td>
-    <td>HyperDX Source for metrics associated with logs. Optional (example: 507f1f77bcf86cd799439013)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metricTables" /></td>
+    <td><CopyableCode code="metric_tables" /></td>
     <td><code>object</code></td>
-    <td></td>
+    <td> (wire: metricTables)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="parentSpanIdExpression" /></td>
+    <td><CopyableCode code="parent_span_id_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the parent span ID. (example: ParentSpanId)</td>
+    <td>Expression to extract the parent span ID. (example: ParentSpanId) (wire: parentSpanIdExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="querySettings" /></td>
+    <td><CopyableCode code="query_settings" /></td>
     <td><code>array</code></td>
-    <td>Optional ClickHouse query settings applied when querying this source.</td>
+    <td>Optional ClickHouse query settings applied when querying this source. (wire: querySettings)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="resourceAttributesExpression" /></td>
+    <td><CopyableCode code="resource_attributes_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract resource-level attributes. (example: ResourceAttributes)</td>
+    <td>Expression to extract resource-level attributes. (example: ResourceAttributes) (wire: resourceAttributesExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="section" /></td>
@@ -181,69 +191,59 @@ The following fields are returned by `SELECT` queries:
     <td>Optional grouping label used to organize sources in the source selector. Sources that share a section value are displayed together. (example: Billing)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="serviceNameExpression" /></td>
+    <td><CopyableCode code="service_name_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the service name from log rows. (example: ServiceName)</td>
+    <td>Expression to extract the service name from log rows. (example: ServiceName) (wire: serviceNameExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sessionSourceId" /></td>
+    <td><CopyableCode code="severity_text_expression" /></td>
     <td><code>string</code></td>
-    <td>HyperDX Source for sessions associated with traces. Optional (example: 507f1f77bcf86cd799439031)</td>
+    <td>Expression to extract the severity/log level text. (example: SeverityText) (wire: severityTextExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="severityTextExpression" /></td>
+    <td><CopyableCode code="span_events_value_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the severity/log level text. (example: SeverityText)</td>
+    <td>Expression to extract span events. Used to capture events associated with spans. Expected to be Nested ( Timestamp DateTime64(9), Name LowCardinality(String), Attributes Map(LowCardinality(String), String) (example: Events) (wire: spanEventsValueExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanEventsValueExpression" /></td>
+    <td><CopyableCode code="span_id_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract span events. Used to capture events associated with spans. Expected to be Nested ( Timestamp DateTime64(9), Name LowCardinality(String), Attributes Map(LowCardinality(String), String) (example: Events)</td>
+    <td>Expression to extract the span ID for correlating logs with traces. (example: SpanId) (wire: spanIdExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanIdExpression" /></td>
+    <td><CopyableCode code="span_kind_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span ID for correlating logs with traces. (example: SpanId)</td>
+    <td>Expression to extract the span kind (e.g., client, server, internal). (example: SpanKind) (wire: spanKindExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanKindExpression" /></td>
+    <td><CopyableCode code="span_name_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span kind (e.g., client, server, internal). (example: SpanKind)</td>
+    <td>Expression to extract the span name. (example: SpanName) (wire: spanNameExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanNameExpression" /></td>
+    <td><CopyableCode code="status_code_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span name. (example: SpanName)</td>
+    <td>Expression to extract the span status code. (example: StatusCode) (wire: statusCodeExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="statusCodeExpression" /></td>
+    <td><CopyableCode code="status_message_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span status code. (example: StatusCode)</td>
+    <td>Expression to extract the span status message. (example: StatusMessage) (wire: statusMessageExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="statusMessageExpression" /></td>
+    <td><CopyableCode code="timestamp_value_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span status message. (example: StatusMessage)</td>
+    <td>DateTime column or expression that is part of your table's primary key. (example: Timestamp) (wire: timestampValueExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="timestampValueExpression" /></td>
+    <td><CopyableCode code="trace_id_expression" /></td>
     <td><code>string</code></td>
-    <td>DateTime column or expression that is part of your table's primary key. (example: Timestamp)</td>
+    <td>Expression to extract the trace ID for correlating logs with traces. (example: TraceId) (wire: traceIdExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="traceIdExpression" /></td>
+    <td><CopyableCode code="use_text_index_for_implicit_column" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the trace ID for correlating logs with traces. (example: TraceId)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="traceSourceId" /></td>
-    <td><code>string</code></td>
-    <td>HyperDX Source for traces associated with logs. Optional (example: 507f1f77bcf86cd799439014)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="useTextIndexForImplicitColumn" /></td>
-    <td><code>string</code></td>
-    <td>Controls whether lucene rendering uses ClickHouse text indices via hasAllTokens() against the implicit column. "auto" detects a covering index at query time, "enabled" forces text index usage, "disabled" forces a LIKE/hasToken fallback. (auto, enabled, disabled) (example: auto)</td>
+    <td>Controls whether lucene rendering uses ClickHouse text indices via hasAllTokens() against the implicit column. "auto" detects a covering index at query time, "enabled" forces text index usage, "disabled" forces a LIKE/hasToken fallback. (auto, enabled, disabled) (example: auto) (wire: useTextIndexForImplicitColumn)</td>
 </tr>
 </tbody>
 </table>
@@ -270,9 +270,29 @@ The following fields are returned by `SELECT` queries:
     <td>Display name for the source. (example: Logs)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="bodyExpression" /></td>
+    <td><CopyableCode code="log_source_id" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the log message body. (example: Body)</td>
+    <td>HyperDX Source for logs associated with traces. Optional (example: 507f1f77bcf86cd799439011) (wire: logSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="metric_source_id" /></td>
+    <td><code>string</code></td>
+    <td>HyperDX Source for metrics associated with logs. Optional (example: 507f1f77bcf86cd799439013) (wire: metricSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="session_source_id" /></td>
+    <td><code>string</code></td>
+    <td>HyperDX Source for sessions associated with traces. Optional (example: 507f1f77bcf86cd799439031) (wire: sessionSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="trace_source_id" /></td>
+    <td><code>string</code></td>
+    <td>HyperDX Source for traces associated with logs. Optional (example: 507f1f77bcf86cd799439014) (wire: traceSourceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="body_expression" /></td>
+    <td><code>string</code></td>
+    <td>Expression to extract the log message body. (example: Body) (wire: bodyExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="connection" /></td>
@@ -280,9 +300,9 @@ The following fields are returned by `SELECT` queries:
     <td>ID of the ClickHouse connection used by this source. (example: 507f1f77bcf86cd799439012)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="defaultTableSelectExpression" /></td>
+    <td><CopyableCode code="default_table_select_expression" /></td>
     <td><code>string</code></td>
-    <td>Default columns selected in search results (this can be customized per search later) (example: Timestamp, ServiceName, SeverityText, Body)</td>
+    <td>Default columns selected in search results (this can be customized per search later) (example: Timestamp, ServiceName, SeverityText, Body) (wire: defaultTableSelectExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="disabled" /></td>
@@ -290,29 +310,29 @@ The following fields are returned by `SELECT` queries:
     <td>When true, the source is hidden from source selectors in the UI. Defaults to false.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="displayedTimestampValueExpression" /></td>
+    <td><CopyableCode code="displayed_timestamp_value_expression" /></td>
     <td><code>string</code></td>
-    <td>This DateTime column is used to display and order search results. (example: TimestampTime)</td>
+    <td>This DateTime column is used to display and order search results. (example: TimestampTime) (wire: displayedTimestampValueExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="durationExpression" /></td>
+    <td><CopyableCode code="duration_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract span duration. (example: Duration)</td>
+    <td>Expression to extract span duration. (example: Duration) (wire: durationExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="durationPrecision" /></td>
+    <td><CopyableCode code="duration_precision" /></td>
     <td><code>integer</code></td>
-    <td>Number of decimal digits in the duration value (e.g., 3 for milliseconds, 6 for microseconds, 9 for nanoseconds).</td>
+    <td>Number of decimal digits in the duration value (e.g., 3 for milliseconds, 6 for microseconds, 9 for nanoseconds). (wire: durationPrecision)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="eventAttributesExpression" /></td>
+    <td><CopyableCode code="event_attributes_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract event-level attributes. (example: LogAttributes)</td>
+    <td>Expression to extract event-level attributes. (example: LogAttributes) (wire: eventAttributesExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="filterSettings" /></td>
+    <td><CopyableCode code="filter_settings" /></td>
     <td><code>object</code></td>
-    <td></td>
+    <td> (wire: filterSettings)</td>
 </tr>
 <tr>
     <td><CopyableCode code="from" /></td>
@@ -320,19 +340,19 @@ The following fields are returned by `SELECT` queries:
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="highlightedRowAttributeExpressions" /></td>
+    <td><CopyableCode code="highlighted_row_attribute_expressions" /></td>
     <td><code>array</code></td>
-    <td>Expressions defining row-level attributes which are displayed in the row side panel for the selected row.</td>
+    <td>Expressions defining row-level attributes which are displayed in the row side panel for the selected row. (wire: highlightedRowAttributeExpressions)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="highlightedTraceAttributeExpressions" /></td>
+    <td><CopyableCode code="highlighted_trace_attribute_expressions" /></td>
     <td><code>array</code></td>
-    <td>Expressions defining trace-level attributes which are displayed in the trace view for the selected trace.</td>
+    <td>Expressions defining trace-level attributes which are displayed in the trace view for the selected trace. (wire: highlightedTraceAttributeExpressions)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="implicitColumnExpression" /></td>
+    <td><CopyableCode code="implicit_column_expression" /></td>
     <td><code>string</code></td>
-    <td>Column used for full text search if no property is specified in a Lucene-based search. Typically the message body of a log. (example: Body)</td>
+    <td>Column used for full text search if no property is specified in a Lucene-based search. Typically the message body of a log. (example: Body) (wire: implicitColumnExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="kind" /></td>
@@ -340,49 +360,39 @@ The following fields are returned by `SELECT` queries:
     <td>Source kind discriminator. Must be "log" for log sources. (log) (example: log)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="knownColumnsListExpression" /></td>
+    <td><CopyableCode code="known_columns_list_expression" /></td>
     <td><code>string</code></td>
-    <td>For Distributed table sources whose target tables have non-matching column sets. A list of columns supported across all target tables, used instead of SELECT * when fetching full row data. Leave blank to select all columns. (example: Timestamp, Body, ServiceName)</td>
+    <td>For Distributed table sources whose target tables have non-matching column sets. A list of columns supported across all target tables, used instead of SELECT * when fetching full row data. Leave blank to select all columns. (example: Timestamp, Body, ServiceName) (wire: knownColumnsListExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="logSourceId" /></td>
-    <td><code>string</code></td>
-    <td>HyperDX Source for logs associated with traces. Optional (example: 507f1f77bcf86cd799439011)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="materializedViews" /></td>
+    <td><CopyableCode code="materialized_views" /></td>
     <td><code>array</code></td>
-    <td>Configure materialized views for query optimization. These pre-aggregated views can significantly improve query performance on aggregation queries.</td>
+    <td>Configure materialized views for query optimization. These pre-aggregated views can significantly improve query performance on aggregation queries. (wire: materializedViews)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="metadataMaterializedViews" /></td>
+    <td><CopyableCode code="metadata_materialized_views" /></td>
     <td><code>object</code></td>
-    <td></td>
+    <td> (wire: metadataMaterializedViews)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="metricSourceId" /></td>
-    <td><code>string</code></td>
-    <td>HyperDX Source for metrics associated with logs. Optional (example: 507f1f77bcf86cd799439013)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="metricTables" /></td>
+    <td><CopyableCode code="metric_tables" /></td>
     <td><code>object</code></td>
-    <td></td>
+    <td> (wire: metricTables)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="parentSpanIdExpression" /></td>
+    <td><CopyableCode code="parent_span_id_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the parent span ID. (example: ParentSpanId)</td>
+    <td>Expression to extract the parent span ID. (example: ParentSpanId) (wire: parentSpanIdExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="querySettings" /></td>
+    <td><CopyableCode code="query_settings" /></td>
     <td><code>array</code></td>
-    <td>Optional ClickHouse query settings applied when querying this source.</td>
+    <td>Optional ClickHouse query settings applied when querying this source. (wire: querySettings)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="resourceAttributesExpression" /></td>
+    <td><CopyableCode code="resource_attributes_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract resource-level attributes. (example: ResourceAttributes)</td>
+    <td>Expression to extract resource-level attributes. (example: ResourceAttributes) (wire: resourceAttributesExpression)</td>
 </tr>
 <tr>
     <td><CopyableCode code="section" /></td>
@@ -390,69 +400,59 @@ The following fields are returned by `SELECT` queries:
     <td>Optional grouping label used to organize sources in the source selector. Sources that share a section value are displayed together. (example: Billing)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="serviceNameExpression" /></td>
+    <td><CopyableCode code="service_name_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the service name from log rows. (example: ServiceName)</td>
+    <td>Expression to extract the service name from log rows. (example: ServiceName) (wire: serviceNameExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="sessionSourceId" /></td>
+    <td><CopyableCode code="severity_text_expression" /></td>
     <td><code>string</code></td>
-    <td>HyperDX Source for sessions associated with traces. Optional (example: 507f1f77bcf86cd799439031)</td>
+    <td>Expression to extract the severity/log level text. (example: SeverityText) (wire: severityTextExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="severityTextExpression" /></td>
+    <td><CopyableCode code="span_events_value_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the severity/log level text. (example: SeverityText)</td>
+    <td>Expression to extract span events. Used to capture events associated with spans. Expected to be Nested ( Timestamp DateTime64(9), Name LowCardinality(String), Attributes Map(LowCardinality(String), String) (example: Events) (wire: spanEventsValueExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanEventsValueExpression" /></td>
+    <td><CopyableCode code="span_id_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract span events. Used to capture events associated with spans. Expected to be Nested ( Timestamp DateTime64(9), Name LowCardinality(String), Attributes Map(LowCardinality(String), String) (example: Events)</td>
+    <td>Expression to extract the span ID for correlating logs with traces. (example: SpanId) (wire: spanIdExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanIdExpression" /></td>
+    <td><CopyableCode code="span_kind_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span ID for correlating logs with traces. (example: SpanId)</td>
+    <td>Expression to extract the span kind (e.g., client, server, internal). (example: SpanKind) (wire: spanKindExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanKindExpression" /></td>
+    <td><CopyableCode code="span_name_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span kind (e.g., client, server, internal). (example: SpanKind)</td>
+    <td>Expression to extract the span name. (example: SpanName) (wire: spanNameExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="spanNameExpression" /></td>
+    <td><CopyableCode code="status_code_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span name. (example: SpanName)</td>
+    <td>Expression to extract the span status code. (example: StatusCode) (wire: statusCodeExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="statusCodeExpression" /></td>
+    <td><CopyableCode code="status_message_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span status code. (example: StatusCode)</td>
+    <td>Expression to extract the span status message. (example: StatusMessage) (wire: statusMessageExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="statusMessageExpression" /></td>
+    <td><CopyableCode code="timestamp_value_expression" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the span status message. (example: StatusMessage)</td>
+    <td>DateTime column or expression that is part of your table's primary key. (example: Timestamp) (wire: timestampValueExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="timestampValueExpression" /></td>
+    <td><CopyableCode code="trace_id_expression" /></td>
     <td><code>string</code></td>
-    <td>DateTime column or expression that is part of your table's primary key. (example: Timestamp)</td>
+    <td>Expression to extract the trace ID for correlating logs with traces. (example: TraceId) (wire: traceIdExpression)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="traceIdExpression" /></td>
+    <td><CopyableCode code="use_text_index_for_implicit_column" /></td>
     <td><code>string</code></td>
-    <td>Expression to extract the trace ID for correlating logs with traces. (example: TraceId)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="traceSourceId" /></td>
-    <td><code>string</code></td>
-    <td>HyperDX Source for traces associated with logs. Optional (example: 507f1f77bcf86cd799439014)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="useTextIndexForImplicitColumn" /></td>
-    <td><code>string</code></td>
-    <td>Controls whether lucene rendering uses ClickHouse text indices via hasAllTokens() against the implicit column. "auto" detects a covering index at query time, "enabled" forces text index usage, "disabled" forces a LIKE/hasToken fallback. (auto, enabled, disabled) (example: auto)</td>
+    <td>Controls whether lucene rendering uses ClickHouse text indices via hasAllTokens() against the implicit column. "auto" detects a covering index at query time, "enabled" forces text index usage, "disabled" forces a LIKE/hasToken fallback. (auto, enabled, disabled) (example: auto) (wire: useTextIndexForImplicitColumn)</td>
 </tr>
 </tbody>
 </table>
@@ -477,35 +477,35 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_source_id"><code>click_stack_source_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a specific source by ID</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a list of all sources for the authenticated team</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-defaultTableSelectExpression"><code>defaultTableSelectExpression</code></a>, <a href="#parameter-timestampValueExpression"><code>timestampValueExpression</code></a>, <a href="#parameter-durationExpression"><code>durationExpression</code></a>, <a href="#parameter-durationPrecision"><code>durationPrecision</code></a>, <a href="#parameter-traceIdExpression"><code>traceIdExpression</code></a>, <a href="#parameter-spanIdExpression"><code>spanIdExpression</code></a>, <a href="#parameter-parentSpanIdExpression"><code>parentSpanIdExpression</code></a>, <a href="#parameter-spanNameExpression"><code>spanNameExpression</code></a>, <a href="#parameter-spanKindExpression"><code>spanKindExpression</code></a>, <a href="#parameter-metricTables"><code>metricTables</code></a>, <a href="#parameter-resourceAttributesExpression"><code>resourceAttributesExpression</code></a>, <a href="#parameter-traceSourceId"><code>traceSourceId</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-default_table_select_expression"><code>default_table_select_expression</code></a>, <a href="#parameter-timestamp_value_expression"><code>timestamp_value_expression</code></a>, <a href="#parameter-duration_expression"><code>duration_expression</code></a>, <a href="#parameter-duration_precision"><code>duration_precision</code></a>, <a href="#parameter-trace_id_expression"><code>trace_id_expression</code></a>, <a href="#parameter-span_id_expression"><code>span_id_expression</code></a>, <a href="#parameter-parent_span_id_expression"><code>parent_span_id_expression</code></a>, <a href="#parameter-span_name_expression"><code>span_name_expression</code></a>, <a href="#parameter-span_kind_expression"><code>span_kind_expression</code></a>, <a href="#parameter-metric_tables"><code>metric_tables</code></a>, <a href="#parameter-resource_attributes_expression"><code>resource_attributes_expression</code></a>, <a href="#parameter-trace_source_id"><code>trace_source_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Creates a new source.  The request body is a source object without the `id` field. If an `id` is sent anyway it is silently ignored (stripped before validation — the request is never rejected because of it). Granularity fields (`materializedViews&#91;&#93;.minGranularity` and `metadataMaterializedViews.granularity`) accept the same short format the API returns (e.g. `5m`, `15s`, `1h`, `1d`).</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-defaultTableSelectExpression"><code>defaultTableSelectExpression</code></a>, <a href="#parameter-timestampValueExpression"><code>timestampValueExpression</code></a>, <a href="#parameter-durationExpression"><code>durationExpression</code></a>, <a href="#parameter-durationPrecision"><code>durationPrecision</code></a>, <a href="#parameter-traceIdExpression"><code>traceIdExpression</code></a>, <a href="#parameter-spanIdExpression"><code>spanIdExpression</code></a>, <a href="#parameter-parentSpanIdExpression"><code>parentSpanIdExpression</code></a>, <a href="#parameter-spanNameExpression"><code>spanNameExpression</code></a>, <a href="#parameter-spanKindExpression"><code>spanKindExpression</code></a>, <a href="#parameter-metricTables"><code>metricTables</code></a>, <a href="#parameter-resourceAttributesExpression"><code>resourceAttributesExpression</code></a>, <a href="#parameter-traceSourceId"><code>traceSourceId</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_source_id"><code>click_stack_source_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-default_table_select_expression"><code>default_table_select_expression</code></a>, <a href="#parameter-timestamp_value_expression"><code>timestamp_value_expression</code></a>, <a href="#parameter-duration_expression"><code>duration_expression</code></a>, <a href="#parameter-duration_precision"><code>duration_precision</code></a>, <a href="#parameter-trace_id_expression"><code>trace_id_expression</code></a>, <a href="#parameter-span_id_expression"><code>span_id_expression</code></a>, <a href="#parameter-parent_span_id_expression"><code>parent_span_id_expression</code></a>, <a href="#parameter-span_name_expression"><code>span_name_expression</code></a>, <a href="#parameter-span_kind_expression"><code>span_kind_expression</code></a>, <a href="#parameter-metric_tables"><code>metric_tables</code></a>, <a href="#parameter-resource_attributes_expression"><code>resource_attributes_expression</code></a>, <a href="#parameter-trace_source_id"><code>trace_source_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Updates an existing source. The full source object must be provided; this is a replace, not a patch.  The request body is a source object without the `id` field. If an `id` is sent anyway it is silently ignored (stripped before validation — never a 400); the path parameter alone identifies the source. Granularity fields (`materializedViews&#91;&#93;.minGranularity` and `metadataMaterializedViews.granularity`) accept the same short format the API returns (e.g. `5m`, `15s`, `1h`, `1d`).</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_source_id"><code>click_stack_source_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes a source</td>
 </tr>
@@ -525,20 +525,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-clickStackSourceId">
-    <td><CopyableCode code="clickStackSourceId" /></td>
+<tr id="parameter-click_stack_source_id">
+    <td><CopyableCode code="click_stack_source_id" /></td>
     <td><code>string</code></td>
-    <td>Source ID</td>
+    <td>Source ID (wire: clickStackSourceId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the ClickStack service.</td>
+    <td>ID of the ClickStack service. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -560,46 +560,46 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 SELECT
 id,
 name,
-bodyExpression,
+log_source_id,
+metric_source_id,
+session_source_id,
+trace_source_id,
+body_expression,
 connection,
-defaultTableSelectExpression,
+default_table_select_expression,
 disabled,
-displayedTimestampValueExpression,
-durationExpression,
-durationPrecision,
-eventAttributesExpression,
-filterSettings,
+displayed_timestamp_value_expression,
+duration_expression,
+duration_precision,
+event_attributes_expression,
+filter_settings,
 from,
-highlightedRowAttributeExpressions,
-highlightedTraceAttributeExpressions,
-implicitColumnExpression,
+highlighted_row_attribute_expressions,
+highlighted_trace_attribute_expressions,
+implicit_column_expression,
 kind,
-knownColumnsListExpression,
-logSourceId,
-materializedViews,
-metadataMaterializedViews,
-metricSourceId,
-metricTables,
-parentSpanIdExpression,
-querySettings,
-resourceAttributesExpression,
+known_columns_list_expression,
+materialized_views,
+metadata_materialized_views,
+metric_tables,
+parent_span_id_expression,
+query_settings,
+resource_attributes_expression,
 section,
-serviceNameExpression,
-sessionSourceId,
-severityTextExpression,
-spanEventsValueExpression,
-spanIdExpression,
-spanKindExpression,
-spanNameExpression,
-statusCodeExpression,
-statusMessageExpression,
-timestampValueExpression,
-traceIdExpression,
-traceSourceId,
-useTextIndexForImplicitColumn
+service_name_expression,
+severity_text_expression,
+span_events_value_expression,
+span_id_expression,
+span_kind_expression,
+span_name_expression,
+status_code_expression,
+status_message_expression,
+timestamp_value_expression,
+trace_id_expression,
+use_text_index_for_implicit_column
 FROM clickhouse.clickstack.sources
-WHERE serviceId = '{{ serviceId }}' -- required
-AND clickStackSourceId = '{{ clickStackSourceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
+AND click_stack_source_id = '{{ click_stack_source_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -612,45 +612,45 @@ AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_
 SELECT
 id,
 name,
-bodyExpression,
+log_source_id,
+metric_source_id,
+session_source_id,
+trace_source_id,
+body_expression,
 connection,
-defaultTableSelectExpression,
+default_table_select_expression,
 disabled,
-displayedTimestampValueExpression,
-durationExpression,
-durationPrecision,
-eventAttributesExpression,
-filterSettings,
+displayed_timestamp_value_expression,
+duration_expression,
+duration_precision,
+event_attributes_expression,
+filter_settings,
 from,
-highlightedRowAttributeExpressions,
-highlightedTraceAttributeExpressions,
-implicitColumnExpression,
+highlighted_row_attribute_expressions,
+highlighted_trace_attribute_expressions,
+implicit_column_expression,
 kind,
-knownColumnsListExpression,
-logSourceId,
-materializedViews,
-metadataMaterializedViews,
-metricSourceId,
-metricTables,
-parentSpanIdExpression,
-querySettings,
-resourceAttributesExpression,
+known_columns_list_expression,
+materialized_views,
+metadata_materialized_views,
+metric_tables,
+parent_span_id_expression,
+query_settings,
+resource_attributes_expression,
 section,
-serviceNameExpression,
-sessionSourceId,
-severityTextExpression,
-spanEventsValueExpression,
-spanIdExpression,
-spanKindExpression,
-spanNameExpression,
-statusCodeExpression,
-statusMessageExpression,
-timestampValueExpression,
-traceIdExpression,
-traceSourceId,
-useTextIndexForImplicitColumn
+service_name_expression,
+severity_text_expression,
+span_events_value_expression,
+span_id_expression,
+span_kind_expression,
+span_name_expression,
+status_code_expression,
+status_message_expression,
+timestamp_value_expression,
+trace_id_expression,
+use_text_index_for_implicit_column
 FROM clickhouse.clickstack.sources
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -680,39 +680,39 @@ disabled,
 kind,
 connection,
 from,
-querySettings,
-filterSettings,
-defaultTableSelectExpression,
-timestampValueExpression,
-serviceNameExpression,
-severityTextExpression,
-bodyExpression,
-eventAttributesExpression,
-resourceAttributesExpression,
-displayedTimestampValueExpression,
-metricSourceId,
-traceSourceId,
-traceIdExpression,
-spanIdExpression,
-implicitColumnExpression,
-knownColumnsListExpression,
-useTextIndexForImplicitColumn,
-highlightedTraceAttributeExpressions,
-highlightedRowAttributeExpressions,
-materializedViews,
-metadataMaterializedViews,
-durationExpression,
-durationPrecision,
-parentSpanIdExpression,
-spanNameExpression,
-spanKindExpression,
-logSourceId,
-sessionSourceId,
-statusCodeExpression,
-statusMessageExpression,
-spanEventsValueExpression,
-metricTables,
-serviceId,
+query_settings,
+filter_settings,
+default_table_select_expression,
+timestamp_value_expression,
+service_name_expression,
+severity_text_expression,
+body_expression,
+event_attributes_expression,
+resource_attributes_expression,
+displayed_timestamp_value_expression,
+metric_source_id,
+trace_source_id,
+trace_id_expression,
+span_id_expression,
+implicit_column_expression,
+known_columns_list_expression,
+use_text_index_for_implicit_column,
+highlighted_trace_attribute_expressions,
+highlighted_row_attribute_expressions,
+materialized_views,
+metadata_materialized_views,
+duration_expression,
+duration_precision,
+parent_span_id_expression,
+span_name_expression,
+span_kind_expression,
+log_source_id,
+session_source_id,
+status_code_expression,
+status_message_expression,
+span_events_value_expression,
+metric_tables,
+service_id,
 organization_id
 )
 SELECT 
@@ -723,42 +723,42 @@ SELECT
 '{{ kind }}' /* required */,
 '{{ connection }}' /* required */,
 '{{ from }}' /* required */,
-'{{ querySettings }}',
-'{{ filterSettings }}',
-'{{ defaultTableSelectExpression }}' /* required */,
-'{{ timestampValueExpression }}' /* required */,
-'{{ serviceNameExpression }}',
-'{{ severityTextExpression }}',
-'{{ bodyExpression }}',
-'{{ eventAttributesExpression }}',
-'{{ resourceAttributesExpression }}' /* required */,
-'{{ displayedTimestampValueExpression }}',
-'{{ metricSourceId }}',
-'{{ traceSourceId }}' /* required */,
-'{{ traceIdExpression }}' /* required */,
-'{{ spanIdExpression }}' /* required */,
-'{{ implicitColumnExpression }}',
-'{{ knownColumnsListExpression }}',
-'{{ useTextIndexForImplicitColumn }}',
-'{{ highlightedTraceAttributeExpressions }}',
-'{{ highlightedRowAttributeExpressions }}',
-'{{ materializedViews }}',
-'{{ metadataMaterializedViews }}',
-'{{ durationExpression }}' /* required */,
-{{ durationPrecision }} /* required */,
-'{{ parentSpanIdExpression }}' /* required */,
-'{{ spanNameExpression }}' /* required */,
-'{{ spanKindExpression }}' /* required */,
-'{{ logSourceId }}',
-'{{ sessionSourceId }}',
-'{{ statusCodeExpression }}',
-'{{ statusMessageExpression }}',
-'{{ spanEventsValueExpression }}',
-'{{ metricTables }}' /* required */,
-'{{ serviceId }}',
+'{{ query_settings }}',
+'{{ filter_settings }}',
+'{{ default_table_select_expression }}' /* required */,
+'{{ timestamp_value_expression }}' /* required */,
+'{{ service_name_expression }}',
+'{{ severity_text_expression }}',
+'{{ body_expression }}',
+'{{ event_attributes_expression }}',
+'{{ resource_attributes_expression }}' /* required */,
+'{{ displayed_timestamp_value_expression }}',
+'{{ metric_source_id }}',
+'{{ trace_source_id }}' /* required */,
+'{{ trace_id_expression }}' /* required */,
+'{{ span_id_expression }}' /* required */,
+'{{ implicit_column_expression }}',
+'{{ known_columns_list_expression }}',
+'{{ use_text_index_for_implicit_column }}',
+'{{ highlighted_trace_attribute_expressions }}',
+'{{ highlighted_row_attribute_expressions }}',
+'{{ materialized_views }}',
+'{{ metadata_materialized_views }}',
+'{{ duration_expression }}' /* required */,
+{{ duration_precision }} /* required */,
+'{{ parent_span_id_expression }}' /* required */,
+'{{ span_name_expression }}' /* required */,
+'{{ span_kind_expression }}' /* required */,
+'{{ log_source_id }}',
+'{{ session_source_id }}',
+'{{ status_code_expression }}',
+'{{ status_message_expression }}',
+'{{ span_events_value_expression }}',
+'{{ metric_tables }}' /* required */,
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -769,8 +769,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: sources
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the sources resource.
     - name: organization_id
       value: "{{ organization_id }}"
@@ -804,95 +804,95 @@ status
       value:
         databaseName: "{{ databaseName }}"
         tableName: "{{ tableName }}"
-    - name: querySettings
+    - name: query_settings
       description: |
         Optional ClickHouse query settings applied when querying this source.
       value:
         - setting: "{{ setting }}"
           value: "{{ value }}"
-    - name: filterSettings
+    - name: filter_settings
       value:
         databaseName: "{{ databaseName }}"
         tableName: "{{ tableName }}"
         columns:
           - name: "{{ name }}"
             label: "{{ label }}"
-    - name: defaultTableSelectExpression
-      value: "{{ defaultTableSelectExpression }}"
+    - name: default_table_select_expression
+      value: "{{ default_table_select_expression }}"
       description: |
         Default columns selected in search results (this can be customized per search later)
-    - name: timestampValueExpression
-      value: "{{ timestampValueExpression }}"
+    - name: timestamp_value_expression
+      value: "{{ timestamp_value_expression }}"
       description: |
         DateTime column or expression that is part of your table's primary key.
-    - name: serviceNameExpression
-      value: "{{ serviceNameExpression }}"
+    - name: service_name_expression
+      value: "{{ service_name_expression }}"
       description: |
         Expression to extract the service name from log rows.
-    - name: severityTextExpression
-      value: "{{ severityTextExpression }}"
+    - name: severity_text_expression
+      value: "{{ severity_text_expression }}"
       description: |
         Expression to extract the severity/log level text.
-    - name: bodyExpression
-      value: "{{ bodyExpression }}"
+    - name: body_expression
+      value: "{{ body_expression }}"
       description: |
         Expression to extract the log message body.
-    - name: eventAttributesExpression
-      value: "{{ eventAttributesExpression }}"
+    - name: event_attributes_expression
+      value: "{{ event_attributes_expression }}"
       description: |
         Expression to extract event-level attributes.
-    - name: resourceAttributesExpression
-      value: "{{ resourceAttributesExpression }}"
+    - name: resource_attributes_expression
+      value: "{{ resource_attributes_expression }}"
       description: |
         Expression to extract resource-level attributes.
-    - name: displayedTimestampValueExpression
-      value: "{{ displayedTimestampValueExpression }}"
+    - name: displayed_timestamp_value_expression
+      value: "{{ displayed_timestamp_value_expression }}"
       description: |
         This DateTime column is used to display and order search results.
-    - name: metricSourceId
-      value: "{{ metricSourceId }}"
+    - name: metric_source_id
+      value: "{{ metric_source_id }}"
       description: |
         HyperDX Source for metrics associated with logs. Optional
-    - name: traceSourceId
-      value: "{{ traceSourceId }}"
+    - name: trace_source_id
+      value: "{{ trace_source_id }}"
       description: |
         HyperDX Source for traces associated with logs. Optional
-    - name: traceIdExpression
-      value: "{{ traceIdExpression }}"
+    - name: trace_id_expression
+      value: "{{ trace_id_expression }}"
       description: |
         Expression to extract the trace ID for correlating logs with traces.
-    - name: spanIdExpression
-      value: "{{ spanIdExpression }}"
+    - name: span_id_expression
+      value: "{{ span_id_expression }}"
       description: |
         Expression to extract the span ID for correlating logs with traces.
-    - name: implicitColumnExpression
-      value: "{{ implicitColumnExpression }}"
+    - name: implicit_column_expression
+      value: "{{ implicit_column_expression }}"
       description: |
         Column used for full text search if no property is specified in a Lucene-based search. Typically the message body of a log.
-    - name: knownColumnsListExpression
-      value: "{{ knownColumnsListExpression }}"
+    - name: known_columns_list_expression
+      value: "{{ known_columns_list_expression }}"
       description: |
         For Distributed table sources whose target tables have non-matching column sets. A list of columns supported across all target tables, used instead of SELECT * when fetching full row data. Leave blank to select all columns.
-    - name: useTextIndexForImplicitColumn
-      value: "{{ useTextIndexForImplicitColumn }}"
+    - name: use_text_index_for_implicit_column
+      value: "{{ use_text_index_for_implicit_column }}"
       description: |
         Controls whether lucene rendering uses ClickHouse text indices via hasAllTokens() against the implicit column. "auto" detects a covering index at query time, "enabled" forces text index usage, "disabled" forces a LIKE/hasToken fallback.
       valid_values: ['auto', 'enabled', 'disabled']
-    - name: highlightedTraceAttributeExpressions
+    - name: highlighted_trace_attribute_expressions
       description: |
         Expressions defining trace-level attributes which are displayed in the trace view for the selected trace.
       value:
         - sqlExpression: "{{ sqlExpression }}"
           luceneExpression: "{{ luceneExpression }}"
           alias: "{{ alias }}"
-    - name: highlightedRowAttributeExpressions
+    - name: highlighted_row_attribute_expressions
       description: |
         Expressions defining row-level attributes which are displayed in the row side panel for the selected row.
       value:
         - sqlExpression: "{{ sqlExpression }}"
           luceneExpression: "{{ luceneExpression }}"
           alias: "{{ alias }}"
-    - name: materializedViews
+    - name: materialized_views
       description: |
         Configure materialized views for query optimization. These pre-aggregated views can significantly improve query performance on aggregation queries.
       value:
@@ -903,52 +903,52 @@ status
           minDate: "{{ minDate }}"
           timestampColumn: "{{ timestampColumn }}"
           aggregatedColumns: "{{ aggregatedColumns }}"
-    - name: metadataMaterializedViews
+    - name: metadata_materialized_views
       value:
         keyRollupTable: "{{ keyRollupTable }}"
         kvRollupTable: "{{ kvRollupTable }}"
         granularity: "{{ granularity }}"
-    - name: durationExpression
-      value: "{{ durationExpression }}"
+    - name: duration_expression
+      value: "{{ duration_expression }}"
       description: |
         Expression to extract span duration.
-    - name: durationPrecision
-      value: {{ durationPrecision }}
+    - name: duration_precision
+      value: {{ duration_precision }}
       description: |
         Number of decimal digits in the duration value (e.g., 3 for milliseconds, 6 for microseconds, 9 for nanoseconds).
-    - name: parentSpanIdExpression
-      value: "{{ parentSpanIdExpression }}"
+    - name: parent_span_id_expression
+      value: "{{ parent_span_id_expression }}"
       description: |
         Expression to extract the parent span ID.
-    - name: spanNameExpression
-      value: "{{ spanNameExpression }}"
+    - name: span_name_expression
+      value: "{{ span_name_expression }}"
       description: |
         Expression to extract the span name.
-    - name: spanKindExpression
-      value: "{{ spanKindExpression }}"
+    - name: span_kind_expression
+      value: "{{ span_kind_expression }}"
       description: |
         Expression to extract the span kind (e.g., client, server, internal).
-    - name: logSourceId
-      value: "{{ logSourceId }}"
+    - name: log_source_id
+      value: "{{ log_source_id }}"
       description: |
         HyperDX Source for logs associated with traces. Optional
-    - name: sessionSourceId
-      value: "{{ sessionSourceId }}"
+    - name: session_source_id
+      value: "{{ session_source_id }}"
       description: |
         HyperDX Source for sessions associated with traces. Optional
-    - name: statusCodeExpression
-      value: "{{ statusCodeExpression }}"
+    - name: status_code_expression
+      value: "{{ status_code_expression }}"
       description: |
         Expression to extract the span status code.
-    - name: statusMessageExpression
-      value: "{{ statusMessageExpression }}"
+    - name: status_message_expression
+      value: "{{ status_message_expression }}"
       description: |
         Expression to extract the span status message.
-    - name: spanEventsValueExpression
-      value: "{{ spanEventsValueExpression }}"
+    - name: span_events_value_expression
+      value: "{{ span_events_value_expression }}"
       description: |
         Expression to extract span events. Used to capture events associated with spans. Expected to be Nested ( Timestamp DateTime64(9), Name LowCardinality(String), Attributes Map(LowCardinality(String), String)
-    - name: metricTables
+    - name: metric_tables
       value:
         gauge: "{{ gauge }}"
         histogram: "{{ histogram }}"
@@ -983,60 +983,60 @@ disabled = {{ disabled }},
 kind = '{{ kind }}',
 connection = '{{ connection }}',
 from = '{{ from }}',
-querySettings = '{{ querySettings }}',
-filterSettings = '{{ filterSettings }}',
-defaultTableSelectExpression = '{{ defaultTableSelectExpression }}',
-timestampValueExpression = '{{ timestampValueExpression }}',
-serviceNameExpression = '{{ serviceNameExpression }}',
-severityTextExpression = '{{ severityTextExpression }}',
-bodyExpression = '{{ bodyExpression }}',
-eventAttributesExpression = '{{ eventAttributesExpression }}',
-resourceAttributesExpression = '{{ resourceAttributesExpression }}',
-displayedTimestampValueExpression = '{{ displayedTimestampValueExpression }}',
-metricSourceId = '{{ metricSourceId }}',
-traceSourceId = '{{ traceSourceId }}',
-traceIdExpression = '{{ traceIdExpression }}',
-spanIdExpression = '{{ spanIdExpression }}',
-implicitColumnExpression = '{{ implicitColumnExpression }}',
-knownColumnsListExpression = '{{ knownColumnsListExpression }}',
-useTextIndexForImplicitColumn = '{{ useTextIndexForImplicitColumn }}',
-highlightedTraceAttributeExpressions = '{{ highlightedTraceAttributeExpressions }}',
-highlightedRowAttributeExpressions = '{{ highlightedRowAttributeExpressions }}',
-materializedViews = '{{ materializedViews }}',
-metadataMaterializedViews = '{{ metadataMaterializedViews }}',
-durationExpression = '{{ durationExpression }}',
-durationPrecision = {{ durationPrecision }},
-parentSpanIdExpression = '{{ parentSpanIdExpression }}',
-spanNameExpression = '{{ spanNameExpression }}',
-spanKindExpression = '{{ spanKindExpression }}',
-logSourceId = '{{ logSourceId }}',
-sessionSourceId = '{{ sessionSourceId }}',
-statusCodeExpression = '{{ statusCodeExpression }}',
-statusMessageExpression = '{{ statusMessageExpression }}',
-spanEventsValueExpression = '{{ spanEventsValueExpression }}',
-metricTables = '{{ metricTables }}'
+query_settings = '{{ query_settings }}',
+filter_settings = '{{ filter_settings }}',
+default_table_select_expression = '{{ default_table_select_expression }}',
+timestamp_value_expression = '{{ timestamp_value_expression }}',
+service_name_expression = '{{ service_name_expression }}',
+severity_text_expression = '{{ severity_text_expression }}',
+body_expression = '{{ body_expression }}',
+event_attributes_expression = '{{ event_attributes_expression }}',
+resource_attributes_expression = '{{ resource_attributes_expression }}',
+displayed_timestamp_value_expression = '{{ displayed_timestamp_value_expression }}',
+metric_source_id = '{{ metric_source_id }}',
+trace_source_id = '{{ trace_source_id }}',
+trace_id_expression = '{{ trace_id_expression }}',
+span_id_expression = '{{ span_id_expression }}',
+implicit_column_expression = '{{ implicit_column_expression }}',
+known_columns_list_expression = '{{ known_columns_list_expression }}',
+use_text_index_for_implicit_column = '{{ use_text_index_for_implicit_column }}',
+highlighted_trace_attribute_expressions = '{{ highlighted_trace_attribute_expressions }}',
+highlighted_row_attribute_expressions = '{{ highlighted_row_attribute_expressions }}',
+materialized_views = '{{ materialized_views }}',
+metadata_materialized_views = '{{ metadata_materialized_views }}',
+duration_expression = '{{ duration_expression }}',
+duration_precision = {{ duration_precision }},
+parent_span_id_expression = '{{ parent_span_id_expression }}',
+span_name_expression = '{{ span_name_expression }}',
+span_kind_expression = '{{ span_kind_expression }}',
+log_source_id = '{{ log_source_id }}',
+session_source_id = '{{ session_source_id }}',
+status_code_expression = '{{ status_code_expression }}',
+status_message_expression = '{{ status_message_expression }}',
+span_events_value_expression = '{{ span_events_value_expression }}',
+metric_tables = '{{ metric_tables }}'
 WHERE 
-serviceId = '{{ serviceId }}' --required
-AND clickStackSourceId = '{{ clickStackSourceId }}' --required
+service_id = '{{ service_id }}' --required
+AND click_stack_source_id = '{{ click_stack_source_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND name = '{{ name }}' --required
 AND kind = '{{ kind }}' --required
 AND connection = '{{ connection }}' --required
 AND from = '{{ from }}' --required
-AND defaultTableSelectExpression = '{{ defaultTableSelectExpression }}' --required
-AND timestampValueExpression = '{{ timestampValueExpression }}' --required
-AND durationExpression = '{{ durationExpression }}' --required
-AND durationPrecision = '{{ durationPrecision }}' --required
-AND traceIdExpression = '{{ traceIdExpression }}' --required
-AND spanIdExpression = '{{ spanIdExpression }}' --required
-AND parentSpanIdExpression = '{{ parentSpanIdExpression }}' --required
-AND spanNameExpression = '{{ spanNameExpression }}' --required
-AND spanKindExpression = '{{ spanKindExpression }}' --required
-AND metricTables = '{{ metricTables }}' --required
-AND resourceAttributesExpression = '{{ resourceAttributesExpression }}' --required
-AND traceSourceId = '{{ traceSourceId }}' --required
+AND default_table_select_expression = '{{ default_table_select_expression }}' --required
+AND timestamp_value_expression = '{{ timestamp_value_expression }}' --required
+AND duration_expression = '{{ duration_expression }}' --required
+AND duration_precision = '{{ duration_precision }}' --required
+AND trace_id_expression = '{{ trace_id_expression }}' --required
+AND span_id_expression = '{{ span_id_expression }}' --required
+AND parent_span_id_expression = '{{ parent_span_id_expression }}' --required
+AND span_name_expression = '{{ span_name_expression }}' --required
+AND span_kind_expression = '{{ span_kind_expression }}' --required
+AND metric_tables = '{{ metric_tables }}' --required
+AND resource_attributes_expression = '{{ resource_attributes_expression }}' --required
+AND trace_source_id = '{{ trace_source_id }}' --required
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -1058,8 +1058,8 @@ status;
 
 ```sql
 DELETE FROM clickhouse.clickstack.sources
-WHERE serviceId = '{{ serviceId }}' --required
-AND clickStackSourceId = '{{ clickStackSourceId }}' --required
+WHERE service_id = '{{ service_id }}' --required
+AND click_stack_source_id = '{{ click_stack_source_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

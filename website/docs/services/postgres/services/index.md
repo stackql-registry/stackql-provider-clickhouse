@@ -61,19 +61,19 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the Postgres service. Alphanumerical string with whitespaces up to 50 characters. (title: Postgres Service Name)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="connectionString" /></td>
+    <td><CopyableCode code="connection_string" /></td>
     <td><code>string</code></td>
-    <td>Connection string to the Postgres service. Embeds the service password, so it is only returned when the service is created or its password is reset. Omitted from every other response when Postgres credential redaction is enabled for the organization. Not guaranteed to be present — treat as optional.</td>
+    <td>Connection string to the Postgres service. Embeds the service password, so it is only returned when the service is created or its password is reset. Omitted from every other response when Postgres credential redaction is enabled for the organization. Not guaranteed to be present — treat as optional. (wire: connectionString)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td> (title: Postgres Service creation timestamp, example: 2026-03-26T20:51:16.384Z)</td>
+    <td> (title: Postgres Service creation timestamp, example: 2026-03-26T20:51:16.384Z) (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="haType" /></td>
+    <td><CopyableCode code="ha_type" /></td>
     <td><code>string</code></td>
-    <td>Type of high availability: “none” for no replication, “async” for asynchronous replication to a single standby, and “sync” for synchronous replication to two standbys. (none, async, sync)</td>
+    <td>Type of high availability: “none” for no replication, “async” for asynchronous replication to a single standby, and “sync” for synchronous replication to two standbys. (none, async, sync) (wire: haType)</td>
 </tr>
 <tr>
     <td><CopyableCode code="hostname" /></td>
@@ -81,9 +81,9 @@ The following fields are returned by `SELECT` queries:
     <td>Hostname for the Postgres service</td>
 </tr>
 <tr>
-    <td><CopyableCode code="isPrimary" /></td>
+    <td><CopyableCode code="is_primary" /></td>
     <td><code>boolean</code></td>
-    <td>True if this service is the primary service in the data warehouse (title: Postgres Service is Primary)</td>
+    <td>True if this service is the primary service in the data warehouse (title: Postgres Service is Primary) (wire: isPrimary)</td>
 </tr>
 <tr>
     <td><CopyableCode code="password" /></td>
@@ -91,9 +91,9 @@ The following fields are returned by `SELECT` queries:
     <td>Password for the Postgres service. Only returned when the service is created or its password is reset. Omitted from every other response when Postgres credential redaction is enabled for the organization. Not guaranteed to be present — treat as optional.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="postgresVersion" /></td>
+    <td><CopyableCode code="postgres_version" /></td>
     <td><code>string</code></td>
-    <td> (18, 17) (title: Postgres major version)</td>
+    <td> (18, 17) (title: Postgres major version) (wire: postgresVersion)</td>
 </tr>
 <tr>
     <td><CopyableCode code="provider" /></td>
@@ -116,9 +116,9 @@ The following fields are returned by `SELECT` queries:
     <td>Current state of the service (creating, restarting, running, replaying_wal, restoring_backup, finalizing_restore, unavailable, stopped, deleting) (title: Postgres Service State)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="storageSize" /></td>
+    <td><CopyableCode code="storage_size" /></td>
     <td><code>integer</code></td>
-    <td>The storage size, in GiB, which must be supported by the specified `size`. (title: Storage Size)</td>
+    <td>The storage size, in GiB, which must be supported by the specified `size`. (title: Storage Size) (wire: storageSize)</td>
 </tr>
 <tr>
     <td><CopyableCode code="tags" /></td>
@@ -155,24 +155,24 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the Postgres service. Alphanumerical string with whitespaces up to 50 characters. (title: Postgres Service Name)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td> (title: Postgres Service creation timestamp, example: 2026-03-26T20:51:16.384Z)</td>
+    <td> (title: Postgres Service creation timestamp, example: 2026-03-26T20:51:16.384Z) (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="haType" /></td>
+    <td><CopyableCode code="ha_type" /></td>
     <td><code>string</code></td>
-    <td>Type of high availability: “none” for no replication, “async” for asynchronous replication to a single standby, and “sync” for synchronous replication to two standbys. (none, async, sync)</td>
+    <td>Type of high availability: “none” for no replication, “async” for asynchronous replication to a single standby, and “sync” for synchronous replication to two standbys. (none, async, sync) (wire: haType)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="isPrimary" /></td>
+    <td><CopyableCode code="is_primary" /></td>
     <td><code>boolean</code></td>
-    <td>True if this service is the primary service in the data warehouse (title: Postgres Service is Primary)</td>
+    <td>True if this service is the primary service in the data warehouse (title: Postgres Service is Primary) (wire: isPrimary)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="postgresVersion" /></td>
+    <td><CopyableCode code="postgres_version" /></td>
     <td><code>string</code></td>
-    <td> (18, 17) (title: Postgres major version)</td>
+    <td> (18, 17) (title: Postgres major version) (wire: postgresVersion)</td>
 </tr>
 <tr>
     <td><CopyableCode code="provider" /></td>
@@ -222,7 +222,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns a Postgres service that belongs to the organization</td>
 </tr>
@@ -243,14 +243,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Update a Postgres service that belongs to the organization. **WARNING:** Changing the name also updates the host name and certificates for the service.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Deletes a Postgres service that belongs to the organization</td>
 </tr>
@@ -308,6 +308,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (uuid)</code></td>
     <td>ID of the requested Postgres service.</td>
 </tr>
+<tr id="parameter-postgres_id">
+    <td><CopyableCode code="postgres_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the requested Postgres service. (wire: postgresId)</td>
+</tr>
 </tbody>
 </table>
 
@@ -328,22 +333,22 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 SELECT
 id,
 name,
-connectionString,
-createdAt,
-haType,
+connection_string,
+created_at,
+ha_type,
 hostname,
-isPrimary,
+is_primary,
 password,
-postgresVersion,
+postgres_version,
 provider,
 region,
 size,
 state,
-storageSize,
+storage_size,
 tags,
 username
 FROM clickhouse.postgres.services
-WHERE postgresId = '{{ postgresId }}' -- required
+WHERE postgres_id = '{{ postgres_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -356,10 +361,10 @@ AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_
 SELECT
 id,
 name,
-createdAt,
-haType,
-isPrimary,
-postgresVersion,
+created_at,
+ha_type,
+is_primary,
+postgres_version,
 provider,
 region,
 size,
@@ -391,27 +396,27 @@ INSERT INTO clickhouse.postgres.services (
 name,
 provider,
 region,
-postgresVersion,
+postgres_version,
 size,
-haType,
+ha_type,
 tags,
-pgConfig,
-pgBouncerConfig,
+pg_config,
+pg_bouncer_config,
 organization_id
 )
 SELECT 
 '{{ name }}' /* required */,
 '{{ provider }}' /* required */,
 '{{ region }}' /* required */,
-'{{ postgresVersion }}',
+'{{ postgres_version }}',
 '{{ size }}' /* required */,
-'{{ haType }}',
+'{{ ha_type }}',
 '{{ tags }}',
-'{{ pgConfig }}',
-'{{ pgBouncerConfig }}',
+'{{ pg_config }}',
+'{{ pg_bouncer_config }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -438,16 +443,16 @@ status
       value: "{{ region }}"
       description: |
         The cloud region for a Postgres service.
-    - name: postgresVersion
-      value: "{{ postgresVersion }}"
+    - name: postgres_version
+      value: "{{ postgres_version }}"
       valid_values: ['18', '17']
     - name: size
       value: "{{ size }}"
       description: |
         The VM size for a Postgres service.
       valid_values: ['c6gd.large', 'c6gd.xlarge', 'c6gd.2xlarge', 'c6gd.4xlarge', 'c6gd.8xlarge', 'c6gd.16xlarge', 'i7i.large', 'i7i.xlarge', 'i7i.2xlarge', 'i7i.4xlarge', 'i7i.8xlarge', 'i7i.12xlarge', 'i7i.16xlarge', 'i7i.24xlarge', 'i7ie.large', 'i7ie.xlarge', 'i7ie.2xlarge', 'i7ie.3xlarge', 'i7ie.6xlarge', 'i7ie.12xlarge', 'i7ie.18xlarge', 'i7ie.24xlarge', 'i8g.large', 'i8g.xlarge', 'i8g.2xlarge', 'i8g.4xlarge', 'i8g.8xlarge', 'i8g.16xlarge', 'i8g.24xlarge', 'i8ge.large', 'i8ge.xlarge', 'i8ge.2xlarge', 'i8ge.3xlarge', 'i8ge.6xlarge', 'i8ge.12xlarge', 'i8ge.18xlarge', 'i8ge.24xlarge', 'm6gd.large', 'm6gd.xlarge', 'm6gd.2xlarge', 'm6gd.4xlarge', 'm6gd.8xlarge', 'm6gd.16xlarge', 'm6id.large', 'm6id.xlarge', 'm6id.2xlarge', 'm6id.4xlarge', 'm6id.8xlarge', 'm6id.16xlarge', 'm8gd.large', 'm8gd.xlarge', 'm8gd.2xlarge', 'm8gd.4xlarge', 'm8gd.8xlarge', 'm8gd.16xlarge', 'r6gd.medium', 'r6gd.large', 'r6gd.xlarge', 'r6gd.2xlarge', 'r6gd.4xlarge', 'r6gd.8xlarge', 'r6gd.12xlarge', 'r6gd.16xlarge', 'r6id.large', 'r6id.xlarge', 'r6id.2xlarge', 'r6id.4xlarge', 'r6id.8xlarge', 'r6id.12xlarge', 'r6id.16xlarge', 'r6id.24xlarge', 'r6id.32xlarge', 'r8gd.medium', 'r8gd.large', 'r8gd.xlarge', 'r8gd.2xlarge', 'r8gd.4xlarge', 'r8gd.8xlarge', 'r8gd.12xlarge', 'r8gd.16xlarge', 'r8gd.24xlarge', 'r8gd.48xlarge']
-    - name: haType
-      value: "{{ haType }}"
+    - name: ha_type
+      value: "{{ ha_type }}"
       description: |
         Type of high availability: “none” for no replication, “async” for asynchronous replication to a single standby, and “sync” for synchronous replication to two standbys.
       valid_values: ['none', 'async', 'sync']
@@ -457,7 +462,7 @@ status
       value:
         - key: "{{ key }}"
           value: "{{ value }}"
-    - name: pgConfig
+    - name: pg_config
       description: |
         Postgres [runtime configuration](https://www.postgresql.org/docs/current/runtime-config.html) configuration.
       value:
@@ -492,8 +497,8 @@ status
         autovacuum_vacuum_insert_scale_factor: "{{ autovacuum_vacuum_insert_scale_factor }}"
         autovacuum_vacuum_cost_limit: "{{ autovacuum_vacuum_cost_limit }}"
         autovacuum_vacuum_cost_delay: "{{ autovacuum_vacuum_cost_delay }}"
-    - name: pgBouncerConfig
-      value: "{{ pgBouncerConfig }}"
+    - name: pg_bouncer_config
+      value: "{{ pg_bouncer_config }}"
       description: |
         PgBouncer [runtime configuration](https://www.pgbouncer.org/config.html) configuration.
 `}</CodeBlock>
@@ -519,13 +524,13 @@ UPDATE clickhouse.postgres.services
 SET 
 name = '{{ name }}',
 size = '{{ size }}',
-haType = '{{ haType }}',
+ha_type = '{{ ha_type }}',
 tags = '{{ tags }}'
 WHERE 
-postgresId = '{{ postgresId }}' --required
+postgres_id = '{{ postgres_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -547,7 +552,7 @@ status;
 
 ```sql
 DELETE FROM clickhouse.postgres.services
-WHERE postgresId = '{{ postgresId }}' --required
+WHERE postgres_id = '{{ postgres_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -556,6 +561,8 @@ AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_I
 
 
 ## Lifecycle Methods
+
+EXEC variables use wire (API) names.
 
 <Tabs
     defaultValue="restored_service"

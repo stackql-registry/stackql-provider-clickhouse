@@ -126,12 +126,12 @@ smoke-cleanup: venv ## sweep stackql-smoke-* keys and services and exit
 
 # -------------------------------------------------------------------- docs
 
-docs: ## generate the website docs from the generated provider, then sanitize
+docs: ## generate the website docs (snake_case surface, provider-utils >= 0.7.8), then sanitize
 	npm run generate-docs -- \
 	  --provider-name $(PROVIDER) \
 	  --provider-dir ./$(SERVICES_DIR)/v00.00.00000 \
 	  --output-dir ./website \
-	  --provider-data-dir ./provider-dev/docgen/provider-data
+	  --provider-data-dir ./provider-dev/docgen/provider-data 	  --snake-case-aliases
 	node website/scripts/sanitize-docs.mjs
 
 website: ## build the docusaurus microsite (vendors shared config first)

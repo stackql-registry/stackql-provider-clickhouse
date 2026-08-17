@@ -56,9 +56,9 @@ The following fields are returned by `SELECT` queries:
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="recentExecutions" /></td>
+    <td><CopyableCode code="recent_executions" /></td>
     <td><code>array</code></td>
-    <td>Recent individual executions matching the pattern.</td>
+    <td>Recent individual executions matching the pattern. (wire: recentExecutions)</td>
 </tr>
 </tbody>
 </table>
@@ -75,99 +75,99 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
+    <td><CopyableCode code="query_id" /></td>
+    <td><code>string</code></td>
+    <td>Stable identifier for the query pattern (normalized SQL). (wire: queryId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="db_name" /></td>
+    <td><code>string</code></td>
+    <td>Database the query ran in. (wire: dbName)</td>
+</tr>
+<tr>
     <td><CopyableCode code="app" /></td>
     <td><code>string</code></td>
     <td>Value of the Postgres `application_name` for executions matching this pattern.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="avgDurationUs" /></td>
+    <td><CopyableCode code="avg_duration_us" /></td>
     <td><code>integer</code></td>
-    <td>Average execution time per call, in microseconds.</td>
+    <td>Average execution time per call, in microseconds. (wire: avgDurationUs)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="callCount" /></td>
+    <td><CopyableCode code="call_count" /></td>
     <td><code>integer</code></td>
-    <td>Number of times the pattern executed in the window.</td>
+    <td>Number of times the pattern executed in the window. (wire: callCount)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="dbName" /></td>
+    <td><CopyableCode code="db_operation" /></td>
     <td><code>string</code></td>
-    <td>Database the query ran in.</td>
+    <td>Top-level SQL operation type (for example, SELECT, INSERT, UPDATE, DELETE, UTILITY). (wire: dbOperation)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="dbOperation" /></td>
+    <td><CopyableCode code="db_user" /></td>
     <td><code>string</code></td>
-    <td>Top-level SQL operation type (for example, SELECT, INSERT, UPDATE, DELETE, UTILITY).</td>
+    <td>Database user that executed the query. (wire: dbUser)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="dbUser" /></td>
+    <td><CopyableCode code="error_count" /></td>
+    <td><code>integer</code></td>
+    <td>Number of executions of the pattern that raised an error. (wire: errorCount)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="max_duration_us" /></td>
+    <td><code>integer</code></td>
+    <td>Maximum execution time of any call, in microseconds. (wire: maxDurationUs)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="p_50_duration_us" /></td>
+    <td><code>integer</code></td>
+    <td>50th percentile execution time, in microseconds. (wire: p50DurationUs)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="p_95_duration_us" /></td>
+    <td><code>integer</code></td>
+    <td>95th percentile execution time, in microseconds. (wire: p95DurationUs)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="p_99_duration_us" /></td>
+    <td><code>integer</code></td>
+    <td>99th percentile execution time, in microseconds. (wire: p99DurationUs)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="query_text" /></td>
     <td><code>string</code></td>
-    <td>Database user that executed the query.</td>
+    <td>Normalized query text with literals replaced by placeholders. (wire: queryText)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="errorCount" /></td>
+    <td><CopyableCode code="total_cpu_time_us" /></td>
     <td><code>integer</code></td>
-    <td>Number of executions of the pattern that raised an error.</td>
+    <td>Total CPU time across all calls, in microseconds. (wire: totalCpuTimeUs)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="maxDurationUs" /></td>
+    <td><CopyableCode code="total_duration_us" /></td>
     <td><code>integer</code></td>
-    <td>Maximum execution time of any call, in microseconds.</td>
+    <td>Total execution time across all calls, in microseconds. (wire: totalDurationUs)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="p50DurationUs" /></td>
+    <td><CopyableCode code="total_rows" /></td>
     <td><code>integer</code></td>
-    <td>50th percentile execution time, in microseconds.</td>
+    <td>Total number of rows returned or affected across all calls. (wire: totalRows)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="p95DurationUs" /></td>
+    <td><CopyableCode code="total_shared_blks_hit" /></td>
     <td><code>integer</code></td>
-    <td>95th percentile execution time, in microseconds.</td>
+    <td>Total shared buffer blocks hit (cache hits) across all calls. (wire: totalSharedBlksHit)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="p99DurationUs" /></td>
+    <td><CopyableCode code="total_shared_blks_read" /></td>
     <td><code>integer</code></td>
-    <td>99th percentile execution time, in microseconds.</td>
+    <td>Total shared buffer blocks read from disk (cache misses) across all calls. (wire: totalSharedBlksRead)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="queryId" /></td>
-    <td><code>string</code></td>
-    <td>Stable identifier for the query pattern (normalized SQL).</td>
-</tr>
-<tr>
-    <td><CopyableCode code="queryText" /></td>
-    <td><code>string</code></td>
-    <td>Normalized query text with literals replaced by placeholders.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalCpuTimeUs" /></td>
+    <td><CopyableCode code="total_wal_bytes" /></td>
     <td><code>integer</code></td>
-    <td>Total CPU time across all calls, in microseconds.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalDurationUs" /></td>
-    <td><code>integer</code></td>
-    <td>Total execution time across all calls, in microseconds.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalRows" /></td>
-    <td><code>integer</code></td>
-    <td>Total number of rows returned or affected across all calls.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalSharedBlksHit" /></td>
-    <td><code>integer</code></td>
-    <td>Total shared buffer blocks hit (cache hits) across all calls.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalSharedBlksRead" /></td>
-    <td><code>integer</code></td>
-    <td>Total shared buffer blocks read from disk (cache misses) across all calls.</td>
-</tr>
-<tr>
-    <td><CopyableCode code="totalWalBytes" /></td>
-    <td><code>integer</code></td>
-    <td>Total WAL (write-ahead log) bytes generated across all calls.</td>
+    <td>Total WAL (write-ahead log) bytes generated across all calls. (wire: totalWalBytes)</td>
 </tr>
 </tbody>
 </table>
@@ -192,14 +192,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-queryId"><code>queryId</code></a>, <a href="#parameter-db_name"><code>db_name</code></a>, <a href="#parameter-db_user"><code>db_user</code></a>, <a href="#parameter-db_operation"><code>db_operation</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-query_id"><code>query_id</code></a>, <a href="#parameter-db_name"><code>db_name</code></a>, <a href="#parameter-db_user"><code>db_user</code></a>, <a href="#parameter-db_operation"><code>db_operation</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-app"><code>app</code></a>, <a href="#parameter-timestamp"><code>timestamp</code></a></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns aggregate metrics for a single slow query pattern together with its most recent individual executions.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-from_date"><code>from_date</code></a>, <a href="#parameter-to_date"><code>to_date</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-postgres_id"><code>postgres_id</code></a>, <a href="#parameter-from_date"><code>from_date</code></a>, <a href="#parameter-to_date"><code>to_date</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-db_name"><code>db_name</code></a>, <a href="#parameter-db_user"><code>db_user</code></a>, <a href="#parameter-db_operation"><code>db_operation</code></a>, <a href="#parameter-app"><code>app</code></a>, <a href="#parameter-sort_by"><code>sort_by</code></a>, <a href="#parameter-sort_order"><code>sort_order</code></a>, <a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-offset"><code>offset</code></a></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns aggregate metrics for the slowest query patterns observed on a Postgres service during the given time window. Use this to discover which queries dominate total execution time, CPU, I/O, or WAL generation.</td>
 </tr>
@@ -244,15 +244,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-postgresId">
-    <td><CopyableCode code="postgresId" /></td>
+<tr id="parameter-postgres_id">
+    <td><CopyableCode code="postgres_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested Postgres service.</td>
+    <td>ID of the requested Postgres service. (wire: postgresId)</td>
 </tr>
-<tr id="parameter-queryId">
-    <td><CopyableCode code="queryId" /></td>
+<tr id="parameter-query_id">
+    <td><CopyableCode code="query_id" /></td>
     <td><code>string</code></td>
-    <td>Stable identifier for the query pattern.</td>
+    <td>Stable identifier for the query pattern. (wire: queryId)</td>
 </tr>
 <tr id="parameter-to_date">
     <td><CopyableCode code="to_date" /></td>
@@ -323,10 +323,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ```sql
 SELECT
 aggregate,
-recentExecutions
+recent_executions
 FROM clickhouse.postgres.slow_query_patterns
-WHERE postgresId = '{{ postgresId }}' -- required
-AND queryId = '{{ queryId }}' -- required
+WHERE postgres_id = '{{ postgres_id }}' -- required
+AND query_id = '{{ query_id }}' -- required
 AND db_name = '{{ db_name }}' -- required
 AND db_user = '{{ db_user }}' -- required
 AND db_operation = '{{ db_operation }}' -- required
@@ -342,27 +342,27 @@ AND timestamp = '{{ timestamp }}'
 
 ```sql
 SELECT
+query_id,
+db_name,
 app,
-avgDurationUs,
-callCount,
-dbName,
-dbOperation,
-dbUser,
-errorCount,
-maxDurationUs,
-p50DurationUs,
-p95DurationUs,
-p99DurationUs,
-queryId,
-queryText,
-totalCpuTimeUs,
-totalDurationUs,
-totalRows,
-totalSharedBlksHit,
-totalSharedBlksRead,
-totalWalBytes
+avg_duration_us,
+call_count,
+db_operation,
+db_user,
+error_count,
+max_duration_us,
+p_50_duration_us,
+p_95_duration_us,
+p_99_duration_us,
+query_text,
+total_cpu_time_us,
+total_duration_us,
+total_rows,
+total_shared_blks_hit,
+total_shared_blks_read,
+total_wal_bytes
 FROM clickhouse.postgres.slow_query_patterns
-WHERE postgresId = '{{ postgresId }}' -- required
+WHERE postgres_id = '{{ postgres_id }}' -- required
 AND from_date = '{{ from_date }}' -- required
 AND to_date = '{{ to_date }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set

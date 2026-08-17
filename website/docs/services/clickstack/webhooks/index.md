@@ -65,9 +65,9 @@ The following fields are returned by `SELECT` queries:
     <td>Optional request body template (example: &#123;"alert": "&#123;&#123;title&#125;&#125;", "severity": "&#123;&#123;level&#125;&#125;"&#125;)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp (example: 2025-01-01T00:00:00.000Z)</td>
+    <td>Creation timestamp (example: 2025-01-01T00:00:00.000Z) (wire: createdAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="description" /></td>
@@ -80,9 +80,9 @@ The following fields are returned by `SELECT` queries:
     <td>Webhook service type (slack) (example: slack)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last update timestamp (example: 2025-06-15T10:30:00.000Z)</td>
+    <td>Last update timestamp (example: 2025-06-15T10:30:00.000Z) (wire: updatedAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="url" /></td>
@@ -112,28 +112,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-offset"><code>offset</code></a></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves webhooks for the authenticated team (paginated). Results are capped at `limit` (default and maximum 1000). When `totalCount` exceeds the number of returned items, page with `limit`/`offset` to retrieve them all.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-service"><code>service</code></a>, <a href="#parameter-url"><code>url</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-service"><code>service</code></a>, <a href="#parameter-url"><code>url</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Creates a new webhook for the authenticated team.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackWebhookId"><code>clickStackWebhookId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-service"><code>service</code></a>, <a href="#parameter-url"><code>url</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_webhook_id"><code>click_stack_webhook_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-service"><code>service</code></a>, <a href="#parameter-url"><code>url</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Replaces an existing webhook. Readable optional fields (`description`, `body`) are a full replace: omitting them clears them. The write-only fields `headers` and `queryParams` are never returned on read, so omitting them preserves the stored values; send an explicit empty object (`&#123;&#125;`) to clear them. Exception: if the destination (`url` or `service`) changes, omitted `headers`/ `queryParams` are cleared rather than preserved so stored secrets are never forwarded to a new destination.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackWebhookId"><code>clickStackWebhookId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_webhook_id"><code>click_stack_webhook_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes a webhook. Blocked with a 409 while any alert still references it — reassign or remove those alerts first — so deletion never leaves an alert pointing at a missing webhook (which would silently drop notifications). Mirrors the internal webhook delete guard.</td>
 </tr>
@@ -153,20 +153,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-clickStackWebhookId">
-    <td><CopyableCode code="clickStackWebhookId" /></td>
+<tr id="parameter-click_stack_webhook_id">
+    <td><CopyableCode code="click_stack_webhook_id" /></td>
     <td><code>string</code></td>
-    <td>Webhook ID</td>
+    <td>Webhook ID (wire: clickStackWebhookId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the ClickStack service.</td>
+    <td>ID of the ClickStack service. (wire: serviceId)</td>
 </tr>
 <tr id="parameter-limit">
     <td><CopyableCode code="limit" /></td>
@@ -198,13 +198,13 @@ SELECT
 id,
 name,
 body,
-createdAt,
+created_at,
 description,
 service,
-updatedAt,
+updated_at,
 url
 FROM clickhouse.clickstack.webhooks
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 AND limit = '{{ limit }}'
 AND offset = '{{ offset }}'
@@ -235,8 +235,8 @@ url,
 description,
 body,
 headers,
-queryParams,
-serviceId,
+query_params,
+service_id,
 organization_id
 )
 SELECT 
@@ -246,11 +246,11 @@ SELECT
 '{{ description }}',
 '{{ body }}',
 '{{ headers }}',
-'{{ queryParams }}',
-'{{ serviceId }}',
+'{{ query_params }}',
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -261,8 +261,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: webhooks
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the webhooks resource.
     - name: organization_id
       value: "{{ organization_id }}"
@@ -290,8 +290,8 @@ status
         Optional request body template. Only for generic/incidentio; rejected for slack.
     - name: headers
       value: "{{ headers }}"
-    - name: queryParams
-      value: "{{ queryParams }}"
+    - name: query_params
+      value: "{{ query_params }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -319,16 +319,16 @@ url = '{{ url }}',
 description = '{{ description }}',
 body = '{{ body }}',
 headers = '{{ headers }}',
-queryParams = '{{ queryParams }}'
+query_params = '{{ query_params }}'
 WHERE 
-serviceId = '{{ serviceId }}' --required
-AND clickStackWebhookId = '{{ clickStackWebhookId }}' --required
+service_id = '{{ service_id }}' --required
+AND click_stack_webhook_id = '{{ click_stack_webhook_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND name = '{{ name }}' --required
 AND service = '{{ service }}' --required
 AND url = '{{ url }}' --required
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -350,8 +350,8 @@ status;
 
 ```sql
 DELETE FROM clickhouse.clickstack.webhooks
-WHERE serviceId = '{{ serviceId }}' --required
-AND clickStackWebhookId = '{{ clickStackWebhookId }}' --required
+WHERE service_id = '{{ service_id }}' --required
+AND click_stack_webhook_id = '{{ click_stack_webhook_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

@@ -66,9 +66,9 @@ The following fields are returned by `SELECT` queries:
     <td>Explanation of the resource the quota limits and how the limit is applied.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="quotaCode" /></td>
+    <td><CopyableCode code="quota_code" /></td>
     <td><code>string</code></td>
-    <td>Stable identifier of the quota. Use it to request a single quota by code. (services-per-organization, postgres-services-per-organization, replicas-per-warehouse, api-keys-per-organization) (example: services-per-organization)</td>
+    <td>Stable identifier of the quota. Use it to request a single quota by code. (services-per-organization, postgres-services-per-organization, replicas-per-warehouse, api-keys-per-organization) (example: services-per-organization) (wire: quotaCode)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scope" /></td>
@@ -115,9 +115,9 @@ The following fields are returned by `SELECT` queries:
     <td>Explanation of the resource the quota limits and how the limit is applied.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="quotaCode" /></td>
+    <td><CopyableCode code="quota_code" /></td>
     <td><code>string</code></td>
-    <td>Stable identifier of the quota. Use it to request a single quota by code. (services-per-organization, postgres-services-per-organization, replicas-per-warehouse, api-keys-per-organization) (example: services-per-organization)</td>
+    <td>Stable identifier of the quota. Use it to request a single quota by code. (services-per-organization, postgres-services-per-organization, replicas-per-warehouse, api-keys-per-organization) (example: services-per-organization) (wire: quotaCode)</td>
 </tr>
 <tr>
     <td><CopyableCode code="scope" /></td>
@@ -157,7 +157,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-quotaCode"><code>quotaCode</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-quota_code"><code>quota_code</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns a single organization quota identified by its quota code. Responds with a not found error when the quota code is unknown or the quota does not apply to the organization.</td>
 </tr>
@@ -189,10 +189,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-quotaCode">
-    <td><CopyableCode code="quotaCode" /></td>
+<tr id="parameter-quota_code">
+    <td><CopyableCode code="quota_code" /></td>
     <td><code>string</code></td>
-    <td>Code of the requested quota.</td>
+    <td>Code of the requested quota. (wire: quotaCode)</td>
 </tr>
 </tbody>
 </table>
@@ -215,12 +215,12 @@ SELECT
 name,
 adjustable,
 description,
-quotaCode,
+quota_code,
 scope,
 usage,
 value
 FROM clickhouse.organizations.quotas
-WHERE quotaCode = '{{ quotaCode }}' -- required
+WHERE quota_code = '{{ quota_code }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -234,7 +234,7 @@ SELECT
 name,
 adjustable,
 description,
-quotaCode,
+quota_code,
 scope,
 usage,
 value

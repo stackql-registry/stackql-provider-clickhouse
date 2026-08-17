@@ -53,14 +53,14 @@ Successful response.
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="functionName" /></td>
-    <td><code>string</code></td>
-    <td>Name of the UDF.</td>
+    <td><CopyableCode code="service_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the attached service. (pattern: &lt;code&gt;^(&#91;0-9a-fA-F&#93;&#123;8&#125;-&#91;0-9a-fA-F&#93;&#123;4&#125;-&#91;1-8&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;89abAB&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;0-9a-fA-F&#93;&#123;12&#125;|00000000-0000-0000-0000-000000000000)$&lt;/code&gt;) (wire: serviceId)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string (uuid)</code></td>
-    <td>ID of the attached service. (pattern: &lt;code&gt;^(&#91;0-9a-fA-F&#93;&#123;8&#125;-&#91;0-9a-fA-F&#93;&#123;4&#125;-&#91;1-8&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;89abAB&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;0-9a-fA-F&#93;&#123;12&#125;|00000000-0000-0000-0000-000000000000)$&lt;/code&gt;)</td>
+    <td><CopyableCode code="function_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the UDF. (wire: functionName)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -89,14 +89,14 @@ Successful response.
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="functionName" /></td>
-    <td><code>string</code></td>
-    <td>Name of the UDF.</td>
+    <td><CopyableCode code="service_id" /></td>
+    <td><code>string (uuid)</code></td>
+    <td>ID of the attached service. (pattern: &lt;code&gt;^(&#91;0-9a-fA-F&#93;&#123;8&#125;-&#91;0-9a-fA-F&#93;&#123;4&#125;-&#91;1-8&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;89abAB&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;0-9a-fA-F&#93;&#123;12&#125;|00000000-0000-0000-0000-000000000000)$&lt;/code&gt;) (wire: serviceId)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string (uuid)</code></td>
-    <td>ID of the attached service. (pattern: &lt;code&gt;^(&#91;0-9a-fA-F&#93;&#123;8&#125;-&#91;0-9a-fA-F&#93;&#123;4&#125;-&#91;1-8&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;89abAB&#93;&#91;0-9a-fA-F&#93;&#123;3&#125;-&#91;0-9a-fA-F&#93;&#123;12&#125;|00000000-0000-0000-0000-000000000000)$&lt;/code&gt;)</td>
+    <td><CopyableCode code="function_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of the UDF. (wire: functionName)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -131,28 +131,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-function_name"><code>function_name</code></a>, <a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns the current attachment of a UDF to one service.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-function_name"><code>function_name</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-cursor"><code>cursor</code></a>, <a href="#parameter-limit"><code>limit</code></a></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns the current service attachments for a UDF, with at most one attachment per service.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-function_name"><code>function_name</code></a>, <a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Attaches one UDF version to a service, replacing the current version when necessary. When version is omitted, the latest ready version is attached.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-function_name"><code>function_name</code></a>, <a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Detaches a UDF from a service.</td>
 </tr>
@@ -172,20 +172,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-functionName">
-    <td><CopyableCode code="functionName" /></td>
+<tr id="parameter-function_name">
+    <td><CopyableCode code="function_name" /></td>
     <td><code>string</code></td>
-    <td>Name of the UDF.</td>
+    <td>Name of the UDF. (wire: functionName)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested service.</td>
+    <td>ID of the requested service. (wire: serviceId)</td>
 </tr>
 <tr id="parameter-cursor">
     <td><CopyableCode code="cursor" /></td>
@@ -215,13 +215,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 
 ```sql
 SELECT
-functionName,
-serviceId,
+service_id,
+function_name,
 status,
 version
 FROM clickhouse.udfs.attachments
-WHERE functionName = '{{ functionName }}' -- required
-AND serviceId = '{{ serviceId }}' -- required
+WHERE function_name = '{{ function_name }}' -- required
+AND service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -232,12 +232,12 @@ AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_
 
 ```sql
 SELECT
-functionName,
-serviceId,
+service_id,
+function_name,
 status,
 version
 FROM clickhouse.udfs.attachments
-WHERE functionName = '{{ functionName }}' -- required
+WHERE function_name = '{{ function_name }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 AND cursor = '{{ cursor }}'
 AND limit = '{{ limit }}'
@@ -264,11 +264,11 @@ UPDATE clickhouse.udfs.attachments
 SET 
 version = {{ version }}
 WHERE 
-functionName = '{{ functionName }}' --required
-AND serviceId = '{{ serviceId }}' --required
+function_name = '{{ function_name }}' --required
+AND service_id = '{{ service_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -290,8 +290,8 @@ status;
 
 ```sql
 DELETE FROM clickhouse.udfs.attachments
-WHERE functionName = '{{ functionName }}' --required
-AND serviceId = '{{ serviceId }}' --required
+WHERE function_name = '{{ function_name }}' --required
+AND service_id = '{{ service_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

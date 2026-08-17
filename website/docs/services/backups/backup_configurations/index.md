@@ -50,19 +50,19 @@ The following fields are returned by `SELECT` queries:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="backupPeriodInHours" /></td>
+    <td><CopyableCode code="backup_period_in_hours" /></td>
     <td><code>number</code></td>
-    <td>The interval in hours between each backup.</td>
+    <td>The interval in hours between each backup. (wire: backupPeriodInHours)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="backupRetentionPeriodInHours" /></td>
+    <td><CopyableCode code="backup_retention_period_in_hours" /></td>
     <td><code>number</code></td>
-    <td>The minimum duration in hours for which the backups are available. Must be a whole number of days between 24 (1 day) and 1080 (45 days) — i.e. a multiple of 24.</td>
+    <td>The minimum duration in hours for which the backups are available. Must be a whole number of days between 24 (1 day) and 1080 (45 days) — i.e. a multiple of 24. (wire: backupRetentionPeriodInHours)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="backupStartTime" /></td>
+    <td><CopyableCode code="backup_start_time" /></td>
     <td><code>string</code></td>
-    <td>The time in HH:MM format for the backups to be performed (evaluated in UTC timezone). When defined the backup period resets to every 24 hours.</td>
+    <td>The time in HH:MM format for the backups to be performed (evaluated in UTC timezone). When defined the backup period resets to every 24 hours. (wire: backupStartTime)</td>
 </tr>
 </tbody>
 </table>
@@ -87,14 +87,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns the service backup configuration.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Updates service backup configuration. Requires ADMIN auth key role. Setting the properties with null value, will reset the properties to theirs default values.</td>
 </tr>
@@ -119,10 +119,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the service.</td>
+    <td>ID of the service. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -141,11 +141,11 @@ Returns the service backup configuration.
 
 ```sql
 SELECT
-backupPeriodInHours,
-backupRetentionPeriodInHours,
-backupStartTime
+backup_period_in_hours,
+backup_retention_period_in_hours,
+backup_start_time
 FROM clickhouse.backups.backup_configurations
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -168,14 +168,14 @@ Updates service backup configuration. Requires ADMIN auth key role. Setting the 
 ```sql
 UPDATE clickhouse.backups.backup_configurations
 SET 
-backupPeriodInHours = {{ backupPeriodInHours }},
-backupRetentionPeriodInHours = {{ backupRetentionPeriodInHours }},
-backupStartTime = '{{ backupStartTime }}'
+backup_period_in_hours = {{ backup_period_in_hours }},
+backup_retention_period_in_hours = {{ backup_retention_period_in_hours }},
+backup_start_time = '{{ backup_start_time }}'
 WHERE 
-serviceId = '{{ serviceId }}' --required
+service_id = '{{ service_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```

@@ -56,9 +56,14 @@ The following fields are returned by `SELECT` queries:
     <td>Unique backup ID.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="backupName" /></td>
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string</code></td>
-    <td>Backup name on the external backup bucket.</td>
+    <td>Name  (wire: serviceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backup_name" /></td>
+    <td><code>string</code></td>
+    <td>Backup name on the external backup bucket. (wire: backupName)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bucket" /></td>
@@ -66,29 +71,24 @@ The following fields are returned by `SELECT` queries:
     <td>Backup bucket where the backup is stored.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="durationInSeconds" /></td>
+    <td><CopyableCode code="duration_in_seconds" /></td>
     <td><code>number</code></td>
-    <td>Time in seconds it took to perform the backup. If the status still in_progress, this is the time in seconds since the backup started until now.</td>
+    <td>Time in seconds it took to perform the backup. If the status still in_progress, this is the time in seconds since the backup started until now. (wire: durationInSeconds)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="finishedAt" /></td>
+    <td><CopyableCode code="finished_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Backup finish timestamp. ISO-8601. Available only for finished backups</td>
+    <td>Backup finish timestamp. ISO-8601. Available only for finished backups (wire: finishedAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string</code></td>
-    <td>Name </td>
-</tr>
-<tr>
-    <td><CopyableCode code="sizeInBytes" /></td>
+    <td><CopyableCode code="size_in_bytes" /></td>
     <td><code>number</code></td>
-    <td>Size of the backup in bytes.</td>
+    <td>Size of the backup in bytes. (wire: sizeInBytes)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="startedAt" /></td>
+    <td><CopyableCode code="started_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Backup start timestamp. ISO-8601.</td>
+    <td>Backup start timestamp. ISO-8601. (wire: startedAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -120,9 +120,14 @@ The following fields are returned by `SELECT` queries:
     <td>Unique backup ID.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="backupName" /></td>
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string</code></td>
-    <td>Backup name on the external backup bucket.</td>
+    <td>Name  (wire: serviceId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="backup_name" /></td>
+    <td><code>string</code></td>
+    <td>Backup name on the external backup bucket. (wire: backupName)</td>
 </tr>
 <tr>
     <td><CopyableCode code="bucket" /></td>
@@ -130,29 +135,24 @@ The following fields are returned by `SELECT` queries:
     <td>Backup bucket where the backup is stored.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="durationInSeconds" /></td>
+    <td><CopyableCode code="duration_in_seconds" /></td>
     <td><code>number</code></td>
-    <td>Time in seconds it took to perform the backup. If the status still in_progress, this is the time in seconds since the backup started until now.</td>
+    <td>Time in seconds it took to perform the backup. If the status still in_progress, this is the time in seconds since the backup started until now. (wire: durationInSeconds)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="finishedAt" /></td>
+    <td><CopyableCode code="finished_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Backup finish timestamp. ISO-8601. Available only for finished backups</td>
+    <td>Backup finish timestamp. ISO-8601. Available only for finished backups (wire: finishedAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="serviceId" /></td>
-    <td><code>string</code></td>
-    <td>Name </td>
-</tr>
-<tr>
-    <td><CopyableCode code="sizeInBytes" /></td>
+    <td><CopyableCode code="size_in_bytes" /></td>
     <td><code>number</code></td>
-    <td>Size of the backup in bytes.</td>
+    <td>Size of the backup in bytes. (wire: sizeInBytes)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="startedAt" /></td>
+    <td><CopyableCode code="started_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Backup start timestamp. ISO-8601.</td>
+    <td>Backup start timestamp. ISO-8601. (wire: startedAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="status" /></td>
@@ -187,14 +187,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-backupId"><code>backupId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-backup_id"><code>backup_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns a single backup info.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns a list of all backups for the service. The most recent backups comes first in the list.</td>
 </tr>
@@ -214,20 +214,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-backupId">
-    <td><CopyableCode code="backupId" /></td>
+<tr id="parameter-backup_id">
+    <td><CopyableCode code="backup_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested backup.</td>
+    <td>ID of the requested backup. (wire: backupId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the service the backup was created from.</td>
+    <td>ID of the service the backup was created from. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -248,18 +248,18 @@ Returns a single backup info.
 ```sql
 SELECT
 id,
-backupName,
+service_id,
+backup_name,
 bucket,
-durationInSeconds,
-finishedAt,
-serviceId,
-sizeInBytes,
-startedAt,
+duration_in_seconds,
+finished_at,
+size_in_bytes,
+started_at,
 status,
 type
 FROM clickhouse.backups.backups
-WHERE serviceId = '{{ serviceId }}' -- required
-AND backupId = '{{ backupId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
+AND backup_id = '{{ backup_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -271,17 +271,17 @@ Returns a list of all backups for the service. The most recent backups comes fir
 ```sql
 SELECT
 id,
-backupName,
+service_id,
+backup_name,
 bucket,
-durationInSeconds,
-finishedAt,
-serviceId,
-sizeInBytes,
-startedAt,
+duration_in_seconds,
+finished_at,
+size_in_bytes,
+started_at,
 status,
 type
 FROM clickhouse.backups.backups
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

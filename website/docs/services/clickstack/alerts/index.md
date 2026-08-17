@@ -61,29 +61,44 @@ The following fields are returned by `SELECT` queries:
     <td>Human-friendly alert name. (example: Test Alert)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="dashboard_id" /></td>
+    <td><code>string</code></td>
+    <td>Dashboard ID for tile-based alerts. (example: 65f5e4a3b9e77c001a567890) (wire: dashboardId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="saved_search_id" /></td>
+    <td><code>string</code></td>
+    <td>Saved search ID for saved_search alerts. (example: 65f5e4a3b9e77c001a345678) (wire: savedSearchId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="team_id" /></td>
+    <td><code>string</code></td>
+    <td>Team identifier. (example: 65f5e4a3b9e77c001a345678) (wire: teamId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tile_id" /></td>
+    <td><code>string</code></td>
+    <td>Tile ID for tile-based alerts. Must be a line, stacked bar, or number type tile. (example: 65f5e4a3b9e77c001a901234) (wire: tileId)</td>
+</tr>
+<tr>
     <td><CopyableCode code="channel" /></td>
     <td><code>object</code></td>
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp. (example: 2023-01-01T00:00:00.000Z)</td>
+    <td>Creation timestamp. (example: 2023-01-01T00:00:00.000Z) (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="dashboardId" /></td>
-    <td><code>string</code></td>
-    <td>Dashboard ID for tile-based alerts. (example: 65f5e4a3b9e77c001a567890)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="executionErrors" /></td>
+    <td><CopyableCode code="execution_errors" /></td>
     <td><code>array</code></td>
-    <td>Errors recorded during the most recent alert execution, if any.</td>
+    <td>Errors recorded during the most recent alert execution, if any. (wire: executionErrors)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="groupBy" /></td>
+    <td><CopyableCode code="group_by" /></td>
     <td><code>string</code></td>
-    <td>Group-by key for saved search alerts. (example: ServiceName)</td>
+    <td>Group-by key for saved search alerts. (example: ServiceName) (wire: groupBy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="interval" /></td>
@@ -101,24 +116,19 @@ The following fields are returned by `SELECT` queries:
     <td>Freeform note for the alert. Supports markdown formatting. (example: Threshold raised from 50 to 100 on 2026-01-15. See &#91;runbook&#93;(https:​//wiki.example.com/runbook).)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="numConsecutiveWindows" /></td>
+    <td><CopyableCode code="num_consecutive_windows" /></td>
     <td><code>integer</code></td>
-    <td>Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state.</td>
+    <td>Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state. (wire: numConsecutiveWindows)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedSearchId" /></td>
-    <td><code>string</code></td>
-    <td>Saved search ID for saved_search alerts. (example: 65f5e4a3b9e77c001a345678)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="scheduleOffsetMinutes" /></td>
+    <td><CopyableCode code="schedule_offset_minutes" /></td>
     <td><code>integer</code></td>
-    <td>Offset from the interval boundary in minutes. For example, 2 with a 5m interval evaluates windows at :02, :07, :12, etc. (UTC).</td>
+    <td>Offset from the interval boundary in minutes. For example, 2 with a 5m interval evaluates windows at :02, :07, :12, etc. (UTC). (wire: scheduleOffsetMinutes)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="scheduleStartAt" /></td>
+    <td><CopyableCode code="schedule_start_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Absolute UTC start time anchor. Alert windows start from this timestamp and repeat every interval. (example: 2026-02-08T10:00:00.000Z)</td>
+    <td>Absolute UTC start time anchor. Alert windows start from this timestamp and repeat every interval. (example: 2026-02-08T10:00:00.000Z) (wire: scheduleStartAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="silenced" /></td>
@@ -136,34 +146,24 @@ The following fields are returned by `SELECT` queries:
     <td>Current alert state. (ALERT, OK, INSUFFICIENT_DATA, DISABLED, PENDING) (example: ALERT)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="teamId" /></td>
-    <td><code>string</code></td>
-    <td>Team identifier. (example: 65f5e4a3b9e77c001a345678)</td>
-</tr>
-<tr>
     <td><CopyableCode code="threshold" /></td>
     <td><code>number</code></td>
     <td>Threshold value for triggering the alert. For between and not_between threshold types, this is the lower bound.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="thresholdMax" /></td>
+    <td><CopyableCode code="threshold_max" /></td>
     <td><code>number</code></td>
-    <td>Upper bound for between and not_between threshold types. Required when thresholdType is between or not_between, must be &gt;= threshold.</td>
+    <td>Upper bound for between and not_between threshold types. Required when thresholdType is between or not_between, must be &gt;= threshold. (wire: thresholdMax)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="thresholdType" /></td>
+    <td><CopyableCode code="threshold_type" /></td>
     <td><code>string</code></td>
-    <td>Threshold comparison direction. (above, below, above_exclusive, below_or_equal, equal, not_equal, between, not_between) (example: above)</td>
+    <td>Threshold comparison direction. (above, below, above_exclusive, below_or_equal, equal, not_equal, between, not_between) (example: above) (wire: thresholdType)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="tileId" /></td>
-    <td><code>string</code></td>
-    <td>Tile ID for tile-based alerts. Must be a line, stacked bar, or number type tile. (example: 65f5e4a3b9e77c001a901234)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last update timestamp. (example: 2023-01-01T00:00:00.000Z)</td>
+    <td>Last update timestamp. (example: 2023-01-01T00:00:00.000Z) (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -190,29 +190,44 @@ The following fields are returned by `SELECT` queries:
     <td>Human-friendly alert name. (example: Test Alert)</td>
 </tr>
 <tr>
+    <td><CopyableCode code="dashboard_id" /></td>
+    <td><code>string</code></td>
+    <td>Dashboard ID for tile-based alerts. (example: 65f5e4a3b9e77c001a567890) (wire: dashboardId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="saved_search_id" /></td>
+    <td><code>string</code></td>
+    <td>Saved search ID for saved_search alerts. (example: 65f5e4a3b9e77c001a345678) (wire: savedSearchId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="team_id" /></td>
+    <td><code>string</code></td>
+    <td>Team identifier. (example: 65f5e4a3b9e77c001a345678) (wire: teamId)</td>
+</tr>
+<tr>
+    <td><CopyableCode code="tile_id" /></td>
+    <td><code>string</code></td>
+    <td>Tile ID for tile-based alerts. Must be a line, stacked bar, or number type tile. (example: 65f5e4a3b9e77c001a901234) (wire: tileId)</td>
+</tr>
+<tr>
     <td><CopyableCode code="channel" /></td>
     <td><code>object</code></td>
     <td></td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Creation timestamp. (example: 2023-01-01T00:00:00.000Z)</td>
+    <td>Creation timestamp. (example: 2023-01-01T00:00:00.000Z) (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="dashboardId" /></td>
-    <td><code>string</code></td>
-    <td>Dashboard ID for tile-based alerts. (example: 65f5e4a3b9e77c001a567890)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="executionErrors" /></td>
+    <td><CopyableCode code="execution_errors" /></td>
     <td><code>array</code></td>
-    <td>Errors recorded during the most recent alert execution, if any.</td>
+    <td>Errors recorded during the most recent alert execution, if any. (wire: executionErrors)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="groupBy" /></td>
+    <td><CopyableCode code="group_by" /></td>
     <td><code>string</code></td>
-    <td>Group-by key for saved search alerts. (example: ServiceName)</td>
+    <td>Group-by key for saved search alerts. (example: ServiceName) (wire: groupBy)</td>
 </tr>
 <tr>
     <td><CopyableCode code="interval" /></td>
@@ -230,24 +245,19 @@ The following fields are returned by `SELECT` queries:
     <td>Freeform note for the alert. Supports markdown formatting. (example: Threshold raised from 50 to 100 on 2026-01-15. See &#91;runbook&#93;(https:​//wiki.example.com/runbook).)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="numConsecutiveWindows" /></td>
+    <td><CopyableCode code="num_consecutive_windows" /></td>
     <td><code>integer</code></td>
-    <td>Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state.</td>
+    <td>Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state. (wire: numConsecutiveWindows)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="savedSearchId" /></td>
-    <td><code>string</code></td>
-    <td>Saved search ID for saved_search alerts. (example: 65f5e4a3b9e77c001a345678)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="scheduleOffsetMinutes" /></td>
+    <td><CopyableCode code="schedule_offset_minutes" /></td>
     <td><code>integer</code></td>
-    <td>Offset from the interval boundary in minutes. For example, 2 with a 5m interval evaluates windows at :02, :07, :12, etc. (UTC).</td>
+    <td>Offset from the interval boundary in minutes. For example, 2 with a 5m interval evaluates windows at :02, :07, :12, etc. (UTC). (wire: scheduleOffsetMinutes)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="scheduleStartAt" /></td>
+    <td><CopyableCode code="schedule_start_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Absolute UTC start time anchor. Alert windows start from this timestamp and repeat every interval. (example: 2026-02-08T10:00:00.000Z)</td>
+    <td>Absolute UTC start time anchor. Alert windows start from this timestamp and repeat every interval. (example: 2026-02-08T10:00:00.000Z) (wire: scheduleStartAt)</td>
 </tr>
 <tr>
     <td><CopyableCode code="silenced" /></td>
@@ -265,34 +275,24 @@ The following fields are returned by `SELECT` queries:
     <td>Current alert state. (ALERT, OK, INSUFFICIENT_DATA, DISABLED, PENDING) (example: ALERT)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="teamId" /></td>
-    <td><code>string</code></td>
-    <td>Team identifier. (example: 65f5e4a3b9e77c001a345678)</td>
-</tr>
-<tr>
     <td><CopyableCode code="threshold" /></td>
     <td><code>number</code></td>
     <td>Threshold value for triggering the alert. For between and not_between threshold types, this is the lower bound.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="thresholdMax" /></td>
+    <td><CopyableCode code="threshold_max" /></td>
     <td><code>number</code></td>
-    <td>Upper bound for between and not_between threshold types. Required when thresholdType is between or not_between, must be &gt;= threshold.</td>
+    <td>Upper bound for between and not_between threshold types. Required when thresholdType is between or not_between, must be &gt;= threshold. (wire: thresholdMax)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="thresholdType" /></td>
+    <td><CopyableCode code="threshold_type" /></td>
     <td><code>string</code></td>
-    <td>Threshold comparison direction. (above, below, above_exclusive, below_or_equal, equal, not_equal, between, not_between) (example: above)</td>
+    <td>Threshold comparison direction. (above, below, above_exclusive, below_or_equal, equal, not_equal, between, not_between) (example: above) (wire: thresholdType)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="tileId" /></td>
-    <td><code>string</code></td>
-    <td>Tile ID for tile-based alerts. Must be a line, stacked bar, or number type tile. (example: 65f5e4a3b9e77c001a901234)</td>
-</tr>
-<tr>
-    <td><CopyableCode code="updatedAt" /></td>
+    <td><CopyableCode code="updated_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>Last update timestamp. (example: 2023-01-01T00:00:00.000Z)</td>
+    <td>Last update timestamp. (example: 2023-01-01T00:00:00.000Z) (wire: updatedAt)</td>
 </tr>
 </tbody>
 </table>
@@ -317,35 +317,35 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackAlertId"><code>clickStackAlertId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_alert_id"><code>click_stack_alert_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a specific alert by ID</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-limit"><code>limit</code></a>, <a href="#parameter-offset"><code>offset</code></a></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves alerts for the authenticated team (paginated). Results are capped at `limit` (default and maximum 1000). When `totalCount` exceeds the number of returned items, page with `limit`/`offset` to retrieve them all.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Creates a new alert</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackAlertId"><code>clickStackAlertId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_alert_id"><code>click_stack_alert_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Updates an existing alert</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackAlertId"><code>clickStackAlertId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-click_stack_alert_id"><code>click_stack_alert_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes an alert</td>
 </tr>
@@ -365,20 +365,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-clickStackAlertId">
-    <td><CopyableCode code="clickStackAlertId" /></td>
+<tr id="parameter-click_stack_alert_id">
+    <td><CopyableCode code="click_stack_alert_id" /></td>
     <td><code>string</code></td>
-    <td>ClickStack Alert ID</td>
+    <td>ClickStack Alert ID (wire: clickStackAlertId)</td>
 </tr>
 <tr id="parameter-organization_id">
     <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the ClickStack service.</td>
+    <td>ID of the ClickStack service. (wire: serviceId)</td>
 </tr>
 <tr id="parameter-limit">
     <td><CopyableCode code="limit" /></td>
@@ -410,30 +410,30 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 SELECT
 id,
 name,
+dashboard_id,
+saved_search_id,
+team_id,
+tile_id,
 channel,
-createdAt,
-dashboardId,
-executionErrors,
-groupBy,
+created_at,
+execution_errors,
+group_by,
 interval,
 message,
 note,
-numConsecutiveWindows,
-savedSearchId,
-scheduleOffsetMinutes,
-scheduleStartAt,
+num_consecutive_windows,
+schedule_offset_minutes,
+schedule_start_at,
 silenced,
 source,
 state,
-teamId,
 threshold,
-thresholdMax,
-thresholdType,
-tileId,
-updatedAt
+threshold_max,
+threshold_type,
+updated_at
 FROM clickhouse.clickstack.alerts
-WHERE serviceId = '{{ serviceId }}' -- required
-AND clickStackAlertId = '{{ clickStackAlertId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
+AND click_stack_alert_id = '{{ click_stack_alert_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
@@ -446,29 +446,29 @@ AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_
 SELECT
 id,
 name,
+dashboard_id,
+saved_search_id,
+team_id,
+tile_id,
 channel,
-createdAt,
-dashboardId,
-executionErrors,
-groupBy,
+created_at,
+execution_errors,
+group_by,
 interval,
 message,
 note,
-numConsecutiveWindows,
-savedSearchId,
-scheduleOffsetMinutes,
-scheduleStartAt,
+num_consecutive_windows,
+schedule_offset_minutes,
+schedule_start_at,
 silenced,
 source,
 state,
-teamId,
 threshold,
-thresholdMax,
-thresholdType,
-tileId,
-updatedAt
+threshold_max,
+threshold_type,
+updated_at
 FROM clickhouse.clickstack.alerts
-WHERE serviceId = '{{ serviceId }}' -- required
+WHERE service_id = '{{ service_id }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 AND limit = '{{ limit }}'
 AND offset = '{{ offset }}'
@@ -493,46 +493,46 @@ AND offset = '{{ offset }}'
 
 ```sql
 INSERT INTO clickhouse.clickstack.alerts (
-dashboardId,
-tileId,
-savedSearchId,
-groupBy,
+dashboard_id,
+tile_id,
+saved_search_id,
+group_by,
 threshold,
-thresholdMax,
+threshold_max,
 interval,
-scheduleOffsetMinutes,
-scheduleStartAt,
+schedule_offset_minutes,
+schedule_start_at,
 source,
-thresholdType,
+threshold_type,
 channel,
 name,
 message,
 note,
-numConsecutiveWindows,
-serviceId,
+num_consecutive_windows,
+service_id,
 organization_id
 )
 SELECT 
-'{{ dashboardId }}',
-'{{ tileId }}',
-'{{ savedSearchId }}',
-'{{ groupBy }}',
+'{{ dashboard_id }}',
+'{{ tile_id }}',
+'{{ saved_search_id }}',
+'{{ group_by }}',
 {{ threshold }},
-{{ thresholdMax }},
+{{ threshold_max }},
 '{{ interval }}',
-{{ scheduleOffsetMinutes }},
-'{{ scheduleStartAt }}',
+{{ schedule_offset_minutes }},
+'{{ schedule_start_at }}',
 '{{ source }}',
-'{{ thresholdType }}',
+'{{ threshold_type }}',
 '{{ channel }}',
 '{{ name }}',
 '{{ message }}',
 '{{ note }}',
-{{ numConsecutiveWindows }},
-'{{ serviceId }}',
+{{ num_consecutive_windows }},
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -543,34 +543,34 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: alerts
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the alerts resource.
     - name: organization_id
       value: "{{ organization_id }}"
       description: Required parameter for the alerts resource.
-    - name: dashboardId
-      value: "{{ dashboardId }}"
+    - name: dashboard_id
+      value: "{{ dashboard_id }}"
       description: |
         Dashboard ID for tile-based alerts.
-    - name: tileId
-      value: "{{ tileId }}"
+    - name: tile_id
+      value: "{{ tile_id }}"
       description: |
         Tile ID for tile-based alerts. Must be a line, stacked bar, or number type tile.
-    - name: savedSearchId
-      value: "{{ savedSearchId }}"
+    - name: saved_search_id
+      value: "{{ saved_search_id }}"
       description: |
         Saved search ID for saved_search alerts.
-    - name: groupBy
-      value: "{{ groupBy }}"
+    - name: group_by
+      value: "{{ group_by }}"
       description: |
         Group-by key for saved search alerts.
     - name: threshold
       value: {{ threshold }}
       description: |
         Threshold value for triggering the alert. For between and not_between threshold types, this is the lower bound.
-    - name: thresholdMax
-      value: {{ thresholdMax }}
+    - name: threshold_max
+      value: {{ threshold_max }}
       description: |
         Upper bound for between and not_between threshold types. Required when thresholdType is between or not_between, must be >= threshold.
     - name: interval
@@ -578,12 +578,12 @@ status
       description: |
         Evaluation interval for the alert.
       valid_values: ['1m', '5m', '15m', '30m', '1h', '6h', '12h', '1d']
-    - name: scheduleOffsetMinutes
-      value: {{ scheduleOffsetMinutes }}
+    - name: schedule_offset_minutes
+      value: {{ schedule_offset_minutes }}
       description: |
         Offset from the interval boundary in minutes. For example, 2 with a 5m interval evaluates windows at :02, :07, :12, etc. (UTC).
-    - name: scheduleStartAt
-      value: "{{ scheduleStartAt }}"
+    - name: schedule_start_at
+      value: "{{ schedule_start_at }}"
       description: |
         Absolute UTC start time anchor. Alert windows start from this timestamp and repeat every interval.
     - name: source
@@ -591,8 +591,8 @@ status
       description: |
         Alert source type (tile-based or saved search).
       valid_values: ['saved_search', 'tile']
-    - name: thresholdType
-      value: "{{ thresholdType }}"
+    - name: threshold_type
+      value: "{{ threshold_type }}"
       description: |
         Threshold comparison direction.
       valid_values: ['above', 'below', 'above_exclusive', 'below_or_equal', 'equal', 'not_equal', 'between', 'not_between']
@@ -617,8 +617,8 @@ status
       value: "{{ note }}"
       description: |
         Freeform note for the alert. Supports markdown formatting.
-    - name: numConsecutiveWindows
-      value: {{ numConsecutiveWindows }}
+    - name: num_consecutive_windows
+      value: {{ num_consecutive_windows }}
       description: |
         Fire the alert only after its condition has been met for this many consecutive evaluation windows. While the condition is met but fewer than this many consecutive windows have violated, the alert is in the PENDING state.
 `}</CodeBlock>
@@ -642,28 +642,28 @@ status
 ```sql
 UPDATE clickhouse.clickstack.alerts
 SET 
-dashboardId = '{{ dashboardId }}',
-tileId = '{{ tileId }}',
-savedSearchId = '{{ savedSearchId }}',
-groupBy = '{{ groupBy }}',
+dashboard_id = '{{ dashboard_id }}',
+tile_id = '{{ tile_id }}',
+saved_search_id = '{{ saved_search_id }}',
+group_by = '{{ group_by }}',
 threshold = {{ threshold }},
-thresholdMax = {{ thresholdMax }},
+threshold_max = {{ threshold_max }},
 interval = '{{ interval }}',
-scheduleOffsetMinutes = {{ scheduleOffsetMinutes }},
-scheduleStartAt = '{{ scheduleStartAt }}',
+schedule_offset_minutes = {{ schedule_offset_minutes }},
+schedule_start_at = '{{ schedule_start_at }}',
 source = '{{ source }}',
-thresholdType = '{{ thresholdType }}',
+threshold_type = '{{ threshold_type }}',
 channel = '{{ channel }}',
 name = '{{ name }}',
 message = '{{ message }}',
 note = '{{ note }}',
-numConsecutiveWindows = {{ numConsecutiveWindows }}
+num_consecutive_windows = {{ num_consecutive_windows }}
 WHERE 
-serviceId = '{{ serviceId }}' --required
-AND clickStackAlertId = '{{ clickStackAlertId }}' --required
+service_id = '{{ service_id }}' --required
+AND click_stack_alert_id = '{{ click_stack_alert_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```
@@ -685,8 +685,8 @@ status;
 
 ```sql
 DELETE FROM clickhouse.clickstack.alerts
-WHERE serviceId = '{{ serviceId }}' --required
-AND clickStackAlertId = '{{ clickStackAlertId }}' --required
+WHERE service_id = '{{ service_id }}' --required
+AND click_stack_alert_id = '{{ click_stack_alert_id }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```

@@ -255,7 +255,7 @@ then `make smoke-public`.
 The doc microsite (`website/`) is Docusaurus 3.10 and follows the shared architecture used by the other provider microsites: navbar/footer/theme/plugin configuration lives in [`stackql/docusaurus-config`](https://github.com/stackql/docusaurus-config), vendored into `.shared-config/` at build time. Site-local files are limited to the provider identity (`website/provider.js`: `providerName = 'clickhouse'`, `providerTitle = 'ClickHouse Cloud'`), thin wrappers, the shared components/theme under `src/`, and static assets including `static/CNAME` (`clickhouse-provider.stackql.io`).
 
 ```bash
-make docs        # generate-docs from the generated provider + website/scripts/sanitize-docs.mjs
+make docs        # generate-docs --snake-case-aliases (provider-utils >= 0.7.8) + website/scripts/sanitize-docs.mjs
 make website     # yarn install && yarn build (vendors the shared config; needs GitHub access)
 make website-start
 ```

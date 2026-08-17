@@ -61,24 +61,24 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the organization.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="byocConfig" /></td>
+    <td><CopyableCode code="byoc_config" /></td>
     <td><code>array</code></td>
-    <td>BYOC configuration for the organization</td>
+    <td>BYOC configuration for the organization (wire: byocConfig)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>The timestamp the organization was created. ISO-8601.</td>
+    <td>The timestamp the organization was created. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="enableCoreDumps" /></td>
+    <td><CopyableCode code="enable_core_dumps" /></td>
     <td><code>boolean</code></td>
-    <td>Whether crash reports (core dumps) collection is enabled for services in the organization. When disabled at the organization level, individual services cannot enable crash reports.</td>
+    <td>Whether crash reports (core dumps) collection is enabled for services in the organization. When disabled at the organization level, individual services cannot enable crash reports. (wire: enableCoreDumps)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="privateEndpoints" /></td>
+    <td><CopyableCode code="private_endpoints" /></td>
     <td><code>array</code></td>
-    <td>List of private endpoints for organization</td>
+    <td>List of private endpoints for organization (wire: privateEndpoints)</td>
 </tr>
 </tbody>
 </table>
@@ -105,24 +105,24 @@ The following fields are returned by `SELECT` queries:
     <td>Name of the organization.</td>
 </tr>
 <tr>
-    <td><CopyableCode code="byocConfig" /></td>
+    <td><CopyableCode code="byoc_config" /></td>
     <td><code>array</code></td>
-    <td>BYOC configuration for the organization</td>
+    <td>BYOC configuration for the organization (wire: byocConfig)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="createdAt" /></td>
+    <td><CopyableCode code="created_at" /></td>
     <td><code>string (date-time)</code></td>
-    <td>The timestamp the organization was created. ISO-8601.</td>
+    <td>The timestamp the organization was created. ISO-8601. (wire: createdAt)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="enableCoreDumps" /></td>
+    <td><CopyableCode code="enable_core_dumps" /></td>
     <td><code>boolean</code></td>
-    <td>Whether crash reports (core dumps) collection is enabled for services in the organization. When disabled at the organization level, individual services cannot enable crash reports.</td>
+    <td>Whether crash reports (core dumps) collection is enabled for services in the organization. When disabled at the organization level, individual services cannot enable crash reports. (wire: enableCoreDumps)</td>
 </tr>
 <tr>
-    <td><CopyableCode code="privateEndpoints" /></td>
+    <td><CopyableCode code="private_endpoints" /></td>
     <td><code>array</code></td>
-    <td>List of private endpoints for organization</td>
+    <td>List of private endpoints for organization (wire: privateEndpoints)</td>
 </tr>
 </tbody>
 </table>
@@ -211,10 +211,10 @@ Returns details of a single organization. In order to get the details, the auth 
 SELECT
 id,
 name,
-byocConfig,
-createdAt,
-enableCoreDumps,
-privateEndpoints
+byoc_config,
+created_at,
+enable_core_dumps,
+private_endpoints
 FROM clickhouse.organizations.organizations
 WHERE organizationId = '{{ organizationId }}' -- required
 AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
@@ -229,10 +229,10 @@ Returns a list with a single organization associated with the API key in the req
 SELECT
 id,
 name,
-byocConfig,
-createdAt,
-enableCoreDumps,
-privateEndpoints
+byoc_config,
+created_at,
+enable_core_dumps,
+private_endpoints
 FROM clickhouse.organizations.organizations
 ;
 ```
@@ -256,13 +256,13 @@ Updates organization fields. Requires ADMIN auth key role.
 UPDATE clickhouse.organizations.organizations
 SET 
 name = '{{ name }}',
-privateEndpoints = '{{ privateEndpoints }}',
-enableCoreDumps = {{ enableCoreDumps }}
+private_endpoints = '{{ private_endpoints }}',
+enable_core_dumps = {{ enable_core_dumps }}
 WHERE 
 organizationId = '{{ organizationId }}' --required
 AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
-requestId,
+request_id,
 result,
 status;
 ```

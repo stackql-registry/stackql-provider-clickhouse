@@ -53,7 +53,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
+    <td><a href="#parameter-service_id"><code>service_id</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Create a new private endpoint. The private endpoint will be associated with this service and organization</td>
 </tr>
@@ -78,10 +78,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
-<tr id="parameter-serviceId">
-    <td><CopyableCode code="serviceId" /></td>
+<tr id="parameter-service_id">
+    <td><CopyableCode code="service_id" /></td>
     <td><code>string (uuid)</code></td>
-    <td>ID of the requested service.</td>
+    <td>ID of the requested service. (wire: serviceId)</td>
 </tr>
 </tbody>
 </table>
@@ -103,16 +103,16 @@ Create a new private endpoint. The private endpoint will be associated with this
 INSERT INTO clickhouse.services.private_endpoints (
 id,
 description,
-serviceId,
+service_id,
 organization_id
 )
 SELECT 
 '{{ id }}',
 '{{ description }}',
-'{{ serviceId }}',
+'{{ service_id }}',
 '{{ organization_id }}'
 RETURNING
-requestId,
+request_id,
 result,
 status
 ;
@@ -123,8 +123,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: private_endpoints
   props:
-    - name: serviceId
-      value: "{{ serviceId }}"
+    - name: service_id
+      value: "{{ service_id }}"
       description: Required parameter for the private_endpoints resource.
     - name: organization_id
       value: "{{ organization_id }}"
