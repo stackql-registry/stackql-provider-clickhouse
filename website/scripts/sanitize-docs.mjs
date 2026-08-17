@@ -38,20 +38,20 @@ let orgScopeAnnotated = 0;
 // ---------------------------------------------------------------------------
 // clickhouse-specific: organization scope annotations
 //
-// The organizationId is an OpenAPI server variable resolved from
+// organization_id is an OpenAPI server variable resolved from
 // CLICKHOUSE_ORG_ID (x-stackQL-envVar). docgen merges server variables into
 // every method's required parameters and example WHERE clauses, which is
 // right only when the variable is unset. Two deterministic rewrites:
-//   1. every example `organizationId = '{{ organizationId }}' -- required`
-//      (and the EXEC `@organizationId=... --required` form) is annotated
+//   1. every example `organization_id = '{{ organization_id }}' -- required`
+//      (and the EXEC `@organization_id=... --required` form) is annotated
 //      "required unless CLICKHOUSE_ORG_ID is set";
 //   2. organizations.organizations `list` addresses GET /v1/organizations
 //      on a path-level server override with no variable at all, so its
-//      required-params cell and example lose organizationId entirely.
+//      required-params cell and example lose organization_id entirely.
 // ---------------------------------------------------------------------------
-const ORG_REQUIRED_SQL = /(organizationId\s*=\s*'\{\{ organizationId \}\}'\s*--\s*required)(?!\s+unless)/;
-const ORG_REQUIRED_EXEC = /(@organizationId='\{\{ organizationId \}\}'\s*--required)(?!\s+unless)/;
-const ORG_LINK = /<a href="#parameter-organizationId"><code>organizationId<\/code><\/a>/;
+const ORG_REQUIRED_SQL = /(organization_id\s*=\s*'\{\{ organization_id \}\}'\s*--\s*required)(?!\s+unless)/;
+const ORG_REQUIRED_EXEC = /(@organization_id='\{\{ organization_id \}\}'\s*--required)(?!\s+unless)/;
+const ORG_LINK = /<a href="#parameter-organization_id"><code>organization_id<\/code><\/a>/;
 
 function annotateOrgScope(lines, filePath) {
   let changed = false;
@@ -67,12 +67,12 @@ function annotateOrgScope(lines, filePath) {
       else if (/^<\/tr>/.test(line.trim())) inListRow = false;
       if (inListRow && ORG_LINK.test(line)) {
         // drop the organizationId token from the list method's required-params cell
-        lines[i] = line.replace(/,\s*<a href="#parameter-organizationId"><code>organizationId<\/code><\/a>/, '')
-          .replace(/<a href="#parameter-organizationId"><code>organizationId<\/code><\/a>,?\s*/, '');
+        lines[i] = line.replace(/,\s*<a href="#parameter-organization_id"><code>organization_id<\/code><\/a>/, '')
+          .replace(/<a href="#parameter-organization_id"><code>organization_id<\/code><\/a>,?\s*/, '');
         changed = true; orgScopeAnnotated++;
         continue;
       }
-      if (inListTab && /organizationId\s*=\s*'\{\{ organizationId \}\}'/.test(line)) {
+      if (inListTab && /organization_id\s*=\s*'\{\{ organization_id \}\}'/.test(line)) {
         // the list example needs no WHERE at all
         const prev = lines[i - 1] || '';
         lines.splice(i, 1);
@@ -238,4 +238,4 @@ function walk(dir) {
 }
 
 walk(docsDir);
-console.log(`sanitize-docs: escaped ${cellsEscaped} description cell(s) across ${filesChanged} file(s); ${orgScopeAnnotated} organizationId scope annotation(s)`);
+console.log(`sanitize-docs: escaped ${cellsEscaped} description cell(s) across ${filesChanged} file(s); ${orgScopeAnnotated} organization_id scope annotation(s)`);

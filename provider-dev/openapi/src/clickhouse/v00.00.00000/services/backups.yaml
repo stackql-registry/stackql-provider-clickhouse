@@ -7,9 +7,7 @@ paths:
   /services/{serviceId}/backups:
     get:
       summary: List of service backups
-      description: >-
-        Returns a list of all backups for the service. The most recent backups
-        comes first in the list.
+      description: Returns a list of all backups for the service. The most recent backups comes first in the list.
       operationId: backupGetList
       parameters:
         - in: path
@@ -40,9 +38,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Backup'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -60,9 +56,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -120,9 +114,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Backup'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -140,9 +132,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -193,9 +183,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/BackupConfiguration'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -213,9 +201,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -236,10 +222,7 @@ paths:
         - Backup
     patch:
       summary: Update service backup configuration
-      description: >-
-        Updates service backup configuration. Requires ADMIN auth key role.
-        Setting the properties with null value, will reset the properties to
-        theirs default values.
+      description: Updates service backup configuration. Requires ADMIN auth key role. Setting the properties with null value, will reset the properties to theirs default values.
       operationId: backupConfigurationUpdate
       parameters:
         - in: path
@@ -273,9 +256,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/BackupConfiguration'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -293,9 +274,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -317,10 +296,7 @@ paths:
   /services/{serviceId}/backupBucket:
     get:
       summary: Get service backup bucket
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns the service
-        backup bucket.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns the service backup bucket.'
       operationId: backupBucketGet
       parameters:
         - in: path
@@ -349,9 +325,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/BackupBucket'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -369,9 +343,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -395,10 +367,7 @@ paths:
           position: after
     post:
       summary: Create service backup bucket
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Create service backup
-        bucket. Requires ADMIN auth key role.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Create service backup bucket. Requires ADMIN auth key role.'
       operationId: backupBucketCreate
       parameters:
         - in: path
@@ -432,9 +401,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/BackupBucket'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -452,9 +419,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -478,11 +443,7 @@ paths:
           position: after
     patch:
       summary: Update service backup bucket
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Update service backup
-        bucket. Requires ADMIN auth key role. The secrets of the specified
-        bucket provider are always required
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Update service backup bucket. Requires ADMIN auth key role. The secrets of the specified bucket provider are always required'
       operationId: backupBucketUpdate
       parameters:
         - in: path
@@ -516,9 +477,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/BackupBucket'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -536,9 +495,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -562,10 +519,7 @@ paths:
           position: after
     delete:
       summary: Delete service backup bucket
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Delete service backup
-        bucket. Requires ADMIN auth key role.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Delete service backup bucket. Requires ADMIN auth key role.'
       operationId: backupBucketDelete
       parameters:
         - in: path
@@ -592,9 +546,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -612,9 +564,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -659,19 +609,14 @@ components:
           type: string
           format: date-time
         finishedAt:
-          description: >-
-            Backup finish timestamp. ISO-8601. Available only for finished
-            backups
+          description: Backup finish timestamp. ISO-8601. Available only for finished backups
           type: string
           format: date-time
         sizeInBytes:
           description: Size of the backup in bytes.
           type: number
         durationInSeconds:
-          description: >-
-            Time in seconds it took to perform the backup. If the status still
-            in_progress, this is the time in seconds since the backup started
-            until now.
+          description: Time in seconds it took to perform the backup. If the status still in_progress, this is the time in seconds since the backup started until now.
           type: number
         type:
           description: Backup type ("full" or "incremental").
@@ -713,16 +658,10 @@ components:
           description: The interval in hours between each backup.
           type: number
         backupRetentionPeriodInHours:
-          description: >-
-            The minimum duration in hours for which the backups are available.
-            Must be a whole number of days between 24 (1 day) and 1080 (45 days)
-            — i.e. a multiple of 24.
+          description: The minimum duration in hours for which the backups are available. Must be a whole number of days between 24 (1 day) and 1080 (45 days) — i.e. a multiple of 24.
           type: number
         backupStartTime:
-          description: >-
-            The time in HH:MM format for the backups to be performed (evaluated
-            in UTC timezone). When defined the backup period resets to every 24
-            hours.
+          description: The time in HH:MM format for the backups to be performed (evaluated in UTC timezone). When defined the backup period resets to every 24 hours.
           type: string
       type: object
     BackupConfigurationPatchRequest:
@@ -731,16 +670,10 @@ components:
           description: The interval in hours between each backup.
           type: number
         backupRetentionPeriodInHours:
-          description: >-
-            The minimum duration in hours for which the backups are available.
-            Must be a whole number of days between 24 (1 day) and 1080 (45 days)
-            — i.e. a multiple of 24.
+          description: The minimum duration in hours for which the backups are available. Must be a whole number of days between 24 (1 day) and 1080 (45 days) — i.e. a multiple of 24.
           type: number
         backupStartTime:
-          description: >-
-            The time in HH:MM format for the backups to be performed (evaluated
-            in UTC timezone). When defined the backup period resets to every 24
-            hours.
+          description: The time in HH:MM format for the backups to be performed (evaluated in UTC timezone). When defined the backup period resets to every 24 hours.
           type: string
       type: object
     BackupBucket:
@@ -1035,6 +968,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1services~1{serviceId}~1backups~1{backupId}/get'
@@ -1042,6 +977,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/backups/methods/get'
@@ -1062,6 +999,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -1071,13 +1010,14 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/backup_configurations/methods/get'
         insert: []
         update:
-          - $ref: >-
-              #/components/x-stackQL-resources/backup_configurations/methods/update
+          - $ref: '#/components/x-stackQL-resources/backup_configurations/methods/update'
         delete: []
         replace: []
     backup_buckets:
@@ -1092,6 +1032,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -1101,6 +1043,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -1110,12 +1054,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1services~1{serviceId}~1backupBucket/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/backup_buckets/methods/get'
@@ -1127,12 +1075,8 @@ components:
           - $ref: '#/components/x-stackQL-resources/backup_buckets/methods/delete'
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: >-
-          ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID
-          environment variable when it is set (x-stackQL-envVar); otherwise it
-          must be supplied on every query as WHERE organizationId = <uuid>. A
-          WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

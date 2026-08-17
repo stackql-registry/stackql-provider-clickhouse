@@ -487,49 +487,49 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns a service that belongs to the organization</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-filter"><code>filter</code></a></td>
     <td>Returns a list of all services in the organization.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Creates a new service in the organization, and returns the current service state and a password to access the service. The service is started asynchronously.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Updates basic service details like service name or IP access list.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Deletes the service. The service must be in stopped state and is deleted asynchronously after this method call.</td>
 </tr>
 <tr>
     <td><a href="#update_state"><CopyableCode code="update_state" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Starts or stop service</td>
 </tr>
 <tr>
     <td><a href="#update_password"><CopyableCode code="update_password" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Sets a new password for the service</td>
 </tr>
@@ -549,10 +549,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-serviceId">
     <td><CopyableCode code="serviceId" /></td>
@@ -624,7 +624,7 @@ tier,
 transparentDataEncryptionKeyId
 FROM clickhouse.services.services
 WHERE serviceId = '{{ serviceId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -675,7 +675,7 @@ tags,
 tier,
 transparentDataEncryptionKeyId
 FROM clickhouse.services.services
-WHERE organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 AND filter = '{{ filter }}'
 ;
 ```
@@ -728,7 +728,7 @@ profile,
 complianceType,
 tags,
 enableCoreDumps,
-organizationId
+organization_id
 )
 SELECT 
 '{{ name }}',
@@ -761,7 +761,7 @@ SELECT
 '{{ complianceType }}',
 '{{ tags }}',
 {{ enableCoreDumps }},
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -774,8 +774,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: services
   props:
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the services resource.
     - name: name
       value: "{{ name }}"
@@ -942,7 +942,7 @@ tags = '{{ tags }}',
 enableCoreDumps = {{ enableCoreDumps }}
 WHERE 
 serviceId = '{{ serviceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
 requestId,
 result,
@@ -967,7 +967,7 @@ Deletes the service. The service must be in stopped state and is deleted asynchr
 ```sql
 DELETE FROM clickhouse.services.services
 WHERE serviceId = '{{ serviceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -990,7 +990,7 @@ Starts or stop service
 ```sql
 EXEC clickhouse.services.services.update_state 
 @serviceId='{{ serviceId }}' --required, 
-@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@organization_id='{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set 
 @@json=
 '{
 "command": "{{ command }}"
@@ -1005,7 +1005,7 @@ Sets a new password for the service
 ```sql
 EXEC clickhouse.services.services.update_password 
 @serviceId='{{ serviceId }}' --required, 
-@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@organization_id='{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set 
 @@json=
 '{
 "newPasswordHash": "{{ newPasswordHash }}", 

@@ -2413,6 +2413,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1udfs~1{functionName}~1attachments~1{serviceId}/get'
@@ -2420,12 +2422,16 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1udfs~1{functionName}~1attachments~1{serviceId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         list:
           operation:
             $ref: '#/paths/~1udfs~1{functionName}~1attachments/get'
@@ -2433,6 +2439,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result.items
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/attachments/methods/get'
@@ -2457,6 +2465,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '201'
+          request:
+            nativeCasing: camel
         list:
           operation:
             $ref: '#/paths/~1udfs/get'
@@ -2464,12 +2474,16 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result.items
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1udfs~1{functionName}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1udfs~1{functionName}/get'
@@ -2477,6 +2491,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/functions/methods/get'
@@ -2498,6 +2514,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '201'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select: []
         insert:
@@ -2519,6 +2537,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '201'
+          request:
+            nativeCasing: camel
         list:
           operation:
             $ref: '#/paths/~1udfs~1{functionName}~1versions/get'
@@ -2526,12 +2546,16 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result.items
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1udfs~1{functionName}~1versions~1{version}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/versions/methods/list'
@@ -2542,10 +2566,10 @@ components:
           - $ref: '#/components/x-stackQL-resources/versions/methods/delete'
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = <uuid>. A WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID
 x-stackQL-config:
   pagination:

@@ -82,21 +82,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns the configuration data for a Postgres service and its PgBouncer service.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-pgConfig"><code>pgConfig</code></a>, <a href="#parameter-pgBouncerConfig"><code>pgBouncerConfig</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-pgConfig"><code>pgConfig</code></a>, <a href="#parameter-pgBouncerConfig"><code>pgBouncerConfig</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Replace the existing Postgres service and pgBouncer configuration.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-pgConfig"><code>pgConfig</code></a>, <a href="#parameter-pgBouncerConfig"><code>pgBouncerConfig</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-pgConfig"><code>pgConfig</code></a>, <a href="#parameter-pgBouncerConfig"><code>pgBouncerConfig</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Update the existing Postgres service and pgBouncer configuration.</td>
 </tr>
@@ -116,10 +116,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-postgresId">
     <td><CopyableCode code="postgresId" /></td>
@@ -147,7 +147,7 @@ pgBouncerConfig,
 pgConfig
 FROM clickhouse.postgres.configs
 WHERE postgresId = '{{ postgresId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -172,13 +172,13 @@ INSERT INTO clickhouse.postgres.configs (
 pgConfig,
 pgBouncerConfig,
 postgresId,
-organizationId
+organization_id
 )
 SELECT 
 '{{ pgConfig }}' /* required */,
 '{{ pgBouncerConfig }}' /* required */,
 '{{ postgresId }}',
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -194,8 +194,8 @@ status
     - name: postgresId
       value: "{{ postgresId }}"
       description: Required parameter for the configs resource.
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the configs resource.
     - name: pgConfig
       description: |
@@ -261,7 +261,7 @@ pgConfig = '{{ pgConfig }}',
 pgBouncerConfig = '{{ pgBouncerConfig }}'
 WHERE 
 postgresId = '{{ postgresId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND pgConfig = '{{ pgConfig }}' --required
 AND pgBouncerConfig = '{{ pgBouncerConfig }}' --required
 RETURNING

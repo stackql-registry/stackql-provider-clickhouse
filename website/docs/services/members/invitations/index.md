@@ -147,28 +147,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-invitationId"><code>invitationId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-invitationId"><code>invitationId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns details for a single organization invitation.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns list of all organization invitations.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Creates organization invitation.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-invitationId"><code>invitationId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-invitationId"><code>invitationId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Deletes a single organization invitation.</td>
 </tr>
@@ -193,10 +193,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (uuid)</code></td>
     <td>ID of the requested organization.</td>
 </tr>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 </tbody>
 </table>
@@ -224,7 +224,7 @@ expireAt,
 role
 FROM clickhouse.members.invitations
 WHERE invitationId = '{{ invitationId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -241,7 +241,7 @@ email,
 expireAt,
 role
 FROM clickhouse.members.invitations
-WHERE organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -266,13 +266,13 @@ INSERT INTO clickhouse.members.invitations (
 email,
 role,
 assignedRoleIds,
-organizationId
+organization_id
 )
 SELECT 
 '{{ email }}',
 '{{ role }}',
 '{{ assignedRoleIds }}',
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -285,8 +285,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: invitations
   props:
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the invitations resource.
     - name: email
       value: "{{ email }}"
@@ -323,7 +323,7 @@ Deletes a single organization invitation.
 ```sql
 DELETE FROM clickhouse.members.invitations
 WHERE invitationId = '{{ invitationId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>

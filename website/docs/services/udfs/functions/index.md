@@ -291,28 +291,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns the latest version of a UDF.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-cursor"><code>cursor</code></a>, <a href="#parameter-limit"><code>limit</code></a></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns the latest version of each UDF in the organization.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-uploadId"><code>uploadId</code></a>, <a href="#parameter-runtime"><code>runtime</code></a>, <a href="#parameter-arguments"><code>arguments</code></a>, <a href="#parameter-returnType"><code>returnType</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-functionName"><code>functionName</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-uploadId"><code>uploadId</code></a>, <a href="#parameter-runtime"><code>runtime</code></a>, <a href="#parameter-arguments"><code>arguments</code></a>, <a href="#parameter-returnType"><code>returnType</code></a>, <a href="#parameter-type"><code>type</code></a>, <a href="#parameter-functionName"><code>functionName</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Creates a new UDF. See &#91;User-defined functions in Cloud&#93;(https:​//clickhouse.com/docs/products/cloud/features/sql-console-features/user-defined-functions).</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Deletes every version of a UDF and detaches it from all services. Removal from services completes asynchronously.</td>
 </tr>
@@ -337,10 +337,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>Name of the UDF.</td>
 </tr>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-cursor">
     <td><CopyableCode code="cursor" /></td>
@@ -392,7 +392,7 @@ updatedAt,
 version
 FROM clickhouse.udfs.functions
 WHERE functionName = '{{ functionName }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -423,7 +423,7 @@ type,
 updatedAt,
 version
 FROM clickhouse.udfs.functions
-WHERE organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 AND cursor = '{{ cursor }}'
 AND limit = '{{ limit }}'
 ;
@@ -463,7 +463,7 @@ type,
 poolSize,
 maxCommandExecutionTime,
 functionName,
-organizationId
+organization_id
 )
 SELECT 
 '{{ uploadId }}' /* required */,
@@ -482,7 +482,7 @@ SELECT
 '{{ poolSize }}',
 '{{ maxCommandExecutionTime }}',
 '{{ functionName }}' /* required */,
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -495,8 +495,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: functions
   props:
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the functions resource.
     - name: uploadId
       value: "{{ uploadId }}"
@@ -568,7 +568,7 @@ status
 ```sql
 DELETE FROM clickhouse.udfs.functions
 WHERE functionName = '{{ functionName }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>

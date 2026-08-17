@@ -131,28 +131,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns the current attachment of a UDF to one service.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td><a href="#parameter-cursor"><code>cursor</code></a>, <a href="#parameter-limit"><code>limit</code></a></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Returns the current service attachments for a UDF, with at most one attachment per service.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Attaches one UDF version to a service, replacing the current version when necessary. When version is omitted, the latest ready version is attached.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-functionName"><code>functionName</code></a>, <a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**Disclaimer:** This beta endpoint is evolving; the API contract may change. &lt;br /&gt;&lt;br /&gt; Detaches a UDF from a service.</td>
 </tr>
@@ -177,10 +177,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>Name of the UDF.</td>
 </tr>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-serviceId">
     <td><CopyableCode code="serviceId" /></td>
@@ -222,7 +222,7 @@ version
 FROM clickhouse.udfs.attachments
 WHERE functionName = '{{ functionName }}' -- required
 AND serviceId = '{{ serviceId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -238,7 +238,7 @@ status,
 version
 FROM clickhouse.udfs.attachments
 WHERE functionName = '{{ functionName }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 AND cursor = '{{ cursor }}'
 AND limit = '{{ limit }}'
 ;
@@ -266,7 +266,7 @@ version = {{ version }}
 WHERE 
 functionName = '{{ functionName }}' --required
 AND serviceId = '{{ serviceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
 requestId,
 result,
@@ -292,7 +292,7 @@ status;
 DELETE FROM clickhouse.udfs.attachments
 WHERE functionName = '{{ functionName }}' --required
 AND serviceId = '{{ serviceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>

@@ -177,42 +177,42 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a specific dashboard by ID</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a list of all dashboards for the authenticated team</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Creates a new dashboard</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Updates an existing dashboard.  **Concurrency:** This endpoint does not support optimistic concurrency control. Concurrent PUT requests for the same dashboard may silently overwrite each other, which can leave orphan tile-to-container references on layout-shape edits. Clients should serialize edits to a given dashboard.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackDashboardId"><code>clickStackDashboardId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes a dashboard</td>
 </tr>
 <tr>
     <td><a href="#validate"><CopyableCode code="validate" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-tiles"><code>tiles</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Validates a dashboard body against the same schema and tile rules used by POST /api/v2/dashboards. The dashboard is **never persisted**. Use this endpoint at plan time (e.g. from a Terraform provider) to check that a dashboard configuration is valid before applying it.</td>
 </tr>
@@ -237,10 +237,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>ClickStack Dashboard ID</td>
 </tr>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-serviceId">
     <td><CopyableCode code="serviceId" /></td>
@@ -277,7 +277,7 @@ tiles
 FROM clickhouse.clickstack.dashboards
 WHERE serviceId = '{{ serviceId }}' -- required
 AND clickStackDashboardId = '{{ clickStackDashboardId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -298,7 +298,7 @@ tags,
 tiles
 FROM clickhouse.clickstack.dashboards
 WHERE serviceId = '{{ serviceId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -329,7 +329,7 @@ savedQueryLanguage,
 savedFilterValues,
 containers,
 serviceId,
-organizationId
+organization_id
 )
 SELECT 
 '{{ name }}' /* required */,
@@ -341,7 +341,7 @@ SELECT
 '{{ savedFilterValues }}',
 '{{ containers }}',
 '{{ serviceId }}',
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -357,8 +357,8 @@ status
     - name: serviceId
       value: "{{ serviceId }}"
       description: Required parameter for the dashboards resource.
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the dashboards resource.
     - name: name
       value: "{{ name }}"
@@ -523,7 +523,7 @@ containers = '{{ containers }}'
 WHERE 
 serviceId = '{{ serviceId }}' --required
 AND clickStackDashboardId = '{{ clickStackDashboardId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND name = '{{ name }}' --required
 AND tiles = '{{ tiles }}' --required
 RETURNING
@@ -551,7 +551,7 @@ status;
 DELETE FROM clickhouse.clickstack.dashboards
 WHERE serviceId = '{{ serviceId }}' --required
 AND clickStackDashboardId = '{{ clickStackDashboardId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -573,7 +573,7 @@ AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID 
 ```sql
 EXEC clickhouse.clickstack.dashboards.validate 
 @serviceId='{{ serviceId }}' --required, 
-@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@organization_id='{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set 
 @@json=
 '{
 "name": "{{ name }}", 

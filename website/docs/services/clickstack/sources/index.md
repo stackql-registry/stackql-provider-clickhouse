@@ -477,35 +477,35 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a specific source by ID</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Retrieves a list of all sources for the authenticated team</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-defaultTableSelectExpression"><code>defaultTableSelectExpression</code></a>, <a href="#parameter-timestampValueExpression"><code>timestampValueExpression</code></a>, <a href="#parameter-durationExpression"><code>durationExpression</code></a>, <a href="#parameter-durationPrecision"><code>durationPrecision</code></a>, <a href="#parameter-traceIdExpression"><code>traceIdExpression</code></a>, <a href="#parameter-spanIdExpression"><code>spanIdExpression</code></a>, <a href="#parameter-parentSpanIdExpression"><code>parentSpanIdExpression</code></a>, <a href="#parameter-spanNameExpression"><code>spanNameExpression</code></a>, <a href="#parameter-spanKindExpression"><code>spanKindExpression</code></a>, <a href="#parameter-metricTables"><code>metricTables</code></a>, <a href="#parameter-resourceAttributesExpression"><code>resourceAttributesExpression</code></a>, <a href="#parameter-traceSourceId"><code>traceSourceId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-defaultTableSelectExpression"><code>defaultTableSelectExpression</code></a>, <a href="#parameter-timestampValueExpression"><code>timestampValueExpression</code></a>, <a href="#parameter-durationExpression"><code>durationExpression</code></a>, <a href="#parameter-durationPrecision"><code>durationPrecision</code></a>, <a href="#parameter-traceIdExpression"><code>traceIdExpression</code></a>, <a href="#parameter-spanIdExpression"><code>spanIdExpression</code></a>, <a href="#parameter-parentSpanIdExpression"><code>parentSpanIdExpression</code></a>, <a href="#parameter-spanNameExpression"><code>spanNameExpression</code></a>, <a href="#parameter-spanKindExpression"><code>spanKindExpression</code></a>, <a href="#parameter-metricTables"><code>metricTables</code></a>, <a href="#parameter-resourceAttributesExpression"><code>resourceAttributesExpression</code></a>, <a href="#parameter-traceSourceId"><code>traceSourceId</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Creates a new source.  The request body is a source object without the `id` field. If an `id` is sent anyway it is silently ignored (stripped before validation — the request is never rejected because of it). Granularity fields (`materializedViews&#91;&#93;.minGranularity` and `metadataMaterializedViews.granularity`) accept the same short format the API returns (e.g. `5m`, `15s`, `1h`, `1d`).</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-defaultTableSelectExpression"><code>defaultTableSelectExpression</code></a>, <a href="#parameter-timestampValueExpression"><code>timestampValueExpression</code></a>, <a href="#parameter-durationExpression"><code>durationExpression</code></a>, <a href="#parameter-durationPrecision"><code>durationPrecision</code></a>, <a href="#parameter-traceIdExpression"><code>traceIdExpression</code></a>, <a href="#parameter-spanIdExpression"><code>spanIdExpression</code></a>, <a href="#parameter-parentSpanIdExpression"><code>parentSpanIdExpression</code></a>, <a href="#parameter-spanNameExpression"><code>spanNameExpression</code></a>, <a href="#parameter-spanKindExpression"><code>spanKindExpression</code></a>, <a href="#parameter-metricTables"><code>metricTables</code></a>, <a href="#parameter-resourceAttributesExpression"><code>resourceAttributesExpression</code></a>, <a href="#parameter-traceSourceId"><code>traceSourceId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-kind"><code>kind</code></a>, <a href="#parameter-connection"><code>connection</code></a>, <a href="#parameter-from"><code>from</code></a>, <a href="#parameter-defaultTableSelectExpression"><code>defaultTableSelectExpression</code></a>, <a href="#parameter-timestampValueExpression"><code>timestampValueExpression</code></a>, <a href="#parameter-durationExpression"><code>durationExpression</code></a>, <a href="#parameter-durationPrecision"><code>durationPrecision</code></a>, <a href="#parameter-traceIdExpression"><code>traceIdExpression</code></a>, <a href="#parameter-spanIdExpression"><code>spanIdExpression</code></a>, <a href="#parameter-parentSpanIdExpression"><code>parentSpanIdExpression</code></a>, <a href="#parameter-spanNameExpression"><code>spanNameExpression</code></a>, <a href="#parameter-spanKindExpression"><code>spanKindExpression</code></a>, <a href="#parameter-metricTables"><code>metricTables</code></a>, <a href="#parameter-resourceAttributesExpression"><code>resourceAttributesExpression</code></a>, <a href="#parameter-traceSourceId"><code>traceSourceId</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Updates an existing source. The full source object must be provided; this is a replace, not a patch.  The request body is a source object without the `id` field. If an `id` is sent anyway it is silently ignored (stripped before validation — never a 400); the path parameter alone identifies the source. Granularity fields (`materializedViews&#91;&#93;.minGranularity` and `metadataMaterializedViews.granularity`) accept the same short format the API returns (e.g. `5m`, `15s`, `1h`, `1d`).</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-clickStackSourceId"><code>clickStackSourceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; ClickStack: Deletes a source</td>
 </tr>
@@ -530,10 +530,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>Source ID</td>
 </tr>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-serviceId">
     <td><CopyableCode code="serviceId" /></td>
@@ -600,7 +600,7 @@ useTextIndexForImplicitColumn
 FROM clickhouse.clickstack.sources
 WHERE serviceId = '{{ serviceId }}' -- required
 AND clickStackSourceId = '{{ clickStackSourceId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -651,7 +651,7 @@ traceSourceId,
 useTextIndexForImplicitColumn
 FROM clickhouse.clickstack.sources
 WHERE serviceId = '{{ serviceId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -713,7 +713,7 @@ statusMessageExpression,
 spanEventsValueExpression,
 metricTables,
 serviceId,
-organizationId
+organization_id
 )
 SELECT 
 '{{ id }}',
@@ -756,7 +756,7 @@ SELECT
 '{{ spanEventsValueExpression }}',
 '{{ metricTables }}' /* required */,
 '{{ serviceId }}',
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -772,8 +772,8 @@ status
     - name: serviceId
       value: "{{ serviceId }}"
       description: Required parameter for the sources resource.
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the sources resource.
     - name: id
       value: "{{ id }}"
@@ -1018,7 +1018,7 @@ metricTables = '{{ metricTables }}'
 WHERE 
 serviceId = '{{ serviceId }}' --required
 AND clickStackSourceId = '{{ clickStackSourceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND name = '{{ name }}' --required
 AND kind = '{{ kind }}' --required
 AND connection = '{{ connection }}' --required
@@ -1060,7 +1060,7 @@ status;
 DELETE FROM clickhouse.clickstack.sources
 WHERE serviceId = '{{ serviceId }}' --required
 AND clickStackSourceId = '{{ clickStackSourceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>

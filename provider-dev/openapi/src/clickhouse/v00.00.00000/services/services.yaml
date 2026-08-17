@@ -12,9 +12,7 @@ paths:
       parameters:
         - in: query
           name: filter
-          description: >-
-            Filter criteria to apply when retrieving the resource. Currently,
-            only filtering by resource tags is supported.
+          description: Filter criteria to apply when retrieving the resource. Currently, only filtering by resource tags is supported.
           schema:
             type: array
             items:
@@ -44,9 +42,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Service'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -64,9 +60,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -87,10 +81,7 @@ paths:
         - Service
     post:
       summary: Create new service
-      description: >-
-        Creates a new service in the organization, and returns the current
-        service state and a password to access the service. The service is
-        started asynchronously.
+      description: Creates a new service in the organization, and returns the current service state and a password to access the service. The service is started asynchronously.
       operationId: instanceCreate
       parameters: []
       requestBody:
@@ -117,9 +108,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServicePostResponse'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -137,9 +126,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -190,9 +177,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Service'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -210,9 +195,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -267,9 +250,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Service'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -287,9 +268,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -310,9 +289,7 @@ paths:
         - Service
     delete:
       summary: Delete service
-      description: >-
-        Deletes the service. The service must be in stopped state and is deleted
-        asynchronously after this method call.
+      description: Deletes the service. The service must be in stopped state and is deleted asynchronously after this method call.
       operationId: instanceDelete
       parameters:
         - in: path
@@ -339,9 +316,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -359,9 +334,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -412,9 +385,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PrivateEndpointConfig'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -432,9 +403,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -456,9 +425,7 @@ paths:
   /services/{serviceId}/serviceQueryEndpoint:
     get:
       summary: Get the service query endpoint for a given instance
-      description: >-
-        Get the configuration for the service query endpoint that allows
-        executing queries via API.
+      description: Get the configuration for the service query endpoint that allows executing queries via API.
       operationId: instanceQueryEndpointGet
       parameters:
         - in: path
@@ -487,9 +454,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServiceQueryAPIEndpoint'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -507,9 +472,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -557,9 +520,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -577,9 +538,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -634,9 +593,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServiceQueryAPIEndpoint'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -654,9 +611,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -712,9 +667,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Service'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -732,9 +685,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -756,11 +707,7 @@ paths:
   /services/{serviceId}/scaling:
     patch:
       summary: Update service auto scaling settings
-      description: >-
-        Updates minimum and maximum total memory limits and idle mode scaling
-        behavior for the service. The memory settings are available only for
-        "production" services and must be a multiple of 12 starting from 24GB.
-        Please contact support to enable adjustment of numReplicas.
+      description: Updates minimum and maximum total memory limits and idle mode scaling behavior for the service. The memory settings are available only for "production" services and must be a multiple of 12 starting from 24GB. Please contact support to enable adjustment of numReplicas.
       operationId: instanceScalingUpdate
       parameters:
         - in: path
@@ -794,9 +741,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Service'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -814,9 +759,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -839,16 +782,7 @@ paths:
   /services/{serviceId}/replicaScaling:
     patch:
       summary: Update service auto scaling settings
-      description: >-
-        Updates minimum and maximum memory limits per replica and idle mode
-        scaling behavior for the service. Supports both vertical autoscaling
-        (fixed replica count, variable memory) and horizontal autoscaling
-        (variable replica count, fixed memory). The memory settings are
-        available only for "production" services and must be a multiple of 4
-        starting from 8GB. For vertical autoscaling, please contact support to
-        enable adjustment of numReplicas. For horizontal autoscaling
-        (autoscalingMode "horizontal" with minReplicas/maxReplicas), contact
-        support to enable the feature for your organization.
+      description: Updates minimum and maximum memory limits per replica and idle mode scaling behavior for the service. Supports both vertical autoscaling (fixed replica count, variable memory) and horizontal autoscaling (variable replica count, fixed memory). The memory settings are available only for "production" services and must be a multiple of 4 starting from 8GB. For vertical autoscaling, please contact support to enable adjustment of numReplicas. For horizontal autoscaling (autoscalingMode "horizontal" with minReplicas/maxReplicas), contact support to enable the feature for your organization.
       operationId: instanceReplicaScalingUpdate
       parameters:
         - in: path
@@ -882,9 +816,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServiceScalingPatchResponse'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -902,9 +834,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -960,9 +890,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServicePasswordPatchResponse'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -980,9 +908,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1004,9 +930,7 @@ paths:
   /services/{serviceId}/privateEndpoint:
     post:
       summary: Create a private endpoint
-      description: >-
-        Create a new private endpoint. The private endpoint will be associated
-        with this service and organization
+      description: Create a new private endpoint. The private endpoint will be associated with this service and organization
       operationId: instancePrivateEndpointCreate
       parameters:
         - in: path
@@ -1040,9 +964,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/InstancePrivateEndpoint'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1060,9 +982,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1108,9 +1028,7 @@ paths:
               schema:
                 type: string
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1128,9 +1046,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1152,12 +1068,7 @@ paths:
   /services/{serviceId}/scalingSchedule:
     get:
       summary: Get service autoscaling schedule
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Returns the autoscaling schedule for a service.
-        Returns 404 if no schedule has been configured or if the schedule was
-        cleared. Requires the scheduled autoscaling feature to be enabled for
-        the organization.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Returns the autoscaling schedule for a service. Returns 404 if no schedule has been configured or if the schedule was cleared. Requires the scheduled autoscaling feature to be enabled for the organization.'
       operationId: scalingScheduleGet
       parameters:
         - in: path
@@ -1186,9 +1097,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ScalingSchedule'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1206,9 +1115,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1232,15 +1139,7 @@ paths:
           position: after
     post:
       summary: Create or replace service autoscaling schedule
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Creates or fully replaces the autoscaling schedule
-        for a service. Pass an empty `entries` array to clear the schedule — a
-        subsequent GET will return 404, and the response will contain an empty
-        `baseConfig` (all fields absent). The base scaling config (applied when
-        no entry is active) is managed separately via the `replicaScaling`
-        endpoint. Requires the scheduled autoscaling feature to be enabled for
-        the organization.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Creates or fully replaces the autoscaling schedule for a service. Pass an empty `entries` array to clear the schedule — a subsequent GET will return 404, and the response will contain an empty `baseConfig` (all fields absent). The base scaling config (applied when no entry is active) is managed separately via the `replicaScaling` endpoint. Requires the scheduled autoscaling feature to be enabled for the organization.'
       operationId: scalingScheduleUpsert
       parameters:
         - in: path
@@ -1274,9 +1173,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ScalingSchedule'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1294,9 +1191,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1320,13 +1215,7 @@ paths:
           position: after
     delete:
       summary: Delete service scheduled scaling
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Deletes the autoscaling schedule for a service. If
-        a schedule entry is currently active, the base scaling config is
-        restored to the instance before the schedule is removed. Returns 404 if
-        no schedule exists. Requires the scheduled autoscaling feature to be
-        enabled for the organization.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Deletes the autoscaling schedule for a service. If a schedule entry is currently active, the base scaling config is restored to the instance before the schedule is removed. Returns 404 if no schedule exists. Requires the scheduled autoscaling feature to be enabled for the organization.'
       operationId: scalingScheduleDelete
       parameters:
         - in: path
@@ -1353,9 +1242,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1373,9 +1260,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1400,18 +1285,13 @@ paths:
   /services/{serviceId}/upgradeWindow:
     get:
       summary: Get service upgrade window
-      description: >-
+      description: |-
         Returns the configured upgrade window for a service.
 
-
         Errors:
-
         - 401: missing, invalid, or disabled API key.
-
         - 403: caller lacks `control-plane:service:view` on the service.
-
-        - 404: service does not exist, is not visible to the caller, or no
-        upgrade window has been configured.
+        - 404: service does not exist, is not visible to the caller, or no upgrade window has been configured.
       operationId: upgradeWindowGet
       parameters:
         - in: path
@@ -1440,9 +1320,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/UpgradeWindow'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1460,9 +1338,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1483,23 +1359,13 @@ paths:
         - Service
     put:
       summary: Set service upgrade window
-      description: >-
-        Creates or fully replaces the upgrade window for a service. The upgrade
-        window currently lasts 6 hours from `startHourUtc`. The upgrade window
-        can only be set on primary services; secondary services inherit the
-        primary service window.
-
+      description: |-
+        Creates or fully replaces the upgrade window for a service. The upgrade window currently lasts 6 hours from `startHourUtc`. The upgrade window can only be set on primary services; secondary services inherit the primary service window.
 
         Errors:
-
-        - 400: invalid field values (`weekday` not in 0–6, `startHourUtc` not in
-        {0, 6, 12, 18}), or the service is a secondary service.
-
+        - 400: invalid field values (`weekday` not in 0–6, `startHourUtc` not in {0, 6, 12, 18}), or the service is a secondary service.
         - 401: missing, invalid, or disabled API key.
-
-        - 403: caller lacks `control-plane:service:manage` on the service, or
-        the organization does not have the scheduled upgrades feature enabled.
-
+        - 403: caller lacks `control-plane:service:manage` on the service, or the organization does not have the scheduled upgrades feature enabled.
         - 404: service does not exist or is not visible to the caller.
       operationId: upgradeWindowUpdate
       parameters:
@@ -1534,9 +1400,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/UpgradeWindow'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1554,9 +1418,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1577,24 +1439,14 @@ paths:
         - Service
     delete:
       summary: Delete service upgrade window
-      description: >-
-        Deletes the upgrade window for a service, restoring the default
-        scheduling behaviour. The upgrade window can only be deleted on primary
-        services. Deletion succeeds even if the organization has lost the
-        scheduled upgrades entitlement, so a window can be cleared after
-        entitlement loss.
-
+      description: |-
+        Deletes the upgrade window for a service, restoring the default scheduling behaviour. The upgrade window can only be deleted on primary services. Deletion succeeds even if the organization has lost the scheduled upgrades entitlement, so a window can be cleared after entitlement loss.
 
         Errors:
-
         - 400: the service is a secondary service.
-
         - 401: missing, invalid, or disabled API key.
-
         - 403: caller lacks `control-plane:service:manage` on the service.
-
-        - 404: service does not exist, is not visible to the caller, or no
-        upgrade window is configured.
+        - 404: service does not exist, is not visible to the caller, or no upgrade window is configured.
       operationId: upgradeWindowDelete
       parameters:
         - in: path
@@ -1621,9 +1473,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1641,9 +1491,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1665,10 +1513,7 @@ paths:
   /services/{serviceId}/clickhouseSettings:
     get:
       summary: List ClickHouse settings
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Returns the configured ClickHouse settings for the
-        service. Only settings that have been explicitly set are included.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Returns the configured ClickHouse settings for the service. Only settings that have been explicitly set are included.'
       operationId: serviceClickhouseSettingsListGet
       parameters:
         - in: path
@@ -1697,9 +1542,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServiceClickhouseSettingsList'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1717,9 +1560,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1743,14 +1584,7 @@ paths:
           position: after
     patch:
       summary: Update ClickHouse settings
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Updates one or more ClickHouse settings for the
-        service. To reset a setting to its platform default, use the [DELETE
-        single setting](#tag/Service/operation/serviceClickhouseSettingDelete)
-        endpoint. Use the [schema
-        endpoint](#tag/Service/operation/serviceClickhouseSettingsSchemaGet) to
-        discover which settings are configurable.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Updates one or more ClickHouse settings for the service. To reset a setting to its platform default, use the [DELETE single setting](#tag/Service/operation/serviceClickhouseSettingDelete) endpoint. Use the [schema endpoint](#tag/Service/operation/serviceClickhouseSettingsSchemaGet) to discover which settings are configurable.'
       operationId: serviceClickhouseSettingsUpdate
       parameters:
         - in: path
@@ -1782,12 +1616,9 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
                   result:
-                    $ref: >-
-                      #/components/schemas/ServiceClickhouseSettingsPatchResponse
+                    $ref: '#/components/schemas/ServiceClickhouseSettingsPatchResponse'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1805,9 +1636,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1832,10 +1661,7 @@ paths:
   /services/{serviceId}/clickhouseSettings/schema:
     get:
       summary: Get ClickHouse settings schema
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Returns the schema of all configurable ClickHouse
-        settings, including types, valid values, descriptions, and warnings.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Returns the schema of all configurable ClickHouse settings, including types, valid values, descriptions, and warnings.'
       operationId: serviceClickhouseSettingsSchemaGet
       parameters:
         - in: path
@@ -1864,9 +1690,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServiceClickhouseSettingsSchema'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1884,9 +1708,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1911,12 +1733,7 @@ paths:
   /services/{serviceId}/clickhouseSettings/{settingName}:
     get:
       summary: Get ClickHouse setting
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Returns the current value of a ClickHouse setting
-        for the service. Use the [schema
-        endpoint](#tag/Service/operation/serviceClickhouseSettingsSchemaGet) to
-        discover which settings are configurable.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Returns the current value of a ClickHouse setting for the service. Use the [schema endpoint](#tag/Service/operation/serviceClickhouseSettingsSchemaGet) to discover which settings are configurable.'
       operationId: serviceClickhouseSettingGet
       parameters:
         - in: path
@@ -1951,9 +1768,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ServiceClickhouseSetting'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1971,9 +1786,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1997,15 +1810,7 @@ paths:
           position: after
     delete:
       summary: Reset ClickHouse setting to default
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Removes a previously-configured ClickHouse setting,
-        reverting its effective value to the platform default. Settings under
-        `spec.extraConfig.server.*` (e.g. `keep_alive_timeout`,
-        `shared_merge_tree_disable_merges_and_mutations_assignment`) trigger a
-        ClickHouse server rollout restart; other settings propagate to all
-        replicas after a short delay. Deleting a setting that was never
-        configured is a no-op (200 OK).
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Removes a previously-configured ClickHouse setting, reverting its effective value to the platform default. Settings under `spec.extraConfig.server.*` (e.g. `keep_alive_timeout`, `shared_merge_tree_disable_merges_and_mutations_assignment`) trigger a ClickHouse server rollout restart; other settings propagate to all replicas after a short delay. Deleting a setting that was never configured is a no-op (200 OK).'
       operationId: serviceClickhouseSettingDelete
       parameters:
         - in: path
@@ -2038,9 +1843,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -2058,9 +1861,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -2091,9 +1892,7 @@ components:
           type: string
           format: uuid
         name:
-          description: >-
-            Name of the service. Alphanumerical string with whitespaces up to 50
-            characters.
+          description: Name of the service. Alphanumerical string with whitespaces up to 50 characters.
           type: string
           maxLength: 50
           minLength: 1
@@ -2159,19 +1958,7 @@ components:
           items:
             $ref: '#/components/schemas/ServiceEndpoint'
         tier:
-          description: >-
-            DEPRECATED for BASIC, SCALE and ENTERPRISE organization tiers. Use
-            `minReplicaMemoryGb`, `maxReplicaMemoryGb`, and `numReplicas`
-            instead. Tier of the service: 'development', 'production',
-            'dedicated_high_mem', 'dedicated_high_cpu', 'dedicated_standard',
-            'dedicated_standard_n2d_standard_4',
-            'dedicated_standard_n2d_standard_8',
-            'dedicated_standard_n2d_standard_32',
-            'dedicated_standard_n2d_standard_128',
-            'dedicated_standard_n2d_standard_32_16SSD',
-            'dedicated_standard_n2d_standard_64_24SSD'. Production services
-            scale, Development are fixed size. Azure services don't support
-            Development tier
+          description: 'DEPRECATED for BASIC, SCALE and ENTERPRISE organization tiers. Use `minReplicaMemoryGb`, `maxReplicaMemoryGb`, and `numReplicas` instead. Tier of the service: ''development'', ''production'', ''dedicated_high_mem'', ''dedicated_high_cpu'', ''dedicated_standard'', ''dedicated_standard_n2d_standard_4'', ''dedicated_standard_n2d_standard_8'', ''dedicated_standard_n2d_standard_32'', ''dedicated_standard_n2d_standard_128'', ''dedicated_standard_n2d_standard_32_16SSD'', ''dedicated_standard_n2d_standard_64_24SSD''. Production services scale, Development are fixed size. Azure services don''t support Development tier'
           type: string
           enum:
             - development
@@ -2187,13 +1974,7 @@ components:
             - dedicated_standard_n2d_standard_64_24SSD
           deprecated: true
         minTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and greater than or equal to 24.
-            Always absent for horizontal-autoscaling services (replica count is
-            variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and greater than or equal to 24. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -2201,13 +1982,7 @@ components:
           example: 48
           deprecated: true
         maxTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and lower than or equal to 360
-            for non paid services or 1068 for paid services. Always absent for
-            horizontal-autoscaling services (replica count is variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and lower than or equal to 360 for non paid services or 1068 for paid services. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -2215,88 +1990,53 @@ components:
           example: 360
           deprecated: true
         minReplicaMemoryGb:
-          description: >-
-            Minimum total memory of each replica during auto-scaling in Gb. A
-            range in vertical autoscaling; equal to maxReplicaMemoryGb in
-            horizontal (memory is fixed while the replica count scales). Must be
-            a multiple of 4 and greater than or equal to 8.
+          description: Minimum total memory of each replica during auto-scaling in Gb. A range in vertical autoscaling; equal to maxReplicaMemoryGb in horizontal (memory is fixed while the replica count scales). Must be a multiple of 4 and greater than or equal to 8.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 16
         maxReplicaMemoryGb:
-          description: >-
-            Maximum total memory of each replica during auto-scaling in Gb. A
-            range in vertical autoscaling; equal to minReplicaMemoryGb in
-            horizontal (memory is fixed while the replica count scales). Must be
-            a multiple of 4 and lower than or equal to 120* for non paid
-            services or 356* for paid services.* - maximum replica size subject
-            to cloud provider hardware availability in your selected region. 
+          description: 'Maximum total memory of each replica during auto-scaling in Gb. A range in vertical autoscaling; equal to minReplicaMemoryGb in horizontal (memory is fixed while the replica count scales). Must be a multiple of 4 and lower than or equal to 120* for non paid services or 356* for paid services.* - maximum replica size subject to cloud provider hardware availability in your selected region. '
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 120
         numReplicas:
-          description: >-
-            Number of replicas for the service. The number of replicas must be
-            between 2 and 20 for the first service in a warehouse. Services that
-            are created in an existing warehouse can have a number of replicas
-            as low as 1. Further restrictions may apply based on your
-            organization's tier. It defaults to 1 for the BASIC tier and 3 for
-            the SCALE and ENTERPRISE tiers. Present only when the service uses
-            vertical autoscaling. For horizontal autoscaling, use minReplicas
-            and maxReplicas instead.
+          description: Number of replicas for the service. The number of replicas must be between 2 and 20 for the first service in a warehouse. Services that are created in an existing warehouse can have a number of replicas as low as 1. Further restrictions may apply based on your organization's tier. It defaults to 1 for the BASIC tier and 3 for the SCALE and ENTERPRISE tiers. Present only when the service uses vertical autoscaling. For horizontal autoscaling, use minReplicas and maxReplicas instead.
           type: integer
           minimum: 1
           maximum: 20
           example: 3
         minReplicas:
-          description: >-
-            Minimum number of replicas for horizontal autoscaling. Present only
-            when the service uses horizontal autoscaling.
+          description: Minimum number of replicas for horizontal autoscaling. Present only when the service uses horizontal autoscaling.
           type: integer
           minimum: 1
           maximum: 20
           example: 1
         maxReplicas:
-          description: >-
-            Maximum number of replicas for horizontal autoscaling. Present only
-            when the service uses horizontal autoscaling.
+          description: Maximum number of replicas for horizontal autoscaling. Present only when the service uses horizontal autoscaling.
           type: integer
           minimum: 1
           maximum: 20
           example: 5
         autoscalingMode:
-          description: >-
-            Configured autoscaling mode. "vertical" runs a fixed replica count
-            while memory scales between minReplicaMemoryGb and
-            maxReplicaMemoryGb; "horizontal" scales the replica count between
-            minReplicas and maxReplicas at a fixed per-replica memory. This is
-            the baseline configuration; the mode currently applied (which may
-            differ while a schedule entry is active) is
-            currentScaling.effectiveAutoscalingMode.
+          description: Configured autoscaling mode. "vertical" runs a fixed replica count while memory scales between minReplicaMemoryGb and maxReplicaMemoryGb; "horizontal" scales the replica count between minReplicas and maxReplicas at a fixed per-replica memory. This is the baseline configuration; the mode currently applied (which may differ while a schedule entry is active) is currentScaling.effectiveAutoscalingMode.
           type: string
           enum:
             - vertical
             - horizontal
           example: vertical
         replicaMemoryGb:
-          description: >-
-            Fixed memory per replica in Gb for horizontal autoscaling. Present
-            only when the service uses horizontal autoscaling. Must be a
-            multiple of 4, at least 8 Gb, and at most 120 Gb for non paid
-            services or 356 Gb for paid services.
+          description: Fixed memory per replica in Gb for horizontal autoscaling. Present only when the service uses horizontal autoscaling. Must be a multiple of 4, at least 8 Gb, and at most 120 Gb for non paid services or 356 Gb for paid services.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 32
         idleScaling:
-          description: >-
-            When set to true the service is allowed to scale down to zero when
-            idle. True by default.
+          description: When set to true the service is allowed to scale down to zero when idle. True by default.
           type: boolean
         idleTimeoutMinutes:
           description: Set minimum idling timeout (in minutes). Must be >= 5 minutes.
@@ -2326,9 +2066,7 @@ components:
             type: string
         availablePrivateEndpointIds:
           type: array
-          description: >-
-            List of available private endpoints ids that can be attached to the
-            service
+          description: List of available private endpoints ids that can be attached to the service
           items:
             type: string
         dataWarehouseId:
@@ -2338,39 +2076,23 @@ components:
           description: True if this service is the primary service in the data warehouse
           type: boolean
         isReadonly:
-          description: >-
-            True if this service is read-only. It can only be read-only if a
-            dataWarehouseId is provided.
+          description: True if this service is read-only. It can only be read-only if a dataWarehouseId is provided.
           type: boolean
         releaseChannel:
-          description: >-
-            Select fast if you want to get new ClickHouse releases as soon as
-            they are available. You'll get new features faster, but with a
-            higher risk of bugs. Select slow if you would like to defer releases
-            to give yourself more time to test. This feature is only available
-            for production services. default is the regular release channel.
+          description: Select fast if you want to get new ClickHouse releases as soon as they are available. You'll get new features faster, but with a higher risk of bugs. Select slow if you would like to defer releases to give yourself more time to test. This feature is only available for production services. default is the regular release channel.
           type: string
           enum:
             - slow
             - default
             - fast
         byocId:
-          description: >-
-            This is the ID returned after setting up a region for Bring Your Own
-            Cloud (BYOC). When the byocId parameter is specified, the
-            minReplicaMemoryGb and the maxReplicaGb parameters are required too,
-            with values included among the following sizes: 48, 116, 172, 232.
+          description: 'This is the ID returned after setting up a region for Bring Your Own Cloud (BYOC). When the byocId parameter is specified, the minReplicaMemoryGb and the maxReplicaGb parameters are required too, with values included among the following sizes: 48, 116, 172, 232.'
           type: string
         hasTransparentDataEncryption:
-          description: >-
-            True if the service should have the Transparent Data Encryption
-            (TDE) enabled. TDE is only available for ENTERPRISE organizations
-            tiers and can only be enabled at service creation.
+          description: True if the service should have the Transparent Data Encryption (TDE) enabled. TDE is only available for ENTERPRISE organizations tiers and can only be enabled at service creation.
           type: boolean
         profile:
-          description: >-
-            Custom instance profile. Only available for ENTERPRISE organization
-            tiers.
+          description: Custom instance profile. Only available for ENTERPRISE organization tiers.
           type: string
           enum:
             - v1-default
@@ -2380,14 +2102,10 @@ components:
             - v1-highmem-l
             - v1-highmem-xl
         transparentDataEncryptionKeyId:
-          description: >-
-            The ID of the Transparent Data Encryption key used for the service.
-            This is only available if hasTransparentDataEncryption is true.
+          description: The ID of the Transparent Data Encryption key used for the service. This is only available if hasTransparentDataEncryption is true.
           type: string
         encryptionRoleId:
-          description: >-
-            The ID of the IAM role used for encryption. This is only available
-            if hasTransparentDataEncryption is true.
+          description: The ID of the IAM role used for encryption. This is only available if hasTransparentDataEncryption is true.
           type: string
         complianceType:
           description: Type of regulatory compliance for service.
@@ -2402,9 +2120,7 @@ components:
             $ref: '#/components/schemas/ResourceTagsV1'
           maxItems: 50
         enableCoreDumps:
-          description: >-
-            True if the service's underline infra is enabled for collecting core
-            dumps. This is an experimental feature
+          description: True if the service's underline infra is enabled for collecting core dumps. This is an experimental feature
           type: boolean
         scalingSchedule:
           $ref: '#/components/schemas/ScalingSchedule'
@@ -2417,9 +2133,7 @@ components:
     ServicePostRequest:
       properties:
         name:
-          description: >-
-            Name of the service. Alphanumerical string with whitespaces up to 50
-            characters.
+          description: Name of the service. Alphanumerical string with whitespaces up to 50 characters.
           type: string
           maxLength: 50
           minLength: 1
@@ -2459,19 +2173,7 @@ components:
             - germanywestcentral
             - centralus
         tier:
-          description: >-
-            DEPRECATED for BASIC, SCALE and ENTERPRISE organization tiers. Use
-            `minReplicaMemoryGb`, `maxReplicaMemoryGb`, and `numReplicas`
-            instead. Tier of the service: 'development', 'production',
-            'dedicated_high_mem', 'dedicated_high_cpu', 'dedicated_standard',
-            'dedicated_standard_n2d_standard_4',
-            'dedicated_standard_n2d_standard_8',
-            'dedicated_standard_n2d_standard_32',
-            'dedicated_standard_n2d_standard_128',
-            'dedicated_standard_n2d_standard_32_16SSD',
-            'dedicated_standard_n2d_standard_64_24SSD'. Production services
-            scale, Development are fixed size. Azure services don't support
-            Development tier
+          description: 'DEPRECATED for BASIC, SCALE and ENTERPRISE organization tiers. Use `minReplicaMemoryGb`, `maxReplicaMemoryGb`, and `numReplicas` instead. Tier of the service: ''development'', ''production'', ''dedicated_high_mem'', ''dedicated_high_cpu'', ''dedicated_standard'', ''dedicated_standard_n2d_standard_4'', ''dedicated_standard_n2d_standard_8'', ''dedicated_standard_n2d_standard_32'', ''dedicated_standard_n2d_standard_128'', ''dedicated_standard_n2d_standard_32_16SSD'', ''dedicated_standard_n2d_standard_64_24SSD''. Production services scale, Development are fixed size. Azure services don''t support Development tier'
           type: string
           enum:
             - development
@@ -2492,13 +2194,7 @@ components:
           items:
             $ref: '#/components/schemas/IpAccessListEntry'
         minTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and greater than or equal to 24.
-            Always absent for horizontal-autoscaling services (replica count is
-            variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and greater than or equal to 24. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -2506,13 +2202,7 @@ components:
           example: 48
           deprecated: true
         maxTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and lower than or equal to 360
-            for non paid services or 1068 for paid services. Always absent for
-            horizontal-autoscaling services (replica count is variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and lower than or equal to 360 for non paid services or 1068 for paid services. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -2520,100 +2210,58 @@ components:
           example: 360
           deprecated: true
         autoscalingMode:
-          description: >-
-            Autoscaling mode. "vertical" (the default when omitted) runs a fixed
-            replica count while memory scales between minReplicaMemoryGb and
-            maxReplicaMemoryGb; "horizontal" scales the replica count between
-            minReplicas and maxReplicas at a fixed per-replica memory
-            (minReplicaMemoryGb equal to maxReplicaMemoryGb). Horizontal
-            requires the feature to be enabled for the organization.
+          description: Autoscaling mode. "vertical" (the default when omitted) runs a fixed replica count while memory scales between minReplicaMemoryGb and maxReplicaMemoryGb; "horizontal" scales the replica count between minReplicas and maxReplicas at a fixed per-replica memory (minReplicaMemoryGb equal to maxReplicaMemoryGb). Horizontal requires the feature to be enabled for the organization.
           type: string
           enum:
             - vertical
             - horizontal
           example: vertical
         minReplicaMemoryGb:
-          description: >-
-            Minimum total memory of each replica during auto-scaling in Gb. A
-            range in vertical autoscaling; equal to maxReplicaMemoryGb in
-            horizontal (memory is fixed while the replica count scales). Must be
-            a multiple of 4 and greater than or equal to 8.
+          description: Minimum total memory of each replica during auto-scaling in Gb. A range in vertical autoscaling; equal to maxReplicaMemoryGb in horizontal (memory is fixed while the replica count scales). Must be a multiple of 4 and greater than or equal to 8.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 16
         maxReplicaMemoryGb:
-          description: >-
-            Maximum total memory of each replica during auto-scaling in Gb. A
-            range in vertical autoscaling; equal to minReplicaMemoryGb in
-            horizontal (memory is fixed while the replica count scales). Must be
-            a multiple of 4 and lower than or equal to 120* for non paid
-            services or 356* for paid services.* - maximum replica size subject
-            to cloud provider hardware availability in your selected region. 
+          description: 'Maximum total memory of each replica during auto-scaling in Gb. A range in vertical autoscaling; equal to minReplicaMemoryGb in horizontal (memory is fixed while the replica count scales). Must be a multiple of 4 and lower than or equal to 120* for non paid services or 356* for paid services.* - maximum replica size subject to cloud provider hardware availability in your selected region. '
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 120
         numReplicas:
-          description: >-
-            Fixed replica count for vertical autoscaling (autoscalingMode
-            "vertical" or omitted). Mutually exclusive with
-            minReplicas/maxReplicas.
+          description: Fixed replica count for vertical autoscaling (autoscalingMode "vertical" or omitted). Mutually exclusive with minReplicas/maxReplicas.
           type: integer
           minimum: 1
           maximum: 20
           example: 3
         minReplicas:
-          description: >-
-            Minimum number of replicas. A minReplicas/maxReplicas band scales
-            the replica count in horizontal autoscaling (autoscalingMode
-            "horizontal"). Must be provided together with maxReplicas. Mutually
-            exclusive with numReplicas. Requires horizontal autoscaling to be
-            enabled for the organization, unless autoscalingMode is omitted or
-            "vertical" and minReplicas equals maxReplicas (an equal band is then
-            an accepted vertical fixed count and needs no horizontal
-            entitlement).
+          description: Minimum number of replicas. A minReplicas/maxReplicas band scales the replica count in horizontal autoscaling (autoscalingMode "horizontal"). Must be provided together with maxReplicas. Mutually exclusive with numReplicas. Requires horizontal autoscaling to be enabled for the organization, unless autoscalingMode is omitted or "vertical" and minReplicas equals maxReplicas (an equal band is then an accepted vertical fixed count and needs no horizontal entitlement).
           type: integer
           minimum: 1
           maximum: 20
           example: 1
         maxReplicas:
-          description: >-
-            Maximum number of replicas. A minReplicas/maxReplicas band scales
-            the replica count in horizontal autoscaling (autoscalingMode
-            "horizontal"). Must be provided together with minReplicas. Mutually
-            exclusive with numReplicas. Requires horizontal autoscaling to be
-            enabled for the organization, unless autoscalingMode is omitted or
-            "vertical" and minReplicas equals maxReplicas (an equal band is then
-            an accepted vertical fixed count and needs no horizontal
-            entitlement).
+          description: Maximum number of replicas. A minReplicas/maxReplicas band scales the replica count in horizontal autoscaling (autoscalingMode "horizontal"). Must be provided together with minReplicas. Mutually exclusive with numReplicas. Requires horizontal autoscaling to be enabled for the organization, unless autoscalingMode is omitted or "vertical" and minReplicas equals maxReplicas (an equal band is then an accepted vertical fixed count and needs no horizontal entitlement).
           type: integer
           minimum: 1
           maximum: 20
           example: 5
         idleScaling:
-          description: >-
-            When set to true the service is allowed to scale down to zero when
-            idle. True by default.
+          description: When set to true the service is allowed to scale down to zero when idle. True by default.
           type: boolean
         idleTimeoutMinutes:
           description: Set minimum idling timeout (in minutes). Must be >= 5 minutes.
           type: number
         isReadonly:
-          description: >-
-            True if this service is read-only. It can only be read-only if a
-            dataWarehouseId is provided.
+          description: True if this service is read-only. It can only be read-only if a dataWarehouseId is provided.
           type: boolean
         dataWarehouseId:
           description: Data warehouse containing this service
           type: string
         backupId:
-          description: >-
-            Optional backup ID used as an initial state for the new service.
-            When used the region and the tier of the new instance must be the
-            same as the values of the original instance.
+          description: Optional backup ID used as an initial state for the new service. When used the region and the tier of the new instance must be the same as the values of the original instance.
           type: string
           format: uuid
         encryptionKey:
@@ -2624,44 +2272,25 @@ components:
           type: string
         privateEndpointIds:
           type: array
-          description: >-
-            DEPRECATED. To associate the service with private endpoints, first
-            create the service, then use the `Update Service Basic Details`
-            endpoint with the `privateEndpointIds` field to modify private
-            endpoints.
+          description: DEPRECATED. To associate the service with private endpoints, first create the service, then use the `Update Service Basic Details` endpoint with the `privateEndpointIds` field to modify private endpoints.
           items:
             type: string
           deprecated: true
         privatePreviewTermsChecked:
-          description: >-
-            Accept the private preview terms and conditions. It is only needed
-            when creating the first service in the organization in case of a
-            private preview
+          description: Accept the private preview terms and conditions. It is only needed when creating the first service in the organization in case of a private preview
           type: boolean
         releaseChannel:
-          description: >-
-            Select fast if you want to get new ClickHouse releases as soon as
-            they are available. You'll get new features faster, but with a
-            higher risk of bugs. Select slow if you would like to defer releases
-            to give yourself more time to test. This feature is only available
-            for production services. default is the regular release channel.
+          description: Select fast if you want to get new ClickHouse releases as soon as they are available. You'll get new features faster, but with a higher risk of bugs. Select slow if you would like to defer releases to give yourself more time to test. This feature is only available for production services. default is the regular release channel.
           type: string
           enum:
             - slow
             - default
             - fast
         byocId:
-          description: >-
-            This is the ID returned after setting up a region for Bring Your Own
-            Cloud (BYOC). When the byocId parameter is specified, the
-            minReplicaMemoryGb and the maxReplicaGb parameters are required too,
-            with values included among the following sizes: 48, 116, 172, 232.
+          description: 'This is the ID returned after setting up a region for Bring Your Own Cloud (BYOC). When the byocId parameter is specified, the minReplicaMemoryGb and the maxReplicaGb parameters are required too, with values included among the following sizes: 48, 116, 172, 232.'
           type: string
         hasTransparentDataEncryption:
-          description: >-
-            True if the service should have the Transparent Data Encryption
-            (TDE) enabled. TDE is only available for ENTERPRISE organizations
-            tiers and can only be enabled at service creation.
+          description: True if the service should have the Transparent Data Encryption (TDE) enabled. TDE is only available for ENTERPRISE organizations tiers and can only be enabled at service creation.
           type: boolean
         endpoints:
           type: array
@@ -2669,9 +2298,7 @@ components:
           items:
             $ref: '#/components/schemas/ServiceEndpointChange'
         profile:
-          description: >-
-            Custom instance profile. Only available for ENTERPRISE organization
-            tiers.
+          description: Custom instance profile. Only available for ENTERPRISE organization tiers.
           type: string
           enum:
             - v1-default
@@ -2693,9 +2320,7 @@ components:
             $ref: '#/components/schemas/ResourceTagsV1'
           maxItems: 50
         enableCoreDumps:
-          description: >-
-            Enables the underlying infra for collecting core dumps. Default is
-            enabled.
+          description: Enables the underlying infra for collecting core dumps. Default is enabled.
           type: boolean
       type: object
     ServicePostResponse:
@@ -2709,9 +2334,7 @@ components:
     ServicePatchRequest:
       properties:
         name:
-          description: >-
-            Name of the service. Alphanumerical string with whitespaces up to 50
-            characters.
+          description: Name of the service. Alphanumerical string with whitespaces up to 50 characters.
           type: string
           maxLength: 50
           minLength: 1
@@ -2720,12 +2343,7 @@ components:
         privateEndpointIds:
           $ref: '#/components/schemas/InstancePrivateEndpointsPatch'
         releaseChannel:
-          description: >-
-            Select fast if you want to get new ClickHouse releases as soon as
-            they are available. You'll get new features faster, but with a
-            higher risk of bugs. Select slow if you would like to defer releases
-            to give yourself more time to test. This feature is only available
-            for production services. default is the regular release channel.
+          description: Select fast if you want to get new ClickHouse releases as soon as they are available. You'll get new features faster, but with a higher risk of bugs. Select slow if you would like to defer releases to give yourself more time to test. This feature is only available for production services. default is the regular release channel.
           type: string
           enum:
             - slow
@@ -2748,10 +2366,7 @@ components:
     PrivateEndpointConfig:
       properties:
         endpointServiceId:
-          description: >-
-            Unique identifier of the interface endpoint you created in your VPC
-            with the AWS(Service Name), GCP(Target Service) or AZURE (Private
-            Link Service) resource
+          description: Unique identifier of the interface endpoint you created in your VPC with the AWS(Service Name), GCP(Target Service) or AZURE (Private Link Service) resource
           type: string
         privateDnsHostname:
           description: Private DNS Hostname of the VPC you created
@@ -2811,13 +2426,7 @@ components:
     ServiceScalingPatchRequest:
       properties:
         minTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and greater than or equal to 24.
-            Always absent for horizontal-autoscaling services (replica count is
-            variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and greater than or equal to 24. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -2825,13 +2434,7 @@ components:
           example: 48
           deprecated: true
         maxTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and lower than or equal to 360
-            for non paid services or 1068 for paid services. Always absent for
-            horizontal-autoscaling services (replica count is variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and lower than or equal to 360 for non paid services or 1068 for paid services. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -2839,21 +2442,13 @@ components:
           example: 360
           deprecated: true
         numReplicas:
-          description: >-
-            Number of replicas for the service. The number of replicas must be
-            between 2 and 20 for the first service in a warehouse. Services that
-            are created in an existing warehouse can have a number of replicas
-            as low as 1. Further restrictions may apply based on your
-            organization's tier. It defaults to 1 for the BASIC tier and 3 for
-            the SCALE and ENTERPRISE tiers.
+          description: Number of replicas for the service. The number of replicas must be between 2 and 20 for the first service in a warehouse. Services that are created in an existing warehouse can have a number of replicas as low as 1. Further restrictions may apply based on your organization's tier. It defaults to 1 for the BASIC tier and 3 for the SCALE and ENTERPRISE tiers.
           type: integer
           minimum: 1
           maximum: 20
           example: 3
         idleScaling:
-          description: >-
-            When set to true the service is allowed to scale down to zero when
-            idle. True by default.
+          description: When set to true the service is allowed to scale down to zero when idle. True by default.
           type: boolean
         idleTimeoutMinutes:
           description: Set minimum idling timeout (in minutes). Must be >= 5 minutes.
@@ -2862,86 +2457,46 @@ components:
     ServiceReplicaScalingPatchRequest:
       properties:
         minReplicaMemoryGb:
-          description: >-
-            Minimum auto-scaling memory in Gb for a single replica. Available
-            only for 'production' services. Must be a multiple of 4 and greater
-            than or equal to 8. A range in vertical autoscaling; equal to
-            maxReplicaMemoryGb in horizontal.
+          description: Minimum auto-scaling memory in Gb for a single replica. Available only for 'production' services. Must be a multiple of 4 and greater than or equal to 8. A range in vertical autoscaling; equal to maxReplicaMemoryGb in horizontal.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 16
         maxReplicaMemoryGb:
-          description: >-
-            Maximum auto-scaling memory in Gb for a single replica. Available
-            only for 'production' services. Must be a multiple of 4 and lower
-            than or equal to 120 for non paid services or 356 for paid services.
-            A range in vertical autoscaling; equal to minReplicaMemoryGb in
-            horizontal.
+          description: Maximum auto-scaling memory in Gb for a single replica. Available only for 'production' services. Must be a multiple of 4 and lower than or equal to 120 for non paid services or 356 for paid services. A range in vertical autoscaling; equal to minReplicaMemoryGb in horizontal.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 120
         autoscalingMode:
-          description: >-
-            Target autoscaling mode. Omit to keep the service on its current
-            mode. "vertical" runs a fixed replica count while memory scales
-            between minReplicaMemoryGb and maxReplicaMemoryGb; "horizontal"
-            scales the replica count between minReplicas and maxReplicas at a
-            fixed per-replica memory (minReplicaMemoryGb equal to
-            maxReplicaMemoryGb). Switching to horizontal requires the feature to
-            be enabled for the organization.
+          description: Target autoscaling mode. Omit to keep the service on its current mode. "vertical" runs a fixed replica count while memory scales between minReplicaMemoryGb and maxReplicaMemoryGb; "horizontal" scales the replica count between minReplicas and maxReplicas at a fixed per-replica memory (minReplicaMemoryGb equal to maxReplicaMemoryGb). Switching to horizontal requires the feature to be enabled for the organization.
           type: string
           enum:
             - vertical
             - horizontal
           example: vertical
         numReplicas:
-          description: >-
-            Fixed replica count for vertical autoscaling (autoscalingMode
-            "vertical"). Mutually exclusive with minReplicas/maxReplicas. When
-            switching to vertical (autoscalingMode "vertical") with numReplicas
-            and no memory, the service's stored baseline per-replica memory is
-            kept as the new vertical range. Please contact support to enable
-            adjustment of numReplicas.
+          description: Fixed replica count for vertical autoscaling (autoscalingMode "vertical"). Mutually exclusive with minReplicas/maxReplicas. When switching to vertical (autoscalingMode "vertical") with numReplicas and no memory, the service's stored baseline per-replica memory is kept as the new vertical range. Please contact support to enable adjustment of numReplicas.
           type: integer
           minimum: 1
           maximum: 20
           example: 3
         minReplicas:
-          description: >-
-            Minimum number of replicas. A minReplicas/maxReplicas band scales
-            the replica count in horizontal autoscaling (autoscalingMode
-            "horizontal"). Must be provided together with maxReplicas. Mutually
-            exclusive with numReplicas. Requires horizontal autoscaling to be
-            enabled for the service, unless autoscalingMode is omitted or
-            "vertical" and minReplicas equals maxReplicas (an equal band is then
-            an accepted vertical fixed count and needs no horizontal
-            entitlement).
+          description: Minimum number of replicas. A minReplicas/maxReplicas band scales the replica count in horizontal autoscaling (autoscalingMode "horizontal"). Must be provided together with maxReplicas. Mutually exclusive with numReplicas. Requires horizontal autoscaling to be enabled for the service, unless autoscalingMode is omitted or "vertical" and minReplicas equals maxReplicas (an equal band is then an accepted vertical fixed count and needs no horizontal entitlement).
           type: integer
           minimum: 1
           maximum: 20
           example: 1
         maxReplicas:
-          description: >-
-            Maximum number of replicas. A minReplicas/maxReplicas band scales
-            the replica count in horizontal autoscaling (autoscalingMode
-            "horizontal"). Must be provided together with minReplicas. Mutually
-            exclusive with numReplicas. Requires horizontal autoscaling to be
-            enabled for the service, unless autoscalingMode is omitted or
-            "vertical" and minReplicas equals maxReplicas (an equal band is then
-            an accepted vertical fixed count and needs no horizontal
-            entitlement).
+          description: Maximum number of replicas. A minReplicas/maxReplicas band scales the replica count in horizontal autoscaling (autoscalingMode "horizontal"). Must be provided together with minReplicas. Mutually exclusive with numReplicas. Requires horizontal autoscaling to be enabled for the service, unless autoscalingMode is omitted or "vertical" and minReplicas equals maxReplicas (an equal band is then an accepted vertical fixed count and needs no horizontal entitlement).
           type: integer
           minimum: 1
           maximum: 20
           example: 5
         idleScaling:
-          description: >-
-            When set to true the service is allowed to scale down to zero when
-            idle. True by default.
+          description: When set to true the service is allowed to scale down to zero when idle. True by default.
           type: boolean
         idleTimeoutMinutes:
           description: Set minimum idling timeout (in minutes). Must be >= 5 minutes.
@@ -2954,9 +2509,7 @@ components:
           type: string
           format: uuid
         name:
-          description: >-
-            Name of the service. Alphanumerical string with whitespaces up to 50
-            characters.
+          description: Name of the service. Alphanumerical string with whitespaces up to 50 characters.
           type: string
           maxLength: 50
           minLength: 1
@@ -3022,19 +2575,7 @@ components:
           items:
             $ref: '#/components/schemas/ServiceEndpoint'
         tier:
-          description: >-
-            DEPRECATED for BASIC, SCALE and ENTERPRISE organization tiers. Use
-            `minReplicaMemoryGb`, `maxReplicaMemoryGb`, and `numReplicas`
-            instead. Tier of the service: 'development', 'production',
-            'dedicated_high_mem', 'dedicated_high_cpu', 'dedicated_standard',
-            'dedicated_standard_n2d_standard_4',
-            'dedicated_standard_n2d_standard_8',
-            'dedicated_standard_n2d_standard_32',
-            'dedicated_standard_n2d_standard_128',
-            'dedicated_standard_n2d_standard_32_16SSD',
-            'dedicated_standard_n2d_standard_64_24SSD'. Production services
-            scale, Development are fixed size. Azure services don't support
-            Development tier
+          description: 'DEPRECATED for BASIC, SCALE and ENTERPRISE organization tiers. Use `minReplicaMemoryGb`, `maxReplicaMemoryGb`, and `numReplicas` instead. Tier of the service: ''development'', ''production'', ''dedicated_high_mem'', ''dedicated_high_cpu'', ''dedicated_standard'', ''dedicated_standard_n2d_standard_4'', ''dedicated_standard_n2d_standard_8'', ''dedicated_standard_n2d_standard_32'', ''dedicated_standard_n2d_standard_128'', ''dedicated_standard_n2d_standard_32_16SSD'', ''dedicated_standard_n2d_standard_64_24SSD''. Production services scale, Development are fixed size. Azure services don''t support Development tier'
           type: string
           enum:
             - development
@@ -3050,13 +2591,7 @@ components:
             - dedicated_standard_n2d_standard_64_24SSD
           deprecated: true
         minTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and greater than or equal to 24.
-            Always absent for horizontal-autoscaling services (replica count is
-            variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `minReplicaMemoryGb` instead. Minimum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and greater than or equal to 24. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -3064,13 +2599,7 @@ components:
           example: 48
           deprecated: true
         maxTotalMemoryGb:
-          description: >-
-            DEPRECATED - inaccurate for services with non-default numbers of
-            replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three
-            workers during auto-scaling in Gb. Available only for 'production'
-            services. Must be a multiple of 12 and lower than or equal to 360
-            for non paid services or 1068 for paid services. Always absent for
-            horizontal-autoscaling services (replica count is variable).
+          description: DEPRECATED - inaccurate for services with non-default numbers of replicas. Use `maxReplicaMemoryGb` instead. Maximum memory of three workers during auto-scaling in Gb. Available only for 'production' services. Must be a multiple of 12 and lower than or equal to 360 for non paid services or 1068 for paid services. Always absent for horizontal-autoscaling services (replica count is variable).
           type: number
           minimum: 24
           maximum: 1068
@@ -3078,88 +2607,53 @@ components:
           example: 360
           deprecated: true
         minReplicaMemoryGb:
-          description: >-
-            Minimum auto-scaling memory in Gb for a single replica. Available
-            only for 'production' services. Must be a multiple of 4 and greater
-            than or equal to 8. A range in vertical autoscaling; equal to
-            maxReplicaMemoryGb in horizontal (memory is fixed while the replica
-            count scales).
+          description: Minimum auto-scaling memory in Gb for a single replica. Available only for 'production' services. Must be a multiple of 4 and greater than or equal to 8. A range in vertical autoscaling; equal to maxReplicaMemoryGb in horizontal (memory is fixed while the replica count scales).
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 16
         maxReplicaMemoryGb:
-          description: >-
-            Maximum auto-scaling memory in Gb for a single replica. Available
-            only for 'production' services. Must be a multiple of 4 and lower
-            than or equal to 120 for non paid services or 356 for paid services.
-            A range in vertical autoscaling; equal to minReplicaMemoryGb in
-            horizontal (memory is fixed while the replica count scales).
+          description: Maximum auto-scaling memory in Gb for a single replica. Available only for 'production' services. Must be a multiple of 4 and lower than or equal to 120 for non paid services or 356 for paid services. A range in vertical autoscaling; equal to minReplicaMemoryGb in horizontal (memory is fixed while the replica count scales).
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 120
         numReplicas:
-          description: >-
-            Number of replicas for the service. The number of replicas must be
-            between 2 and 20 for the first service in a warehouse. Services that
-            are created in an existing warehouse can have a number of replicas
-            as low as 1. Further restrictions may apply based on your
-            organization's tier. It defaults to 1 for the BASIC tier and 3 for
-            the SCALE and ENTERPRISE tiers. Present only when the service uses
-            vertical autoscaling. For horizontal autoscaling, use minReplicas
-            and maxReplicas instead.
+          description: Number of replicas for the service. The number of replicas must be between 2 and 20 for the first service in a warehouse. Services that are created in an existing warehouse can have a number of replicas as low as 1. Further restrictions may apply based on your organization's tier. It defaults to 1 for the BASIC tier and 3 for the SCALE and ENTERPRISE tiers. Present only when the service uses vertical autoscaling. For horizontal autoscaling, use minReplicas and maxReplicas instead.
           type: integer
           minimum: 1
           maximum: 20
           example: 3
         minReplicas:
-          description: >-
-            Minimum number of replicas for horizontal autoscaling. Present only
-            when the service uses horizontal autoscaling.
+          description: Minimum number of replicas for horizontal autoscaling. Present only when the service uses horizontal autoscaling.
           type: integer
           minimum: 1
           maximum: 20
           example: 1
         maxReplicas:
-          description: >-
-            Maximum number of replicas for horizontal autoscaling. Present only
-            when the service uses horizontal autoscaling.
+          description: Maximum number of replicas for horizontal autoscaling. Present only when the service uses horizontal autoscaling.
           type: integer
           minimum: 1
           maximum: 20
           example: 5
         autoscalingMode:
-          description: >-
-            Configured autoscaling mode. "vertical" runs a fixed replica count
-            while memory scales between minReplicaMemoryGb and
-            maxReplicaMemoryGb; "horizontal" scales the replica count between
-            minReplicas and maxReplicas at a fixed per-replica memory. This is
-            the baseline configuration; the mode currently applied (which may
-            differ while a schedule entry is active) is
-            currentScaling.effectiveAutoscalingMode.
+          description: Configured autoscaling mode. "vertical" runs a fixed replica count while memory scales between minReplicaMemoryGb and maxReplicaMemoryGb; "horizontal" scales the replica count between minReplicas and maxReplicas at a fixed per-replica memory. This is the baseline configuration; the mode currently applied (which may differ while a schedule entry is active) is currentScaling.effectiveAutoscalingMode.
           type: string
           enum:
             - vertical
             - horizontal
           example: vertical
         replicaMemoryGb:
-          description: >-
-            Fixed memory per replica in Gb for horizontal autoscaling. Present
-            only when the service uses horizontal autoscaling. Must be a
-            multiple of 4, at least 8 Gb, and at most 120 Gb for non paid
-            services or 356 Gb for paid services.
+          description: Fixed memory per replica in Gb for horizontal autoscaling. Present only when the service uses horizontal autoscaling. Must be a multiple of 4, at least 8 Gb, and at most 120 Gb for non paid services or 356 Gb for paid services.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 32
         idleScaling:
-          description: >-
-            When set to true the service is allowed to scale down to zero when
-            idle. True by default.
+          description: When set to true the service is allowed to scale down to zero when idle. True by default.
           type: boolean
         idleTimeoutMinutes:
           description: Set minimum idling timeout (in minutes). Must be >= 5 minutes.
@@ -3189,9 +2683,7 @@ components:
             type: string
         availablePrivateEndpointIds:
           type: array
-          description: >-
-            List of available private endpoints ids that can be attached to the
-            service
+          description: List of available private endpoints ids that can be attached to the service
           items:
             type: string
         dataWarehouseId:
@@ -3201,39 +2693,23 @@ components:
           description: True if this service is the primary service in the data warehouse
           type: boolean
         isReadonly:
-          description: >-
-            True if this service is read-only. It can only be read-only if a
-            dataWarehouseId is provided.
+          description: True if this service is read-only. It can only be read-only if a dataWarehouseId is provided.
           type: boolean
         releaseChannel:
-          description: >-
-            Select fast if you want to get new ClickHouse releases as soon as
-            they are available. You'll get new features faster, but with a
-            higher risk of bugs. Select slow if you would like to defer releases
-            to give yourself more time to test. This feature is only available
-            for production services. default is the regular release channel.
+          description: Select fast if you want to get new ClickHouse releases as soon as they are available. You'll get new features faster, but with a higher risk of bugs. Select slow if you would like to defer releases to give yourself more time to test. This feature is only available for production services. default is the regular release channel.
           type: string
           enum:
             - slow
             - default
             - fast
         byocId:
-          description: >-
-            This is the ID returned after setting up a region for Bring Your Own
-            Cloud (BYOC). When the byocId parameter is specified, the
-            minReplicaMemoryGb and the maxReplicaGb parameters are required too,
-            with values included among the following sizes: 48, 116, 172, 232.
+          description: 'This is the ID returned after setting up a region for Bring Your Own Cloud (BYOC). When the byocId parameter is specified, the minReplicaMemoryGb and the maxReplicaGb parameters are required too, with values included among the following sizes: 48, 116, 172, 232.'
           type: string
         hasTransparentDataEncryption:
-          description: >-
-            True if the service should have the Transparent Data Encryption
-            (TDE) enabled. TDE is only available for ENTERPRISE organizations
-            tiers and can only be enabled at service creation.
+          description: True if the service should have the Transparent Data Encryption (TDE) enabled. TDE is only available for ENTERPRISE organizations tiers and can only be enabled at service creation.
           type: boolean
         profile:
-          description: >-
-            Custom instance profile. Only available for ENTERPRISE organization
-            tiers.
+          description: Custom instance profile. Only available for ENTERPRISE organization tiers.
           type: string
           enum:
             - v1-default
@@ -3243,14 +2719,10 @@ components:
             - v1-highmem-l
             - v1-highmem-xl
         transparentDataEncryptionKeyId:
-          description: >-
-            The ID of the Transparent Data Encryption key used for the service.
-            This is only available if hasTransparentDataEncryption is true.
+          description: The ID of the Transparent Data Encryption key used for the service. This is only available if hasTransparentDataEncryption is true.
           type: string
         encryptionRoleId:
-          description: >-
-            The ID of the IAM role used for encryption. This is only available
-            if hasTransparentDataEncryption is true.
+          description: The ID of the IAM role used for encryption. This is only available if hasTransparentDataEncryption is true.
           type: string
         complianceType:
           description: Type of regulatory compliance for service.
@@ -3265,9 +2737,7 @@ components:
             $ref: '#/components/schemas/ResourceTagsV1'
           maxItems: 50
         enableCoreDumps:
-          description: >-
-            True if the service's underline infra is enabled for collecting core
-            dumps. This is an experimental feature
+          description: True if the service's underline infra is enabled for collecting core dumps. This is an experimental feature
           type: boolean
         scalingSchedule:
           $ref: '#/components/schemas/ScalingSchedule'
@@ -3280,26 +2750,16 @@ components:
     ServicePasswordPatchRequest:
       properties:
         newPasswordHash:
-          description: >-
-            Optional password hash. Used to avoid password transmission over
-            network. If not provided a new password is generated and is provided
-            in the response. Otherwise this hash is used. Algorithm: echo -n
-            "yourpassword" | sha256sum | tr -d '-' | xxd -r -p | base64
+          description: 'Optional password hash. Used to avoid password transmission over network. If not provided a new password is generated and is provided in the response. Otherwise this hash is used. Algorithm: echo -n "yourpassword" | sha256sum | tr -d ''-'' | xxd -r -p | base64'
           type: string
         newDoubleSha1Hash:
-          description: >-
-            Optional double SHA1 password hash for MySQL protocol. If
-            newPasswordHash is not provided this key will be ignored and the
-            generated password will be used. Algorithm: echo -n "yourpassword" |
-            sha1sum | tr -d '-' | xxd -r -p | sha1sum | tr -d '-'
+          description: 'Optional double SHA1 password hash for MySQL protocol. If newPasswordHash is not provided this key will be ignored and the generated password will be used. Algorithm: echo -n "yourpassword" | sha1sum | tr -d ''-'' | xxd -r -p | sha1sum | tr -d ''-'''
           type: string
       type: object
     ServicePasswordPatchResponse:
       properties:
         password:
-          description: >-
-            New service password. Provided only if there was no
-            'newPasswordHash' in the request
+          description: New service password. Provided only if there was no 'newPasswordHash' in the request
           type: string
       type: object
     ServicPrivateEndpointePostRequest:
@@ -3365,9 +2825,7 @@ components:
         baseConfig:
           $ref: '#/components/schemas/ScalingScheduleBaseConfig'
         activeEntryId:
-          description: >-
-            ID of the currently-active schedule entry. Absent when no entry is
-            active and the base config is in effect.
+          description: ID of the currently-active schedule entry. Absent when no entry is active and the base config is in effect.
           type: string
           format: uuid
       required:
@@ -3387,17 +2845,13 @@ components:
     UpgradeWindow:
       properties:
         weekday:
-          description: >-
-            Day of the week the upgrade window starts. 0 = Sunday, 1 = Monday,
-            …, 6 = Saturday.
+          description: Day of the week the upgrade window starts. 0 = Sunday, 1 = Monday, …, 6 = Saturday.
           type: integer
           minimum: 0
           maximum: 6
           example: 3
         startHourUtc:
-          description: >-
-            UTC hour when the upgrade window starts. Must be one of 0, 6, 12, or
-            18.
+          description: UTC hour when the upgrade window starts. Must be one of 0, 6, 12, or 18.
           type: integer
           enum:
             - 0
@@ -3406,9 +2860,7 @@ components:
             - 18
           example: 12
         duration:
-          description: >-
-            Length of the upgrade window in hours. Currently only a 6-hour
-            window is supported.
+          description: Length of the upgrade window in hours. Currently only a 6-hour window is supported.
           type: integer
           enum:
             - 6
@@ -3421,17 +2873,13 @@ components:
     UpgradeWindowPutRequest:
       properties:
         weekday:
-          description: >-
-            Day of the week the upgrade window starts. 0 = Sunday, 1 = Monday,
-            …, 6 = Saturday.
+          description: Day of the week the upgrade window starts. 0 = Sunday, 1 = Monday, …, 6 = Saturday.
           type: integer
           minimum: 0
           maximum: 6
           example: 3
         startHourUtc:
-          description: >-
-            UTC hour when the upgrade window starts. Must be one of 0, 6, 12, or
-            18. The upgrade window currently lasts 6 hours from this start time.
+          description: UTC hour when the upgrade window starts. Must be one of 0, 6, 12, or 18. The upgrade window currently lasts 6 hours from this start time.
           type: integer
           enum:
             - 0
@@ -3454,9 +2902,7 @@ components:
     ServiceClickhouseSettingsPatchRequest:
       properties:
         settings:
-          description: >-
-            JSON object of setting names to values. Example: {"compatibility":
-            "24.8"}
+          description: 'JSON object of setting names to values. Example: {"compatibility": "24.8"}'
           type: string
           example: '{"compatibility": "24.8"}'
       required:
@@ -3465,9 +2911,7 @@ components:
     ServiceClickhouseSettingsPatchResponse:
       properties:
         settings:
-          description: >-
-            JSON object of setting names to their applied values. Example:
-            {"compatibility": "24.8"}
+          description: 'JSON object of setting names to their applied values. Example: {"compatibility": "24.8"}'
           type: string
           example: '{"compatibility": "24.8"}'
         warnings:
@@ -3480,9 +2924,7 @@ components:
       properties:
         settings:
           type: array
-          description: >-
-            List of all configurable ClickHouse settings with their types,
-            descriptions, and constraints.
+          description: List of all configurable ClickHouse settings with their types, descriptions, and constraints.
           items:
             $ref: '#/components/schemas/ServiceClickhouseSettingSchemaEntry'
       type: object
@@ -3493,9 +2935,7 @@ components:
           type: string
           example: compatibility
         value:
-          description: >-
-            Current value of the setting. Returned as a string for all setting
-            types.
+          description: Current value of the setting. Returned as a string for all setting types.
           type: string
           example: '24.8'
       type: object
@@ -3526,9 +2966,7 @@ components:
           description: IP or CIDR
           type: string
         description:
-          description: >-
-            Optional description of IPv4 address or IPv4 CIDR to allow access
-            from
+          description: Optional description of IPv4 address or IPv4 CIDR to allow access from
           type: string
       type: object
     ResourceTagsV1:
@@ -3553,59 +2991,31 @@ components:
     CurrentScaling:
       properties:
         effectiveAutoscalingMode:
-          description: >-
-            Autoscaling mode currently in effect on the running service. May
-            diverge from the configured baseline mode while a schedule entry is
-            active.
+          description: Autoscaling mode currently in effect on the running service. May diverge from the configured baseline mode while a schedule entry is active.
           type: string
           enum:
             - vertical
             - horizontal
         effectiveMinReplicaMemoryGb:
-          description: >-
-            Minimum memory per replica (Gb) currently applied to the running
-            service. May diverge from the top-level `minReplicaMemoryGb`
-            baseline while a schedule entry is active.
+          description: Minimum memory per replica (Gb) currently applied to the running service. May diverge from the top-level `minReplicaMemoryGb` baseline while a schedule entry is active.
           type: number
         effectiveMaxReplicaMemoryGb:
-          description: >-
-            Maximum memory per replica (Gb) currently applied to the running
-            service. May diverge from the top-level `maxReplicaMemoryGb`
-            baseline while a schedule entry is active. Reflects the stored
-            value: normally equal to `effectiveMinReplicaMemoryGb` in horizontal
-            mode, but a legacy service stored with an unequal memory range
-            reports the stored bounds as-is.
+          description: 'Maximum memory per replica (Gb) currently applied to the running service. May diverge from the top-level `maxReplicaMemoryGb` baseline while a schedule entry is active. Reflects the stored value: normally equal to `effectiveMinReplicaMemoryGb` in horizontal mode, but a legacy service stored with an unequal memory range reports the stored bounds as-is.'
           type: number
         effectiveMinReplicas:
-          description: >-
-            Minimum number of replicas currently applied to the running service.
-            May diverge from the baseline while a schedule entry is active.
-            Reflects the stored value: normally equal to `effectiveMaxReplicas`
-            in vertical mode (a fixed replica count), but a legacy service
-            stored with an unequal replica range reports the stored bounds
-            as-is.
+          description: 'Minimum number of replicas currently applied to the running service. May diverge from the baseline while a schedule entry is active. Reflects the stored value: normally equal to `effectiveMaxReplicas` in vertical mode (a fixed replica count), but a legacy service stored with an unequal replica range reports the stored bounds as-is.'
           type: integer
         effectiveMaxReplicas:
-          description: >-
-            Maximum number of replicas currently applied to the running service.
-            May diverge from the baseline while a schedule entry is active.
+          description: Maximum number of replicas currently applied to the running service. May diverge from the baseline while a schedule entry is active.
           type: integer
         effectiveIdleScaling:
-          description: >-
-            Whether idle scaling is currently in effect on the service. May
-            diverge from the top-level `idleScaling` baseline while a schedule
-            entry is active.
+          description: Whether idle scaling is currently in effect on the service. May diverge from the top-level `idleScaling` baseline while a schedule entry is active.
           type: boolean
         effectiveIdleTimeoutMinutes:
-          description: >-
-            Idle timeout in minutes currently in effect on the service. May
-            diverge from the top-level `idleTimeoutMinutes` baseline while a
-            schedule entry is active.
+          description: Idle timeout in minutes currently in effect on the service. May diverge from the top-level `idleTimeoutMinutes` baseline while a schedule entry is active.
           type: integer
         activeEntryId:
-          description: >-
-            ID of the schedule entry whose values are currently applied to the
-            service. Absent when no entry is active.
+          description: ID of the schedule entry whose values are currently applied to the service. Absent when no entry is active.
           type: string
           format: uuid
       type: object
@@ -3673,9 +3083,7 @@ components:
           type: string
         weekdays:
           type: array
-          description: >-
-            Days of the week this entry applies to. 0 = Sunday, 1 = Monday, …, 6
-            = Saturday.
+          description: Days of the week this entry applies to. 0 = Sunday, 1 = Monday, …, 6 = Saturday.
           items:
             type: integer
           minItems: 1
@@ -3685,50 +3093,27 @@ components:
           minimum: 0
           maximum: 23
         endHourUtc:
-          description: >-
-            UTC hour (1–24) when this entry deactivates (exclusive). Must differ
-            from startHourUtc. Set to 24 to end at midnight. Values less than
-            startHourUtc create an overnight window spanning midnight.
+          description: UTC hour (1–24) when this entry deactivates (exclusive). Must differ from startHourUtc. Set to 24 to end at midnight. Values less than startHourUtc create an overnight window spanning midnight.
           type: integer
           minimum: 1
           maximum: 24
         autoscalingMode:
-          description: >-
-            Autoscaling mode for this entry. "vertical" runs a fixed replica
-            count while memory scales; "horizontal" scales the replica count at
-            a fixed per-replica memory. Defaults to "vertical" for entries
-            persisted before the mode was exposed.
+          description: Autoscaling mode for this entry. "vertical" runs a fixed replica count while memory scales; "horizontal" scales the replica count at a fixed per-replica memory. Defaults to "vertical" for entries persisted before the mode was exposed.
           type: string
           enum:
             - vertical
             - horizontal
         minReplicaMemoryGb:
-          description: >-
-            Minimum memory per replica (Gb) during this window. A range in
-            vertical; in horizontal it equals maxReplicaMemoryGb (memory is
-            fixed while the replica count scales).
+          description: Minimum memory per replica (Gb) during this window. A range in vertical; in horizontal it equals maxReplicaMemoryGb (memory is fixed while the replica count scales).
           type: number
         maxReplicaMemoryGb:
-          description: >-
-            Maximum memory per replica (Gb) during this window. A range in
-            vertical; in horizontal it equals minReplicaMemoryGb (memory is
-            fixed while the replica count scales).
+          description: Maximum memory per replica (Gb) during this window. A range in vertical; in horizontal it equals minReplicaMemoryGb (memory is fixed while the replica count scales).
           type: number
         minReplicas:
-          description: >-
-            Minimum number of replicas during this window. For a horizontal
-            entry the replica count scales between minReplicas and maxReplicas;
-            for a vertical entry minReplicas and maxReplicas are equal and
-            report the fixed replica count (both omitted when the entry stored
-            no count).
+          description: Minimum number of replicas during this window. For a horizontal entry the replica count scales between minReplicas and maxReplicas; for a vertical entry minReplicas and maxReplicas are equal and report the fixed replica count (both omitted when the entry stored no count).
           type: integer
         maxReplicas:
-          description: >-
-            Maximum number of replicas during this window. For a horizontal
-            entry the replica count scales between minReplicas and maxReplicas;
-            for a vertical entry minReplicas and maxReplicas are equal and
-            report the fixed replica count (both omitted when the entry stored
-            no count).
+          description: Maximum number of replicas during this window. For a horizontal entry the replica count scales between minReplicas and maxReplicas; for a vertical entry minReplicas and maxReplicas are equal and report the fixed replica count (both omitted when the entry stored no count).
           type: integer
         idleScaling:
           description: Whether idle scaling is enabled during this window.
@@ -3737,10 +3122,7 @@ components:
           description: Idle timeout in minutes during this window.
           type: integer
         isActiveNow:
-          description: >-
-            Whether this entry is currently active. Scheduled times are
-            indicative — actions are applied on a best-effort basis and may be
-            delayed by a few minutes.
+          description: Whether this entry is currently active. Scheduled times are indicative — actions are applied on a best-effort basis and may be delayed by a few minutes.
           type: boolean
       required:
         - id
@@ -3754,10 +3136,7 @@ components:
     ScalingScheduleBaseConfig:
       properties:
         autoscalingMode:
-          description: >-
-            Autoscaling mode applied when no schedule entry is active.
-            "vertical" runs a fixed replica count while memory scales;
-            "horizontal" scales the replica count at a fixed per-replica memory.
+          description: Autoscaling mode applied when no schedule entry is active. "vertical" runs a fixed replica count while memory scales; "horizontal" scales the replica count at a fixed per-replica memory.
           type: string
           enum:
             - vertical
@@ -3789,9 +3168,7 @@ components:
           example: Business hours
         weekdays:
           type: array
-          description: >-
-            Days of the week this entry applies to. 0 = Sunday, 1 = Monday, …, 6
-            = Saturday.
+          description: Days of the week this entry applies to. 0 = Sunday, 1 = Monday, …, 6 = Saturday.
           items:
             type: integer
           example:
@@ -3808,86 +3185,44 @@ components:
           maximum: 23
           example: 9
         endHourUtc:
-          description: >-
-            UTC hour (1–24) when this entry deactivates (exclusive). Must differ
-            from startHourUtc. Set to 24 to end at midnight. Values less than
-            startHourUtc create an overnight window spanning midnight.
+          description: UTC hour (1–24) when this entry deactivates (exclusive). Must differ from startHourUtc. Set to 24 to end at midnight. Values less than startHourUtc create an overnight window spanning midnight.
           type: integer
           minimum: 1
           maximum: 24
           example: 17
         autoscalingMode:
-          description: >-
-            Autoscaling mode for this entry. "vertical" (the default when
-            omitted) runs a fixed replica count while memory scales between
-            minReplicaMemoryGb and maxReplicaMemoryGb; "horizontal" scales the
-            replica count between minReplicas and maxReplicas at a fixed
-            per-replica memory (minReplicaMemoryGb equal to maxReplicaMemoryGb).
-            Horizontal requires the feature to be enabled for the organization.
+          description: Autoscaling mode for this entry. "vertical" (the default when omitted) runs a fixed replica count while memory scales between minReplicaMemoryGb and maxReplicaMemoryGb; "horizontal" scales the replica count between minReplicas and maxReplicas at a fixed per-replica memory (minReplicaMemoryGb equal to maxReplicaMemoryGb). Horizontal requires the feature to be enabled for the organization.
           type: string
           enum:
             - vertical
             - horizontal
           example: vertical
         minReplicaMemoryGb:
-          description: >-
-            Minimum memory per replica (Gb). Optional for vertical entries —
-            provide both bounds for a memory range, or omit both to inherit
-            memory from the base scaling config. Required for horizontal (both
-            bounds, equal to maxReplicaMemoryGb — memory is fixed while the
-            replica count scales). The upper bound is tier-dependent (lower for
-            non-paid organizations) and enforced when the entry is applied.
+          description: Minimum memory per replica (Gb). Optional for vertical entries — provide both bounds for a memory range, or omit both to inherit memory from the base scaling config. Required for horizontal (both bounds, equal to maxReplicaMemoryGb — memory is fixed while the replica count scales). The upper bound is tier-dependent (lower for non-paid organizations) and enforced when the entry is applied.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 16
         maxReplicaMemoryGb:
-          description: >-
-            Maximum memory per replica (Gb). Optional for vertical entries —
-            provide both bounds for a memory range, or omit both to inherit
-            memory from the base scaling config. Required for horizontal (both
-            bounds, equal to minReplicaMemoryGb — memory is fixed while the
-            replica count scales). The upper bound is tier-dependent (lower for
-            non-paid organizations) and enforced when the entry is applied.
+          description: Maximum memory per replica (Gb). Optional for vertical entries — provide both bounds for a memory range, or omit both to inherit memory from the base scaling config. Required for horizontal (both bounds, equal to minReplicaMemoryGb — memory is fixed while the replica count scales). The upper bound is tier-dependent (lower for non-paid organizations) and enforced when the entry is applied.
           type: number
           minimum: 8
           maximum: 356
           multipleOf: 4
           example: 16
         numReplicas:
-          description: >-
-            Fixed replica count for a vertical entry (autoscalingMode "vertical"
-            or omitted). Mutually exclusive with minReplicas/maxReplicas. The
-            per-service replica maximum is variable (tier-dependent,
-            configurable per service) and enforced when the entry is applied,
-            not at request time.
+          description: Fixed replica count for a vertical entry (autoscalingMode "vertical" or omitted). Mutually exclusive with minReplicas/maxReplicas. The per-service replica maximum is variable (tier-dependent, configurable per service) and enforced when the entry is applied, not at request time.
           type: integer
           minimum: 1
           example: 3
         minReplicas:
-          description: >-
-            Minimum number of replicas. A minReplicas/maxReplicas band scales
-            the replica count in a horizontal entry (autoscalingMode
-            "horizontal"); when autoscalingMode is omitted or "vertical", an
-            equal band (minReplicas === maxReplicas) is instead an accepted
-            vertical fixed count and needs no horizontal entitlement. Must be
-            provided together with maxReplicas. The per-service replica maximum
-            is variable (tier-dependent, configurable per service) and enforced
-            when the entry is applied, not at request time.
+          description: Minimum number of replicas. A minReplicas/maxReplicas band scales the replica count in a horizontal entry (autoscalingMode "horizontal"); when autoscalingMode is omitted or "vertical", an equal band (minReplicas === maxReplicas) is instead an accepted vertical fixed count and needs no horizontal entitlement. Must be provided together with maxReplicas. The per-service replica maximum is variable (tier-dependent, configurable per service) and enforced when the entry is applied, not at request time.
           type: integer
           minimum: 1
           example: 2
         maxReplicas:
-          description: >-
-            Maximum number of replicas. A minReplicas/maxReplicas band scales
-            the replica count in a horizontal entry (autoscalingMode
-            "horizontal"); when autoscalingMode is omitted or "vertical", an
-            equal band (minReplicas === maxReplicas) is instead an accepted
-            vertical fixed count and needs no horizontal entitlement. Must be
-            provided together with minReplicas. The per-service replica maximum
-            is variable (tier-dependent, configurable per service) and enforced
-            when the entry is applied, not at request time.
+          description: Maximum number of replicas. A minReplicas/maxReplicas band scales the replica count in a horizontal entry (autoscalingMode "horizontal"); when autoscalingMode is omitted or "vertical", an equal band (minReplicas === maxReplicas) is instead an accepted vertical fixed count and needs no horizontal entitlement. Must be provided together with minReplicas. The per-service replica maximum is variable (tier-dependent, configurable per service) and enforced when the entry is applied, not at request time.
           type: integer
           minimum: 1
           example: 3
@@ -3912,9 +3247,7 @@ components:
         message:
           description: Warning message.
           type: string
-          example: >-
-            Changing the compatibility version without comprehensive testing can
-            cause query failures or instability.
+          example: Changing the compatibility version without comprehensive testing can cause query failures or instability.
       type: object
     ServiceClickhouseSettingSchemaEntry:
       properties:
@@ -3939,13 +3272,9 @@ components:
             - 0
             - 1
         warning:
-          description: >-
-            Warning message about potential disruptive effects of changing this
-            setting.
+          description: Warning message about potential disruptive effects of changing this setting.
           type: string
-          example: >-
-            Changing this setting without comprehensive testing can cause
-            instability.
+          example: Changing this setting without comprehensive testing can cause instability.
         deprecationNotice:
           description: Deprecation notice, if applicable.
           type: string
@@ -3968,6 +3297,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -3977,6 +3308,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1services~1{serviceId}/get'
@@ -3984,6 +3317,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -3993,12 +3328,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1services~1{serviceId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update_state:
           config:
             requestBodyTranslate:
@@ -4008,6 +3347,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update_password:
           config:
             requestBodyTranslate:
@@ -4017,6 +3358,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/services/methods/get'
@@ -4040,10 +3383,11 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
-          - $ref: >-
-              #/components/x-stackQL-resources/private_endpoint_configs/methods/get
+          - $ref: '#/components/x-stackQL-resources/private_endpoint_configs/methods/get'
         insert: []
         update: []
         delete: []
@@ -4060,12 +3404,16 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1services~1{serviceId}~1serviceQueryEndpoint/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -4075,17 +3423,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
-          - $ref: >-
-              #/components/x-stackQL-resources/service_query_endpoints/methods/get
+          - $ref: '#/components/x-stackQL-resources/service_query_endpoints/methods/get'
         insert:
-          - $ref: >-
-              #/components/x-stackQL-resources/service_query_endpoints/methods/create
+          - $ref: '#/components/x-stackQL-resources/service_query_endpoints/methods/create'
         update: []
         delete:
-          - $ref: >-
-              #/components/x-stackQL-resources/service_query_endpoints/methods/delete
+          - $ref: '#/components/x-stackQL-resources/service_query_endpoints/methods/delete'
         replace: []
     replica_scalings:
       id: clickhouse.services.replica_scalings
@@ -4101,6 +3448,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select: []
         insert: []
@@ -4122,6 +3471,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select: []
         insert:
@@ -4141,6 +3492,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -4150,12 +3503,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1services~1{serviceId}~1scalingSchedule/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/scaling_schedules/methods/get'
@@ -4177,6 +3534,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -4186,12 +3545,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1services~1{serviceId}~1upgradeWindow/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/upgrade_windows/methods/get'
@@ -4213,6 +3576,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -4222,32 +3587,34 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         get:
           operation:
-            $ref: >-
-              #/paths/~1services~1{serviceId}~1clickhouseSettings~1{settingName}/get
+            $ref: '#/paths/~1services~1{serviceId}~1clickhouseSettings~1{settingName}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         delete:
           operation:
-            $ref: >-
-              #/paths/~1services~1{serviceId}~1clickhouseSettings~1{settingName}/delete
+            $ref: '#/paths/~1services~1{serviceId}~1clickhouseSettings~1{settingName}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/clickhouse_settings/methods/get'
           - $ref: '#/components/x-stackQL-resources/clickhouse_settings/methods/list'
         insert: []
         update:
-          - $ref: >-
-              #/components/x-stackQL-resources/clickhouse_settings/methods/update
+          - $ref: '#/components/x-stackQL-resources/clickhouse_settings/methods/update'
         delete:
-          - $ref: >-
-              #/components/x-stackQL-resources/clickhouse_settings/methods/delete
+          - $ref: '#/components/x-stackQL-resources/clickhouse_settings/methods/delete'
         replace: []
     clickhouse_settings_schemas:
       id: clickhouse.services.clickhouse_settings_schemas
@@ -4261,21 +3628,18 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
-          - $ref: >-
-              #/components/x-stackQL-resources/clickhouse_settings_schemas/methods/get
+          - $ref: '#/components/x-stackQL-resources/clickhouse_settings_schemas/methods/get'
         insert: []
         update: []
         delete: []
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: >-
-          ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID
-          environment variable when it is set (x-stackQL-envVar); otherwise it
-          must be supplied on every query as WHERE organizationId = <uuid>. A
-          WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

@@ -24,7 +24,10 @@ SERVICES_DIR := provider-dev/openapi/src/$(PROVIDER)
 # CLICKHOUSE_ORG_ID via x-stackQL-envVar) is the single source of truth in
 # provider-dev/config/servers.json - shared by bin/split.mjs and this file.
 SERVERS := $(shell tr -d '\n' < provider-dev/config/servers.json)
-PROVIDER_CONFIG := {"auth": {"type": "basic", "username_var": "CLICKHOUSE_CLOUD_API_KEY", "password_var": "CLICKHOUSE_CLOUD_API_SECRET"}}
+# snake_case_aliases: SELECT/DESCRIBE columns present as snake_case aliases of
+# the camelCase wire properties (paired with request.nativeCasing: camel on
+# every method, set in post_process) - the oci provider precedent.
+PROVIDER_CONFIG := {"auth": {"type": "basic", "username_var": "CLICKHOUSE_CLOUD_API_KEY", "password_var": "CLICKHOUSE_CLOUD_API_SECRET"}, "snake_case_aliases": true}
 # NOTE: no pagination config is shipped - every list endpoint returns the
 # complete bounded collection (verified in the endpoint inventory, NOTES.md).
 VENV := .venv

@@ -222,63 +222,63 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns a Postgres service that belongs to the organization</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Returns a list of all Postgres services in the organization.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-provider"><code>provider</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-size"><code>size</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-provider"><code>provider</code></a>, <a href="#parameter-region"><code>region</code></a>, <a href="#parameter-size"><code>size</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Creates a new Postgres service in the organization and returns it. The service is started asynchronously.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Update a Postgres service that belongs to the organization. **WARNING:** Changing the name also updates the host name and certificates for the service.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Deletes a Postgres service that belongs to the organization</td>
 </tr>
 <tr>
     <td><a href="#restored_service"><CopyableCode code="restored_service" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-restoreTarget"><code>restoreTarget</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-restoreTarget"><code>restoreTarget</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Restore a Postgres database from continuous backup, optionally at a specific point in time.</td>
 </tr>
 <tr>
     <td><a href="#update_password"><CopyableCode code="update_password" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Sets a new password for a Postgres service's superuser account.</td>
 </tr>
 <tr>
     <td><a href="#update_state"><CopyableCode code="update_state" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Initiate a process for a Postgres service:&lt;br /&gt;* restart: Initiates a service restart&lt;br /&gt;* promote: Promotes a read replica to primary&lt;br /&gt;* switchover: Switch a primary over to a standby&lt;br /&gt;</td>
 </tr>
 <tr>
     <td><a href="#read_replica"><CopyableCode code="read_replica" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-name"><code>name</code></a></td>
+    <td><a href="#parameter-postgresId"><code>postgresId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-name"><code>name</code></a></td>
     <td></td>
     <td>**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. &lt;br /&gt;&lt;br /&gt; Initiate the process to create a new read replica for a Postgres service.</td>
 </tr>
@@ -298,10 +298,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-postgresId">
     <td><CopyableCode code="postgresId" /></td>
@@ -344,7 +344,7 @@ tags,
 username
 FROM clickhouse.postgres.services
 WHERE postgresId = '{{ postgresId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -366,7 +366,7 @@ size,
 state,
 tags
 FROM clickhouse.postgres.services
-WHERE organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -397,7 +397,7 @@ haType,
 tags,
 pgConfig,
 pgBouncerConfig,
-organizationId
+organization_id
 )
 SELECT 
 '{{ name }}' /* required */,
@@ -409,7 +409,7 @@ SELECT
 '{{ tags }}',
 '{{ pgConfig }}',
 '{{ pgBouncerConfig }}',
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -422,8 +422,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: services
   props:
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the services resource.
     - name: name
       value: "{{ name }}"
@@ -523,7 +523,7 @@ haType = '{{ haType }}',
 tags = '{{ tags }}'
 WHERE 
 postgresId = '{{ postgresId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
 requestId,
 result,
@@ -548,7 +548,7 @@ status;
 ```sql
 DELETE FROM clickhouse.postgres.services
 WHERE postgresId = '{{ postgresId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -573,7 +573,7 @@ AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID 
 ```sql
 EXEC clickhouse.postgres.services.restored_service 
 @postgresId='{{ postgresId }}' --required, 
-@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@organization_id='{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set 
 @@json=
 '{
 "name": "{{ name }}", 
@@ -592,7 +592,7 @@ EXEC clickhouse.postgres.services.restored_service
 ```sql
 EXEC clickhouse.postgres.services.update_password 
 @postgresId='{{ postgresId }}' --required, 
-@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@organization_id='{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set 
 @@json=
 '{
 "password": "{{ password }}"
@@ -607,7 +607,7 @@ EXEC clickhouse.postgres.services.update_password
 ```sql
 EXEC clickhouse.postgres.services.update_state 
 @postgresId='{{ postgresId }}' --required, 
-@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@organization_id='{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set 
 @@json=
 '{
 "command": "{{ command }}"
@@ -622,7 +622,7 @@ EXEC clickhouse.postgres.services.update_state
 ```sql
 EXEC clickhouse.postgres.services.read_replica 
 @postgresId='{{ postgresId }}' --required, 
-@organizationId='{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set 
+@organization_id='{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set 
 @@json=
 '{
 "name": "{{ name }}", 

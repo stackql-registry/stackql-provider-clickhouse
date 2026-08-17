@@ -53,21 +53,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Create a new BYOC Infrastructure in the organization. Returns the configuration of the newly created infrastructure</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-byocInfrastructureId"><code>byocInfrastructureId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-byocInfrastructureId"><code>byocInfrastructureId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Update configuration of the BYOC infrastructure. Returns the modified infrastructure</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-byocInfrastructureId"><code>byocInfrastructureId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-byocInfrastructureId"><code>byocInfrastructureId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Removes a BYOC Infrastructure from the organization</td>
 </tr>
@@ -92,10 +92,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string (uuid)</code></td>
     <td>ID of the requested BYOC Infrastructure</td>
 </tr>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 </tbody>
 </table>
@@ -120,7 +120,7 @@ accountId,
 availabilityZoneSuffixes,
 vpcCidrRange,
 displayName,
-organizationId
+organization_id
 )
 SELECT 
 '{{ regionId }}',
@@ -128,7 +128,7 @@ SELECT
 '{{ availabilityZoneSuffixes }}',
 '{{ vpcCidrRange }}',
 '{{ displayName }}',
-'{{ organizationId }}'
+'{{ organization_id }}'
 RETURNING
 requestId,
 result,
@@ -141,8 +141,8 @@ status
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: byoc_infrastructures
   props:
-    - name: organizationId
-      value: "{{ organizationId }}"
+    - name: organization_id
+      value: "{{ organization_id }}"
       description: Required parameter for the byoc_infrastructures resource.
     - name: regionId
       value: "{{ regionId }}"
@@ -190,7 +190,7 @@ SET
 displayName = '{{ displayName }}'
 WHERE 
 byocInfrastructureId = '{{ byocInfrastructureId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 RETURNING
 requestId,
 result,
@@ -215,7 +215,7 @@ Removes a BYOC Infrastructure from the organization
 ```sql
 DELETE FROM clickhouse.organizations.byoc_infrastructures
 WHERE byocInfrastructureId = '{{ byocInfrastructureId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>

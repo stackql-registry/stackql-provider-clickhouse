@@ -97,3 +97,4 @@ config:
     type: basic
     username_var: CLICKHOUSE_CLOUD_API_KEY
     password_var: CLICKHOUSE_CLOUD_API_SECRET
+  snake_case_aliases: true

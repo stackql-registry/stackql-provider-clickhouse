@@ -1755,6 +1755,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1v1~1organizations~1{organizationId}/get'
@@ -1762,6 +1764,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -1771,6 +1775,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/organizations/methods/get'
@@ -1800,6 +1806,8 @@ components:
                 {{- $wrapped := printf "{\"organization_prometheus_discovery_get\":%s}" . -}}
                 {{- $wrapped -}}
               type: golang_template_text_v0.3.0
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/prometheus_scrape_targets/methods/list'
@@ -1819,6 +1827,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1quotas~1{quotaCode}/get'
@@ -1826,6 +1836,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/quotas/methods/get'
@@ -1846,6 +1858,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1activities~1{activityId}/get'
@@ -1853,6 +1867,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/activities/methods/get'
@@ -1873,6 +1889,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result.costs
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/usage_costs/methods/list'
@@ -1892,6 +1910,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result.prepaidBalances
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/active_balances/methods/list'
@@ -1911,6 +1931,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/private_endpoint_configs/methods/get'
@@ -1932,12 +1954,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1byocInfrastructure~1{byocInfrastructureId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -1947,6 +1973,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select: []
         insert:
@@ -1957,8 +1985,8 @@ components:
           - $ref: '#/components/x-stackQL-resources/byoc_infrastructures/methods/delete'
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = <uuid>. A WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

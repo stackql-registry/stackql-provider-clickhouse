@@ -31,9 +31,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/RBACRole'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -51,9 +49,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -74,9 +70,7 @@ paths:
         - Role Management
     post:
       summary: Create a new role
-      description: >-
-        Creates a new custom role for an organization with specified policies
-        and actors.
+      description: Creates a new custom role for an organization with specified policies and actors.
       operationId: organizationRolePost
       parameters: []
       requestBody:
@@ -103,9 +97,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/RBACRole'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -123,9 +115,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -176,9 +166,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/RBACRole'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -196,9 +184,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -219,9 +205,7 @@ paths:
         - Role Management
     patch:
       summary: Update a role
-      description: >-
-        Updates an existing custom role. System roles cannot be updated. All
-        fields are optional - only provided fields will be updated.
+      description: Updates an existing custom role. System roles cannot be updated. All fields are optional - only provided fields will be updated.
       operationId: organizationRolePatch
       parameters:
         - in: path
@@ -255,9 +239,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/RBACRole'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -275,9 +257,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -298,9 +278,7 @@ paths:
         - Role Management
     delete:
       summary: Delete a role
-      description: >-
-        Deletes an existing custom role. System roles cannot be deleted. This
-        operation will remove the role and all its associated policies.
+      description: Deletes an existing custom role. System roles cannot be deleted. This operation will remove the role and all its associated policies.
       operationId: organizationRoleDelete
       parameters:
         - in: path
@@ -327,9 +305,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -347,9 +323,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -392,9 +366,7 @@ components:
             - custom
         actors:
           type: array
-          description: >-
-            List of actor resource IDs assigned to this role (e.g., user/uuid,
-            apiKey/uuid)
+          description: List of actor resource IDs assigned to this role (e.g., user/uuid, apiKey/uuid)
           items:
             type: string
         policies:
@@ -418,9 +390,7 @@ components:
           type: string
         actors:
           type: array
-          description: >-
-            List of actor resource IDs to assign to this role (e.g.,
-            ["user/uuid", "apiKey/uuid"])
+          description: List of actor resource IDs to assign to this role (e.g., ["user/uuid", "apiKey/uuid"])
           items:
             type: string
         policies:
@@ -473,9 +443,7 @@ components:
             type: string
         resources:
           type: array
-          description: >-
-            List of resource IDs this policy applies to (e.g., instance/uuid,
-            instance/*)
+          description: List of resource IDs this policy applies to (e.g., instance/uuid, instance/*)
           items:
             type: string
         tags:
@@ -491,16 +459,12 @@ components:
             - DENY
         permissions:
           type: array
-          description: >-
-            List of permissions to grant or deny (e.g.,
-            ["control-plane:organization:view"])
+          description: List of permissions to grant or deny (e.g., ["control-plane:organization:view"])
           items:
             type: string
         resources:
           type: array
-          description: >-
-            List of resource IDs this policy applies to (e.g., ["instance/uuid",
-            "instance/*"])
+          description: List of resource IDs this policy applies to (e.g., ["instance/uuid", "instance/*"])
           items:
             type: string
         tags:
@@ -537,6 +501,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -546,6 +512,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1roles~1{roleId}/get'
@@ -553,6 +521,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -562,12 +532,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1roles~1{roleId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/roles/methods/get'
@@ -580,12 +554,8 @@ components:
           - $ref: '#/components/x-stackQL-resources/roles/methods/delete'
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: >-
-          ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID
-          environment variable when it is set (x-stackQL-envVar); otherwise it
-          must be supplied on every query as WHERE organizationId = <uuid>. A
-          WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

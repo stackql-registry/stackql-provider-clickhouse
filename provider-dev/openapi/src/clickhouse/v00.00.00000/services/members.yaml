@@ -31,9 +31,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Member'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -51,9 +49,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -104,9 +100,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Member'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -124,9 +118,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -181,9 +173,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Member'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -201,9 +191,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -251,9 +239,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -271,9 +257,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -319,9 +303,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Invitation'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -339,9 +321,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -389,9 +369,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Invitation'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -409,9 +387,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -462,9 +438,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/Invitation'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -482,9 +456,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -532,9 +504,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -552,9 +522,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -578,9 +546,7 @@ components:
     Member:
       properties:
         userId:
-          description: >-
-            Unique user ID. If a user is a member in multiple organizations this
-            ID will stay the same.
+          description: Unique user ID. If a user is a member in multiple organizations this ID will stay the same.
           type: string
         name:
           description: Name of the member as set a personal user profile.
@@ -590,11 +556,7 @@ components:
           type: string
           format: email
         role:
-          description: >-
-            DEPRECATED. Use `assignedRoles` instead. Role of the member in the
-            organization. For organizations that have migrated to custom roles,
-            this field is frozen at the pre-migration value and does not reflect
-            current role assignments.
+          description: DEPRECATED. Use `assignedRoles` instead. Role of the member in the organization. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect current role assignments.
           type: string
           enum:
             - admin
@@ -613,9 +575,7 @@ components:
     MemberPatchRequest:
       properties:
         role:
-          description: >-
-            DEPRECATED. Use `assignedRoleIds` instead. Role of the member in the
-            organization.
+          description: DEPRECATED. Use `assignedRoleIds` instead. Role of the member in the organization.
           type: string
           enum:
             - admin
@@ -630,11 +590,7 @@ components:
     Invitation:
       properties:
         role:
-          description: >-
-            DEPRECATED. Use `assignedRoles` instead. Role of the invited user in
-            the organization. For organizations that have migrated to custom
-            roles, this field is frozen at the pre-migration value and does not
-            reflect the role assignment that will be applied.
+          description: DEPRECATED. Use `assignedRoles` instead. Role of the invited user in the organization. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect the role assignment that will be applied.
           type: string
           enum:
             - admin
@@ -645,9 +601,7 @@ components:
           type: string
           format: uuid
         email:
-          description: >-
-            Email of the invited user. Only a user with this email can join
-            using the invitation. The email is stored in a lowercase form.
+          description: Email of the invited user. Only a user with this email can join using the invitation. The email is stored in a lowercase form.
           type: string
           format: email
         createdAt:
@@ -660,24 +614,18 @@ components:
           format: date-time
         assignedRoles:
           type: array
-          description: >-
-            Custom roles and System roles that will be assigned to the user when
-            they accept the invitation
+          description: Custom roles and System roles that will be assigned to the user when they accept the invitation
           items:
             $ref: '#/components/schemas/AssignedRole'
       type: object
     InvitationPostRequest:
       properties:
         email:
-          description: >-
-            Email of the invited user. Only a user with this email can join
-            using the invitation. The email is stored in a lowercase form.
+          description: Email of the invited user. Only a user with this email can join using the invitation. The email is stored in a lowercase form.
           type: string
           format: email
         role:
-          description: >-
-            DEPRECATED. Use `assignedRoleIds` instead. Role to assign to the
-            invited user in the organization.
+          description: DEPRECATED. Use `assignedRoleIds` instead. Role to assign to the invited user in the organization.
           type: string
           enum:
             - admin
@@ -685,9 +633,7 @@ components:
           deprecated: true
         assignedRoleIds:
           type: array
-          description: >-
-            List of role IDs to assign to the invited user when they accept the
-            invitation
+          description: List of role IDs to assign to the invited user when they accept the invitation
           items:
             type: string
       type: object
@@ -720,6 +666,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1members~1{userId}/get'
@@ -727,6 +675,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -736,12 +686,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1members~1{userId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/members/methods/get'
@@ -764,6 +718,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -773,6 +729,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1invitations~1{invitationId}/get'
@@ -780,12 +738,16 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1invitations~1{invitationId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/invitations/methods/get'
@@ -797,12 +759,8 @@ components:
           - $ref: '#/components/x-stackQL-resources/invitations/methods/delete'
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: >-
-          ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID
-          environment variable when it is set (x-stackQL-envVar); otherwise it
-          must be supplied on every query as WHERE organizationId = <uuid>. A
-          WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

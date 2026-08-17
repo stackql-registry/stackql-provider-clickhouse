@@ -20,6 +20,14 @@
 //    x-stackQL-config pagination block on udfs.yaml lets stackql follow the
 //    cursor; the non-list operations in the service ignore it.
 //
+// 3. snake_case surface. `request.nativeCasing: camel` on every method of
+//    every service, paired with `snake_case_aliases: true` on the provider
+//    config (Makefile PROVIDER_CONFIG): snake_case WHERE / INSERT keys
+//    resolve against the camelCase wire parameters and body attributes, and
+//    SELECT / DESCRIBE columns present as snake aliases. The wire casing is
+//    untouched; nested JSON blob contents keep wire casing. The oci
+//    provider precedent (any-sdk v0.5.4-alpha01 primitives).
+//
 // Usage: node provider-dev/scripts/post_process.mjs
 
 import fs from 'fs';
@@ -54,7 +62,7 @@ for (const f of fs.readdirSync(servicesDir).filter((x) => x.endsWith('.yaml'))) 
     if (p.startsWith('/v1/')) errors.push(`${f}: path ${p} was not rebased onto the org-scoped server`);
   }
   const srv = d.servers?.[0];
-  if (!srv?.variables?.organizationId?.['x-stackQL-envVar']) errors.push(`${f}: top-level server lacks the organizationId x-stackQL-envVar variable`);
+  if (!srv?.variables?.organization_id?.['x-stackQL-envVar']) errors.push(`${f}: top-level server lacks the organization_id x-stackQL-envVar variable`);
 }
 // udfs: cursor pagination config
 const udfsSpecPath = path.join(servicesDir, 'udfs.yaml');
@@ -73,11 +81,26 @@ if (fs.existsSync(udfsSpecPath)) {
 } else {
   errors.push('udfs.yaml not found - the udfs service is expected from the refreshed spec');
 }
+// nativeCasing: camel on every method of every service
+const docsByFile = new Map();
+let casedMethods = 0;
+for (const f of fs.readdirSync(servicesDir).filter((x) => x.endsWith('.yaml'))) {
+  const d = f === 'organizations.yaml' ? doc : f === 'udfs.yaml' ? udfsDoc : yaml.load(fs.readFileSync(path.join(servicesDir, f), 'utf8'));
+  const resources = d.components?.['x-stackQL-resources'] || {};
+  if (Object.keys(resources).length === 0) errors.push(`${f}: no x-stackQL-resources`);
+  for (const res of Object.values(resources)) {
+    for (const method of Object.values(res.methods || {})) {
+      method.request = { ...(method.request || {}), nativeCasing: 'camel' };
+      casedMethods++;
+    }
+  }
+  docsByFile.set(f, d);
+}
 if (errors.length > 0) {
   console.error(`FAILED with ${errors.length} error(s), nothing written:`);
   for (const e of errors) console.error(`  ${e}`);
   process.exit(1);
 }
-fs.writeFileSync(orgSpecPath, yaml.dump(doc, { lineWidth: -1, noRefs: true }));
-fs.writeFileSync(udfsSpecPath, yaml.dump(udfsDoc, { lineWidth: -1, noRefs: true }));
+for (const [f, d] of docsByFile) fs.writeFileSync(path.join(servicesDir, f), yaml.dump(d, { lineWidth: -1, noRefs: true }));
+console.log(`post_process: request.nativeCasing: camel on ${casedMethods} methods across ${docsByFile.size} services`);
 console.log(`post_process: pinned ${applied} organization-root path item(s) to ${API_BASE_URL} in organizations.yaml; cursor pagination config on udfs.yaml`);

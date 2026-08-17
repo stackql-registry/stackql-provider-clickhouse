@@ -185,7 +185,7 @@ class Smoke:
             for r in rows:
                 if str(r.get("name", "")).startswith(SMOKE_PREFIX):
                     print(f"  sweeping key {r['name']}")
-                    self.q(f"DELETE FROM clickhouse.keys.keys WHERE keyId = '{r['id']}'")
+                    self.q(f"DELETE FROM clickhouse.keys.keys WHERE key_id = '{r['id']}'")
         rows, err = self.q("SELECT id, name, state FROM clickhouse.services.services")
         if err:
             print(f"  WARN service sweep list failed: {err[:120]}")
@@ -199,10 +199,10 @@ class Smoke:
                 self.q(f"EXEC clickhouse.services.services.update_state @serviceId = '{sid}', @command = 'stop'")
             self.wait_for(
                 f"sweep: {r['name']} stopped",
-                f"SELECT state FROM clickhouse.services.services WHERE serviceId = '{sid}'",
+                f"SELECT state FROM clickhouse.services.services WHERE service_id = '{sid}'",
                 lambda rows: rows and rows[0].get("state") in ("stopped", "terminating"),
             )
-            self.q(f"DELETE FROM clickhouse.services.services WHERE serviceId = '{sid}'")
+            self.q(f"DELETE FROM clickhouse.services.services WHERE service_id = '{sid}'")
 
     # -------------------------------------------------------------- read path
     def read_smokes(self) -> None:
@@ -210,32 +210,32 @@ class Smoke:
         self.step("show services", "SHOW SERVICES IN clickhouse", expect_rows=True, contains="organizations")
         self.step("organizations list (root path, no params)", "SELECT id, name FROM clickhouse.organizations.organizations", expect_rows=True)
         self.step(
-            "organization get (WHERE organizationId)",
-            f"SELECT name FROM clickhouse.organizations.organizations WHERE organizationId = '{os.environ['CLICKHOUSE_ORG_ID']}'",
+            "organization get (WHERE organization_id)",
+            f"SELECT name FROM clickhouse.organizations.organizations WHERE organization_id = '{os.environ['CLICKHOUSE_ORG_ID']}'",
             expect_rows=True,
         )
         self.step(
             "services estate inventory (organizationId from CLICKHOUSE_ORG_ID)",
-            "SELECT id, name, state, provider, region, numReplicas, minReplicaMemoryGb, maxReplicaMemoryGb, "
-            "json_extract(currentScaling, '$.effectiveAutoscalingMode') AS scaling_mode FROM clickhouse.services.services",
+            "SELECT id, name, state, provider, region, num_replicas, min_replica_memory_gb, max_replica_memory_gb, "
+            "json_extract(current_scaling, '$.effectiveAutoscalingMode') AS scaling_mode FROM clickhouse.services.services",
         )
-        self.step("members audit", "SELECT userId, name, role, joinedAt FROM clickhouse.members.members", expect_rows=True)
+        self.step("members audit", "SELECT user_id, name, role, joined_at FROM clickhouse.members.members", expect_rows=True)
         self.step("invitations", "SELECT id, email, role FROM clickhouse.members.invitations")
-        self.step("keys by age", "SELECT id, name, state, createdAt, expireAt, usedAt FROM clickhouse.keys.keys", expect_rows=True)
+        self.step("keys by age", "SELECT id, name, state, created_at, expire_at, used_at FROM clickhouse.keys.keys", expect_rows=True)
         self.step("roles", "SELECT id, name FROM clickhouse.roles.roles", expect_rows=True, contains="Admin")
-        self.step("quotas (usage vs limit)", "SELECT quotaCode, name, value, usage FROM clickhouse.organizations.quotas", expect_rows=True, contains="services-per-organization")
-        self.step("activities (audit)", "SELECT id, type, actorType, createdAt FROM clickhouse.organizations.activities", expect_rows=True)
+        self.step("quotas (usage vs limit)", "SELECT quota_code, name, value, usage FROM clickhouse.organizations.quotas", expect_rows=True, contains="services-per-organization")
+        self.step("activities (audit)", "SELECT id, type, actor_type, created_at FROM clickhouse.organizations.activities", expect_rows=True)
         to_d, from_d = date.today(), date.today() - timedelta(days=30)
         self.step(
             "usage cost by day and entity (FinOps lead)",
-            "SELECT date, entityType, entityName, totalCHC, json_extract(metrics, '$.computeCHC') AS computeCHC "
+            "SELECT date, entity_type, entity_name, total_chc, json_extract(metrics, '$.computeCHC') AS compute_chc "
             f"FROM clickhouse.organizations.usage_costs WHERE from_date = '{from_d}' AND to_date = '{to_d}'",
         )
         rows, _ = self.q("SELECT id FROM clickhouse.services.services")
         if rows:
             sid = rows[0]["id"]
-            self.step("backups for first service", f"SELECT id, status, startedAt FROM clickhouse.backups.backups WHERE serviceId = '{sid}'")
-            self.step("backup configuration", f"SELECT backupPeriodInHours, backupRetentionPeriodInHours FROM clickhouse.backups.backup_configurations WHERE serviceId = '{sid}'")
+            self.step("backups for first service", f"SELECT id, status, started_at FROM clickhouse.backups.backups WHERE service_id = '{sid}'")
+            self.step("backup configuration", f"SELECT backup_period_in_hours, backup_retention_period_in_hours FROM clickhouse.backups.backup_configurations WHERE service_id = '{sid}'")
 
     # ------------------------------------------------------------- write path
     def key_lifecycle(self) -> None:
@@ -252,8 +252,8 @@ class Smoke:
             if role:
                 break
         if role:
-            body_cols, body_vals = "assignedRoleIds", f"'[\"{role['id']}\"]'"
-            how = f"assignedRoleIds=[{role['name']}]"
+            body_cols, body_vals = "assigned_role_ids", f"'[\"{role['id']}\"]'"
+            how = f"assigned_role_ids=[{role['name']}]"
         else:
             body_cols, body_vals = "roles", "'[\"developer\"]'"
             how = "roles=[developer] (legacy)"
@@ -270,14 +270,14 @@ class Smoke:
         self.results.append(("key visible after INSERT", "PASS", ""))
         print("  PASS  key visible after INSERT")
         kid = key["id"]
-        self.step("key get", f"SELECT name, state FROM clickhouse.keys.keys WHERE keyId = '{kid}'", expect_rows=True, contains="enabled")
+        self.step("key get", f"SELECT name, state FROM clickhouse.keys.keys WHERE key_id = '{kid}'", expect_rows=True, contains="enabled")
         self.step(
-            "key UPDATE (state disabled + ipAccessList replacement)",
+            "key UPDATE (state disabled + ip_access_list replacement)",
             f"UPDATE clickhouse.keys.keys SET state = 'disabled', "
-            f"ipAccessList = '[{{\"source\": \"203.0.113.0/24\", \"description\": \"smoke\"}}]' WHERE keyId = '{kid}'",
+            f"ip_access_list = '[{{\"source\": \"203.0.113.0/24\", \"description\": \"smoke\"}}]' WHERE key_id = '{kid}'",
         )
-        self.step("key reflects UPDATE", f"SELECT state, ipAccessList FROM clickhouse.keys.keys WHERE keyId = '{kid}'", expect_rows=True, contains="203.0.113.0/24")
-        self.step("key DELETE", f"DELETE FROM clickhouse.keys.keys WHERE keyId = '{kid}'")
+        self.step("key reflects UPDATE", f"SELECT state, ip_access_list FROM clickhouse.keys.keys WHERE key_id = '{kid}'", expect_rows=True, contains="203.0.113.0/24")
+        self.step("key DELETE", f"DELETE FROM clickhouse.keys.keys WHERE key_id = '{kid}'")
         rows, err = self.q("SELECT id FROM clickhouse.keys.keys")
         gone = not err and all(r.get("id") != kid for r in rows)
         self.results.append(("key gone after DELETE", "PASS" if gone else "FAIL", err or ""))
@@ -291,7 +291,7 @@ class Smoke:
         region = (rows[0].get("region") if rows else None) or self.args.region
         self.step(
             "service INSERT (smallest footprint: 1 replica x 8 GB, idle after 5 min)",
-            f"INSERT INTO clickhouse.services.services (name, provider, region, minReplicaMemoryGb, maxReplicaMemoryGb, numReplicas, idleScaling, idleTimeoutMinutes, ipAccessList) "
+            f"INSERT INTO clickhouse.services.services (name, provider, region, min_replica_memory_gb, max_replica_memory_gb, num_replicas, idle_scaling, idle_timeout_minutes, ip_access_list) "
             f"SELECT '{name}', '{provider}', '{region}', 8, 8, 1, true, 5, '[]'",
         )
         # the services list is eventually consistent for a few seconds after
@@ -311,23 +311,23 @@ class Smoke:
         try:
             self.wait_for(
                 "service provisioned",
-                f"SELECT state FROM clickhouse.services.services WHERE serviceId = '{sid}'",
+                f"SELECT state FROM clickhouse.services.services WHERE service_id = '{sid}'",
                 lambda rows: rows and rows[0].get("state") in ("running", "idle", "stopped"),
             )
             self.step(
-                "service ipAccessList UPDATE (add/remove array patch)",
-                f"UPDATE clickhouse.services.services SET ipAccessList = '{{\"add\": [{{\"source\": \"203.0.113.0/24\", \"description\": \"smoke\"}}], \"remove\": []}}' "
-                f"WHERE serviceId = '{sid}'",
+                "service ip_access_list UPDATE (add/remove array patch)",
+                f"UPDATE clickhouse.services.services SET ip_access_list = '{{\"add\": [{{\"source\": \"203.0.113.0/24\", \"description\": \"smoke\"}}], \"remove\": []}}' "
+                f"WHERE service_id = '{sid}'",
             )
-            self.step("service reflects patch", f"SELECT ipAccessList FROM clickhouse.services.services WHERE serviceId = '{sid}'", expect_rows=True, contains="203.0.113.0/24")
+            self.step("service reflects patch", f"SELECT ip_access_list FROM clickhouse.services.services WHERE service_id = '{sid}'", expect_rows=True, contains="203.0.113.0/24")
         finally:
             self.step("service EXEC update_state stop", f"EXEC clickhouse.services.services.update_state @serviceId = '{sid}', @command = 'stop'")
             self.wait_for(
                 "service stopped",
-                f"SELECT state FROM clickhouse.services.services WHERE serviceId = '{sid}'",
+                f"SELECT state FROM clickhouse.services.services WHERE service_id = '{sid}'",
                 lambda rows: rows and rows[0].get("state") == "stopped",
             )
-            self.step("service DELETE", f"DELETE FROM clickhouse.services.services WHERE serviceId = '{sid}'")
+            self.step("service DELETE", f"DELETE FROM clickhouse.services.services WHERE service_id = '{sid}'")
             self.wait_for(
                 "service gone",
                 "SELECT id FROM clickhouse.services.services",

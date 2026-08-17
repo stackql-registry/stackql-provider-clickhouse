@@ -7,11 +7,7 @@ paths:
   /postgres:
     post:
       summary: Create new Postgres service
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Creates a new Postgres
-        service in the organization and returns it. The service is started
-        asynchronously.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Creates a new Postgres service in the organization and returns it. The service is started asynchronously.'
       operationId: postgresServiceCreate
       parameters: []
       requestBody:
@@ -38,9 +34,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresService'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -58,9 +52,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -84,10 +76,7 @@ paths:
           position: after
     get:
       summary: List of organization Postgres services
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns a list of all
-        Postgres services in the organization.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns a list of all Postgres services in the organization.'
       operationId: postgresServiceGetList
       parameters: []
       responses:
@@ -111,9 +100,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/PostgresServiceListItem'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -131,9 +118,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -158,10 +143,7 @@ paths:
   /postgres/prometheus:
     get:
       summary: Get organization PostgreSQL metrics
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Returns Prometheus metrics for all PostgreSQL
-        services in an organization. Maximum 100 services supported.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Returns Prometheus metrics for all PostgreSQL services in an organization. Maximum 100 services supported.'
       operationId: postgresOrgPrometheusGet
       parameters: []
       responses:
@@ -172,9 +154,7 @@ paths:
               schema:
                 type: string
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -192,9 +172,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -219,10 +197,7 @@ paths:
   /postgres/{postgresId}:
     get:
       summary: Get PostgreSQL service details
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns a Postgres
-        service that belongs to the organization
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns a Postgres service that belongs to the organization'
       operationId: postgresServiceGet
       parameters:
         - in: path
@@ -251,9 +226,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresService'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -271,9 +244,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -297,10 +268,7 @@ paths:
           position: after
     delete:
       summary: Delete a PostgreSQL service
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Deletes a Postgres
-        service that belongs to the organization
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Deletes a Postgres service that belongs to the organization'
       operationId: postgresServiceDelete
       parameters:
         - in: path
@@ -327,9 +295,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -347,9 +313,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -373,11 +337,7 @@ paths:
           position: after
     patch:
       summary: Update a PostgreSQL service
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Update a Postgres
-        service that belongs to the organization. **WARNING:** Changing the name
-        also updates the host name and certificates for the service.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Update a Postgres service that belongs to the organization. **WARNING:** Changing the name also updates the host name and certificates for the service.'
       operationId: postgresServicePatch
       parameters:
         - in: path
@@ -411,9 +371,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresService'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -431,9 +389,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -458,10 +414,7 @@ paths:
   /postgres/{postgresId}/caCertificates:
     get:
       summary: Get Postgres CA certs
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Download CA
-        certificates for a PostgreSQL service
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Download CA certificates for a PostgreSQL service'
       operationId: postgresServiceCertsGet
       parameters:
         - in: path
@@ -484,9 +437,7 @@ paths:
               schema:
                 type: string
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -504,9 +455,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -531,10 +480,7 @@ paths:
   /postgres/{postgresId}/restoredService:
     post:
       summary: Restore a Postgres service
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Restore a Postgres
-        database from continuous backup, optionally at a specific point in time.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Restore a Postgres database from continuous backup, optionally at a specific point in time.'
       operationId: postgresInstanceRestore
       parameters:
         - in: path
@@ -568,9 +514,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresService'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -588,9 +532,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -615,10 +557,7 @@ paths:
   /postgres/{postgresId}/password:
     patch:
       summary: Update Postgres superuser password
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Sets a new password for
-        a Postgres service's superuser account.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Sets a new password for a Postgres service''s superuser account.'
       operationId: postgresServiceSetPassword
       parameters:
         - in: path
@@ -652,9 +591,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresServicePasswordResource'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -672,9 +609,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -699,15 +634,10 @@ paths:
   /postgres/{postgresId}/state:
     patch:
       summary: Update Postgres service state
-      description: >
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Initiate a process for
-        a Postgres service:
-
+      description: |
+        **This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Initiate a process for a Postgres service:
         * restart: Initiates a service restart
-
         * promote: Promotes a read replica to primary
-
         * switchover: Switch a primary over to a standby
       operationId: postgresServicePatchState
       parameters:
@@ -742,9 +672,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresService'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -762,9 +690,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -789,10 +715,7 @@ paths:
   /postgres/{postgresId}/readReplica:
     post:
       summary: Create a read replica for a Postgres service
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Initiate the process to
-        create a new read replica for a Postgres service.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Initiate the process to create a new read replica for a Postgres service.'
       operationId: postgresInstanceCreateReadReplica
       parameters:
         - in: path
@@ -826,9 +749,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresService'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -846,9 +767,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -873,10 +792,7 @@ paths:
   /postgres/{postgresId}/config:
     get:
       summary: Get PostgreSQL service configuration
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns the
-        configuration data for a Postgres service and its PgBouncer service.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns the configuration data for a Postgres service and its PgBouncer service.'
       operationId: postgresInstanceConfigGet
       parameters:
         - in: path
@@ -905,9 +821,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/postgresInstanceConfig'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -925,9 +839,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -951,10 +863,7 @@ paths:
           position: after
     post:
       summary: Replace Postgres service configuration
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Replace the existing
-        Postgres service and pgBouncer configuration.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Replace the existing Postgres service and pgBouncer configuration.'
       operationId: postgresInstanceConfigPost
       parameters:
         - in: path
@@ -988,9 +897,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/postgresInstanceUpdateConfigResponse'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1008,9 +915,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1034,10 +939,7 @@ paths:
           position: after
     patch:
       summary: Update Postgres service configuration
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Update the existing
-        Postgres service and pgBouncer configuration.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Update the existing Postgres service and pgBouncer configuration.'
       operationId: postgresInstanceConfigPatch
       parameters:
         - in: path
@@ -1071,9 +973,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/postgresInstanceUpdateConfigResponse'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1091,9 +991,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1118,10 +1016,7 @@ paths:
   /postgres/{postgresId}/prometheus:
     get:
       summary: Get PostgreSQL service metrics
-      description: >-
-        **Disclaimer:** This beta endpoint is evolving; the API contract may
-        change. <br /><br /> Returns Prometheus metrics for a PostgreSQL
-        service.
+      description: '**Disclaimer:** This beta endpoint is evolving; the API contract may change. <br /><br /> Returns Prometheus metrics for a PostgreSQL service.'
       operationId: postgresInstancePrometheusGet
       parameters:
         - in: path
@@ -1139,9 +1034,7 @@ paths:
               schema:
                 type: string
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1159,9 +1052,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1186,13 +1077,7 @@ paths:
   /postgres/{postgresId}/metrics:
     get:
       summary: Get Postgres time-series metrics
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns bucketed
-        time-series metrics for a PostgreSQL service over the requested window
-        (CPU, memory, disk, network, connections, cache hit ratio, throughput,
-        transactions, and more). Use this to chart or analyze how a service
-        behaved over time.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns bucketed time-series metrics for a PostgreSQL service over the requested window (CPU, memory, disk, network, connections, cache hit ratio, throughput, transactions, and more). Use this to chart or analyze how a service behaved over time.'
       operationId: postgresInstanceMetricsGet
       parameters:
         - in: path
@@ -1218,10 +1103,7 @@ paths:
           required: true
         - in: query
           name: bucket_size_seconds
-          description: >-
-            Time-series bucket size in seconds. When omitted, a bucket size is
-            derived from the requested window. Requests are capped at 250 data
-            points.
+          description: Time-series bucket size in seconds. When omitted, a bucket size is derived from the requested window. Requests are capped at 250 data points.
           schema:
             type: integer
             minimum: 1
@@ -1244,9 +1126,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresMetrics'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1264,9 +1144,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1291,12 +1169,7 @@ paths:
   /postgres/{postgresId}/slowQueryPatterns:
     get:
       summary: List Postgres slow query patterns
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns aggregate
-        metrics for the slowest query patterns observed on a Postgres service
-        during the given time window. Use this to discover which queries
-        dominate total execution time, CPU, I/O, or WAL generation.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns aggregate metrics for the slowest query patterns observed on a Postgres service during the given time window. Use this to discover which queries dominate total execution time, CPU, I/O, or WAL generation.'
       operationId: slowQueryPatternsGetList
       parameters:
         - in: path
@@ -1332,9 +1205,7 @@ paths:
             type: string
         - in: query
           name: db_operation
-          description: >-
-            Database operation filter (for example, SELECT, INSERT, UPDATE,
-            DELETE, UTILITY).
+          description: Database operation filter (for example, SELECT, INSERT, UPDATE, DELETE, UTILITY).
           schema:
             type: string
         - in: query
@@ -1407,9 +1278,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/PostgresSlowQueryPattern'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1427,9 +1296,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1454,11 +1321,7 @@ paths:
   /postgres/{postgresId}/slowQueryPatterns/{queryId}:
     get:
       summary: Get a Postgres slow query pattern with recent executions
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns aggregate
-        metrics for a single slow query pattern together with its most recent
-        individual executions.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns aggregate metrics for a single slow query pattern together with its most recent individual executions.'
       operationId: slowQueryPatternGet
       parameters:
         - in: path
@@ -1488,9 +1351,7 @@ paths:
           required: true
         - in: query
           name: db_operation
-          description: >-
-            Database operation filter (for example, SELECT, INSERT, UPDATE,
-            DELETE, UTILITY).
+          description: Database operation filter (for example, SELECT, INSERT, UPDATE, DELETE, UTILITY).
           schema:
             type: string
           required: true
@@ -1524,9 +1385,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/PostgresSlowQueryPatternDetail'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1544,9 +1403,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1571,14 +1428,7 @@ paths:
   /postgres/{postgresId}/logs:
     get:
       summary: List Postgres server logs
-      description: >-
-        **This endpoint is in beta.** API contract is stable, and no breaking
-        changes are expected in the future. <br /><br /> Returns PostgreSQL
-        server log entries for a Postgres service within the given time window,
-        most recent first by default (override with `sort_order`). Results are
-        paginated with `limit`/`offset`; advance `offset` until a page returns
-        fewer than `limit` entries to read the full window. The time range must
-        not exceed 30 days, and `to_date` must be after `from_date`.
+      description: '**This endpoint is in beta.** API contract is stable, and no breaking changes are expected in the future. <br /><br /> Returns PostgreSQL server log entries for a Postgres service within the given time window, most recent first by default (override with `sort_order`). Results are paginated with `limit`/`offset`; advance `offset` until a page returns fewer than `limit` entries to read the full window. The time range must not exceed 30 days, and `to_date` must be after `from_date`.'
       operationId: postgresLogsGetList
       parameters:
         - in: path
@@ -1609,9 +1459,7 @@ paths:
             type: string
         - in: query
           name: severity
-          description: >-
-            Filter to log entries with this PostgreSQL severity (for example,
-            ERROR, WARNING, LOG).
+          description: Filter to log entries with this PostgreSQL severity (for example, ERROR, WARNING, LOG).
           schema:
             type: string
         - in: query
@@ -1659,9 +1507,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/PostgresLogEntry'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -1679,9 +1525,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -1758,22 +1602,13 @@ components:
         isPrimary:
           $ref: '#/components/schemas/pgIsPrimaryProperty'
         connectionString:
-          description: >-
-            Connection string to the Postgres service. Embeds the service
-            password, so it is only returned when the service is created or its
-            password is reset. Omitted from every other response when Postgres
-            credential redaction is enabled for the organization. Not guaranteed
-            to be present — treat as optional.
+          description: Connection string to the Postgres service. Embeds the service password, so it is only returned when the service is created or its password is reset. Omitted from every other response when Postgres credential redaction is enabled for the organization. Not guaranteed to be present — treat as optional.
           type: string
         username:
           description: Username for the Postgres service
           type: string
         password:
-          description: >-
-            Password for the Postgres service. Only returned when the service is
-            created or its password is reset. Omitted from every other response
-            when Postgres credential redaction is enabled for the organization.
-            Not guaranteed to be present — treat as optional.
+          description: Password for the Postgres service. Only returned when the service is created or its password is reset. Omitted from every other response when Postgres credential redaction is enabled for the organization. Not guaranteed to be present — treat as optional.
           type: string
         hostname:
           description: Hostname for the Postgres service
@@ -1839,9 +1674,7 @@ components:
     PostgresServicePasswordResource:
       properties:
         password:
-          description: >-
-            New Postgres superuser password. Provided only if there was no
-            'password' in the request.
+          description: New Postgres superuser password. Provided only if there was no 'password' in the request.
           type: string
       type: object
     PostgresServiceSetState:
@@ -1884,9 +1717,7 @@ components:
         pgBouncerConfig:
           $ref: '#/components/schemas/pgBouncerConfig'
         message:
-          description: >-
-            Informational message about the configuration update, such as
-            restart requirements.
+          description: Informational message about the configuration update, such as restart requirements.
           type: string
       required:
         - pgConfig
@@ -1917,14 +1748,10 @@ components:
           description: Database user that executed the query.
           type: string
         dbOperation:
-          description: >-
-            Top-level SQL operation type (for example, SELECT, INSERT, UPDATE,
-            DELETE, UTILITY).
+          description: Top-level SQL operation type (for example, SELECT, INSERT, UPDATE, DELETE, UTILITY).
           type: string
         app:
-          description: >-
-            Value of the Postgres `application_name` for executions matching
-            this pattern.
+          description: Value of the Postgres `application_name` for executions matching this pattern.
           type: string
         callCount:
           description: Number of times the pattern executed in the window.
@@ -1954,9 +1781,7 @@ components:
           description: Total number of rows returned or affected across all calls.
           type: integer
         totalSharedBlksRead:
-          description: >-
-            Total shared buffer blocks read from disk (cache misses) across all
-            calls.
+          description: Total shared buffer blocks read from disk (cache misses) across all calls.
           type: integer
         totalSharedBlksHit:
           description: Total shared buffer blocks hit (cache hits) across all calls.
@@ -2007,14 +1832,10 @@ components:
           type: string
           format: date-time
         severity:
-          description: >-
-            PostgreSQL severity of the entry (for example, LOG, WARNING, ERROR,
-            FATAL, PANIC).
+          description: PostgreSQL severity of the entry (for example, LOG, WARNING, ERROR, FATAL, PANIC).
           type: string
         body:
-          description: >-
-            Raw log entry body as emitted by PostgreSQL. Structured bodies are
-            returned as a JSON-encoded string.
+          description: Raw log entry body as emitted by PostgreSQL. Structured bodies are returned as a JSON-encoded string.
           type: string
       required:
         - timestamp
@@ -2024,9 +1845,7 @@ components:
     pgNameProperty:
       type: string
       title: Postgres Service Name
-      description: >-
-        Name of the Postgres service. Alphanumerical string with whitespaces up
-        to 50 characters.
+      description: Name of the Postgres service. Alphanumerical string with whitespaces up to 50 characters.
       minLength: 1
       maxLength: 50
     pgProvider:
@@ -2134,10 +1953,7 @@ components:
         - r8gd.48xlarge
     pgHaType:
       type: string
-      description: >-
-        Type of high availability: “none” for no replication, “async” for
-        asynchronous replication to a single standby, and “sync” for synchronous
-        replication to two standbys.
+      description: 'Type of high availability: “none” for no replication, “async” for asynchronous replication to a single standby, and “sync” for synchronous replication to two standbys.'
       enum:
         - none
         - async
@@ -2148,22 +1964,15 @@ components:
         $ref: '#/components/schemas/ResourceTagsV1'
       maxItems: 50
       title: Postgres Tags
-      description: >-
-        Tags associated with the Postgres service. Tag keys starting with “chc_”
-        are reserved for internal use.
+      description: Tags associated with the Postgres service. Tag keys starting with “chc_” are reserved for internal use.
     pgConfig:
       type: object
       title: Postgres Configuration
-      description: >-
-        Postgres [runtime
-        configuration](https://www.postgresql.org/docs/current/runtime-config.html)
-        configuration.
+      description: Postgres [runtime configuration](https://www.postgresql.org/docs/current/runtime-config.html) configuration.
       properties:
         max_connections:
           type: string
-          description: >-
-            Sets the maximum number of concurrent connections to the database
-            server.
+          description: Sets the maximum number of concurrent connections to the database server.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/max_connections/
           example: 500
@@ -2172,8 +1981,7 @@ components:
           type: string
           description: Sets the default transaction isolation level for new transactions.
           externalDocs:
-            url: >-
-              https://postgresqlco.nf/doc/en/param/default_transaction_isolation/
+            url: https://postgresqlco.nf/doc/en/param/default_transaction_isolation/
           example: read committed
           enum:
             - read committed
@@ -2181,9 +1989,7 @@ components:
             - serializable
         ssl_min_protocol_version:
           type: string
-          description: >-
-            Sets the minimum SSL/TLS protocol version allowed for client
-            connections.
+          description: Sets the minimum SSL/TLS protocol version allowed for client connections.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/ssl_min_protocol_version/
           example: TLSv1.3
@@ -2201,9 +2007,7 @@ components:
           minimum: 64
         work_mem:
           type: string
-          description: >-
-            Sets the amount of memory Postgres will use for internal operations
-            like sorting and hashing as part of executing a query.
+          description: Sets the amount of memory Postgres will use for internal operations like sorting and hashing as part of executing a query.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/work_mem/
           example: 4MB
@@ -2217,157 +2021,119 @@ components:
           minimum: 8
         random_page_cost:
           type: string
-          description: >-
-            Sets the planner's estimate of the cost of a
-            non-sequentially-fetched disk page. Lower values (1.1-1.5) are
-            better for SSDs.
+          description: Sets the planner's estimate of the cost of a non-sequentially-fetched disk page. Lower values (1.1-1.5) are better for SSDs.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/random_page_cost/
           example: 1.1
           minimum: 0
         effective_io_concurrency:
           type: string
-          description: >-
-            Number of concurrent disk I/O operations the planner expects. Higher
-            values (100-200) benefit SSDs.
+          description: Number of concurrent disk I/O operations the planner expects. Higher values (100-200) benefit SSDs.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/effective_io_concurrency/
           example: 200
           minimum: 0
         max_worker_processes:
           type: string
-          description: >-
-            Maximum number of background processes the system can support.
-            Includes parallel query workers, logical replication, and more.
+          description: Maximum number of background processes the system can support. Includes parallel query workers, logical replication, and more.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/max_worker_processes/
           example: 8
           minimum: 0
         max_parallel_workers:
           type: string
-          description: >-
-            Maximum number of workers that can be used for parallel operations.
-            Cannot exceed max_worker_processes.
+          description: Maximum number of workers that can be used for parallel operations. Cannot exceed max_worker_processes.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/max_parallel_workers/
           example: 4
           minimum: 0
         max_parallel_workers_per_gather:
           type: string
-          description: >-
-            Maximum number of parallel workers per executor node for parallel
-            queries. Use 0 to disable parallel queries.
+          description: Maximum number of parallel workers per executor node for parallel queries. Use 0 to disable parallel queries.
           externalDocs:
-            url: >-
-              https://postgresqlco.nf/doc/en/param/max_parallel_workers_per_gather/
+            url: https://postgresqlco.nf/doc/en/param/max_parallel_workers_per_gather/
           example: 2
           minimum: 0
         max_parallel_maintenance_workers:
           type: string
-          description: >-
-            Maximum number of parallel workers for maintenance operations like
-            CREATE INDEX and VACUUM.
+          description: Maximum number of parallel workers for maintenance operations like CREATE INDEX and VACUUM.
           externalDocs:
-            url: >-
-              https://postgresqlco.nf/doc/en/param/max_parallel_maintenance_workers/
+            url: https://postgresqlco.nf/doc/en/param/max_parallel_maintenance_workers/
           example: 2
           minimum: 0
         statement_timeout:
           type: string
-          description: >-
-            Abort any statement that runs longer than the specified time. Use 0
-            to disable.
+          description: Abort any statement that runs longer than the specified time. Use 0 to disable.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/statement_timeout/
           example: 60s
           minimum: 0
         lock_timeout:
           type: string
-          description: >-
-            Abort any statement that waits longer than the specified time while
-            attempting to acquire a lock. Use 0 to disable.
+          description: Abort any statement that waits longer than the specified time while attempting to acquire a lock. Use 0 to disable.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/lock_timeout/
           example: 10s
           minimum: 0
         idle_session_timeout:
           type: string
-          description: >-
-            Terminate any session that has been idle for longer than the
-            specified time. Use 0 to disable.
+          description: Terminate any session that has been idle for longer than the specified time. Use 0 to disable.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/idle_session_timeout/
           example: 2m
           minimum: 0
         idle_in_transaction_session_timeout:
           type: string
-          description: >-
-            Terminate any session that has been idle within an open transaction
-            for longer than the specified time. Use 0 to disable.
+          description: Terminate any session that has been idle within an open transaction for longer than the specified time. Use 0 to disable.
           externalDocs:
-            url: >-
-              https://postgresqlco.nf/doc/en/param/idle_in_transaction_session_timeout/
+            url: https://postgresqlco.nf/doc/en/param/idle_in_transaction_session_timeout/
           example: 2h
           minimum: 0
         transaction_timeout:
           type: string
-          description: >-
-            Terminate any statement that takes more than the specified time,
-            even while active. Use 0 to disable.
+          description: Terminate any statement that takes more than the specified time, even while active. Use 0 to disable.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/transaction_timeout/
           example: 120s
           minimum: 0
         wal_sender_timeout:
           type: string
-          description: >-
-            Terminate replication connections that are inactive for longer than
-            this time. Use 0 to disable.
+          description: Terminate replication connections that are inactive for longer than this time. Use 0 to disable.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/wal_sender_timeout/
           example: 120m
           minimum: 0
         wal_keep_size:
           type: string
-          description: >-
-            Minimum size of past WAL files kept in pg_wal for standby servers.
-            Use 0 to disable.
+          description: Minimum size of past WAL files kept in pg_wal for standby servers. Use 0 to disable.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/wal_keep_size/
           example: 1GB
           minimum: 0
         min_wal_size:
           type: string
-          description: >-
-            Minimum size to shrink the WAL to. WAL files are recycled rather
-            than removed when below this size.
+          description: Minimum size to shrink the WAL to. WAL files are recycled rather than removed when below this size.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/min_wal_size/
           example: 80MB
           minimum: 32768
         max_wal_size:
           type: string
-          description: >-
-            Maximum size WAL can grow between checkpoints. Larger values improve
-            write performance but increase crash recovery time.
+          description: Maximum size WAL can grow between checkpoints. Larger values improve write performance but increase crash recovery time.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/max_wal_size/
           example: 5GB
           minimum: 32768
         max_slot_wal_keep_size:
           type: string
-          description: >-
-            Specifies the maximum size of WAL files that replication slots are
-            allowed to retain. Use -1 for unlimited.
+          description: Specifies the maximum size of WAL files that replication slots are allowed to retain. Use -1 for unlimited.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/max_slot_wal_keep_size/
           example: '-1'
           minimum: 0
         wal_compression:
           type: string
-          description: >-
-            Compress full-page writes in WAL. Reduces I/O at the cost of CPU.
-            Options vary by PostgreSQL version.
+          description: Compress full-page writes in WAL. Reduces I/O at the cost of CPU. Options vary by PostgreSQL version.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/wal_compression/
           example: 'off'
@@ -2378,77 +2144,56 @@ components:
             - zstd
         autovacuum_max_workers:
           type: string
-          description: >-
-            Maximum number of autovacuum worker processes that can run at the
-            same time. Workers share a single cost-limit budget, so raising this
-            alone may not speed up vacuuming.
+          description: Maximum number of autovacuum worker processes that can run at the same time. Workers share a single cost-limit budget, so raising this alone may not speed up vacuuming.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/autovacuum_max_workers/
           example: 8
           minimum: 1
         autovacuum_naptime:
           type: string
-          description: >-
-            Minimum delay between autovacuum runs. Lower values make autovacuum
-            check for work more frequently.
+          description: Minimum delay between autovacuum runs. Lower values make autovacuum check for work more frequently.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/autovacuum_naptime/
           example: 5s
           minimum: 1
         autovacuum_work_mem:
           type: string
-          description: >-
-            Maximum memory each autovacuum worker uses to track dead tuples.
-            Higher values reduce repeated index-vacuum passes on large tables.
-            Use -1 to fall back to maintenance_work_mem.
+          description: Maximum memory each autovacuum worker uses to track dead tuples. Higher values reduce repeated index-vacuum passes on large tables. Use -1 to fall back to maintenance_work_mem.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/autovacuum_work_mem/
           example: 64000kB
           minimum: 1024
         autovacuum_vacuum_scale_factor:
           type: string
-          description: >-
-            Fraction of a table's rows that must change before autovacuum runs.
-            Lower values vacuum large tables more frequently.
+          description: Fraction of a table's rows that must change before autovacuum runs. Lower values vacuum large tables more frequently.
           externalDocs:
-            url: >-
-              https://postgresqlco.nf/doc/en/param/autovacuum_vacuum_scale_factor/
+            url: https://postgresqlco.nf/doc/en/param/autovacuum_vacuum_scale_factor/
           example: 0.2
           minimum: 0
         autovacuum_analyze_scale_factor:
           type: string
-          description: >-
-            Fraction of a table's rows that must change before autovacuum runs
-            ANALYZE to refresh planner statistics.
+          description: Fraction of a table's rows that must change before autovacuum runs ANALYZE to refresh planner statistics.
           externalDocs:
-            url: >-
-              https://postgresqlco.nf/doc/en/param/autovacuum_analyze_scale_factor/
+            url: https://postgresqlco.nf/doc/en/param/autovacuum_analyze_scale_factor/
           example: 0.1
           minimum: 0
         autovacuum_vacuum_insert_scale_factor:
           type: string
-          description: >-
-            Fraction of a table's rows that must be inserted before autovacuum
-            runs. Helps vacuum insert-heavy, rarely-updated tables.
+          description: Fraction of a table's rows that must be inserted before autovacuum runs. Helps vacuum insert-heavy, rarely-updated tables.
           externalDocs:
-            url: >-
-              https://postgresqlco.nf/doc/en/param/autovacuum_vacuum_insert_scale_factor/
+            url: https://postgresqlco.nf/doc/en/param/autovacuum_vacuum_insert_scale_factor/
           example: 0.2
           minimum: 0
         autovacuum_vacuum_cost_limit:
           type: string
-          description: >-
-            Cost-accounting limit shared across all autovacuum workers before
-            they pause. Use -1 to inherit vacuum_cost_limit.
+          description: Cost-accounting limit shared across all autovacuum workers before they pause. Use -1 to inherit vacuum_cost_limit.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/autovacuum_vacuum_cost_limit/
           example: '-1'
           minimum: 1
         autovacuum_vacuum_cost_delay:
           type: string
-          description: >-
-            Time autovacuum sleeps when the cost limit is reached. Lower values
-            speed up vacuuming at the cost of more I/O.
+          description: Time autovacuum sleeps when the cost limit is reached. Lower values speed up vacuuming at the cost of more I/O.
           externalDocs:
             url: https://postgresqlco.nf/doc/en/param/autovacuum_vacuum_cost_delay/
           example: 2ms
@@ -2460,9 +2205,7 @@ components:
     pgBouncerConfig:
       type: object
       title: PgBouncer Configuration
-      description: >-
-        PgBouncer [runtime configuration](https://www.pgbouncer.org/config.html)
-        configuration.
+      description: PgBouncer [runtime configuration](https://www.pgbouncer.org/config.html) configuration.
       additionalProperties:
         type: string
         description: Any PgBouncer configuration parameter.
@@ -2478,9 +2221,7 @@ components:
     pgStorageSize:
       type: integer
       title: Storage Size
-      description: >-
-        The storage size, in GiB, which must be supported by the specified
-        `size`.
+      description: The storage size, in GiB, which must be supported by the specified `size`.
     pgStateProperty:
       type: string
       title: Postgres Service State
@@ -2510,21 +2251,15 @@ components:
       format: date-time
       title: PITR Restore Target as an RFC 3339-formatted timestamp in UTC time.
       example: '2026-03-31T18:17:37Z'
-      description: >-
-        The point in time at which to recover, as either date/time, named
-        restore point, or a specific transaction ID.
+      description: The point in time at which to recover, as either date/time, named restore point, or a specific transaction ID.
     pgPassword:
       title: Password
       type: string
-      description: >
-        Optional password. If not provided a new password is generated and
-        provided in the response. Must contain:
-
+      description: |
+        Optional password. If not provided a new password is generated and provided in the response. Must contain:
 
         * At least one lowercase letter
-
         * At least one uppercase letter
-
         * At least one digit
       minLength: 12
       maxLength: 1024
@@ -2532,9 +2267,7 @@ components:
     PostgresMetric:
       properties:
         key:
-          description: >-
-            Stable metric identifier (for example cpu_usage, connection_count,
-            cache_hit_ratio).
+          description: Stable metric identifier (for example cpu_usage, connection_count, cache_hit_ratio).
           type: string
         name:
           description: Human-readable metric name.
@@ -2681,9 +2414,7 @@ components:
           description: Postgres error severity level if the execution raised an error.
           type: integer
         serverRole:
-          description: >-
-            Role of the server that executed the query (for example, primary or
-            standby).
+          description: Role of the server that executed the query (for example, primary or standby).
           type: string
         traceId:
           description: OpenTelemetry trace ID associated with the execution.
@@ -2753,9 +2484,7 @@ components:
     PostgresMetricSeries:
       properties:
         label:
-          description: >-
-            Distinguishing label for this series within the metric (for example
-            a CPU mode, a database name, or "Reads").
+          description: Distinguishing label for this series within the metric (for example a CPU mode, a database name, or "Reads").
           type: string
         dataPoints:
           type: array
@@ -2793,6 +2522,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         list:
           operation:
             $ref: '#/paths/~1postgres/get'
@@ -2800,6 +2531,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1postgres~1{postgresId}/get'
@@ -2807,12 +2540,16 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1postgres~1{postgresId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -2822,6 +2559,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         restored_service:
           config:
             requestBodyTranslate:
@@ -2831,6 +2570,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update_password:
           config:
             requestBodyTranslate:
@@ -2840,6 +2581,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update_state:
           config:
             requestBodyTranslate:
@@ -2849,6 +2592,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         read_replica:
           config:
             requestBodyTranslate:
@@ -2858,6 +2603,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/services/methods/get'
@@ -2881,6 +2628,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -2890,6 +2639,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -2899,6 +2650,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/configs/methods/get'
@@ -2920,6 +2673,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/metrics/methods/get'
@@ -2939,6 +2694,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1postgres~1{postgresId}~1slowQueryPatterns~1{queryId}/get'
@@ -2946,6 +2703,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/slow_query_patterns/methods/get'
@@ -2966,6 +2725,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/logs/methods/list'
@@ -2974,12 +2735,8 @@ components:
         delete: []
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: >-
-          ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID
-          environment variable when it is set (x-stackQL-envVar); otherwise it
-          must be supplied on every query as WHERE organizationId = <uuid>. A
-          WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

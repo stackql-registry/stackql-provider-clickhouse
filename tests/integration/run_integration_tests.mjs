@@ -15,6 +15,9 @@
 //   - an ipAccessList add/remove array-patch UPDATE (body passed through)
 //   - a ClickStack dashboard INSERT / SELECT / UPDATE (PUT) / DELETE round trip
 //   - status-only DELETE responses
+//   - the snake_case surface: snake WHERE / INSERT keys (service_id,
+//     ip_access_list, click_stack_dashboard_id) resolve to the camelCase wire
+//     names via request.nativeCasing; SELECT columns are snake aliases
 //
 // The vendor server template is https-only and cannot address the mock, so
 // this runner materialises a TEST COPY of provider-dev/openapi in
@@ -66,7 +69,7 @@ function buildTestRegistry(port) {
     const doc = yaml.load(readFileSync(fp, 'utf8'));
     if (!doc.servers?.[0]?.url) throw new Error(`no top-level servers block found in ${f}`);
     doc.servers[0].url = doc.servers[0].url.replace('https://api.clickhouse.cloud', base);
-    if (!doc.servers[0].variables?.organizationId?.['x-stackQL-envVar']) throw new Error(`${f}: organizationId server variable lost its x-stackQL-envVar`);
+    if (!doc.servers[0].variables?.organization_id?.['x-stackQL-envVar']) throw new Error(`${f}: organization_id server variable lost its x-stackQL-envVar`);
     for (const item of Object.values(doc.paths || {})) {
       if (item.servers) item.servers = item.servers.map((s) => ({ ...s, url: s.url.replace('https://api.clickhouse.cloud', base) }));
     }
@@ -135,11 +138,11 @@ try {
   let r = await runSql(`SHOW SERVICES IN clickhouse`);
   check('show services (10)', r.rows && r.rows.length === 10, r.err || `got ${r.rows?.length}`);
   r = await runSql(`SHOW METHODS IN clickhouse.services.services`);
-  check('show methods: organizationId not required when CLICKHOUSE_ORG_ID is set',
-    r.rows && r.rows.length === 7 && !r.rows.some((m) => String(m.RequiredParams).includes('organizationId')), r.err || JSON.stringify(r.rows));
+  check('show methods: organization_id not required when CLICKHOUSE_ORG_ID is set',
+    r.rows && r.rows.length === 7 && !r.rows.some((m) => String(m.RequiredParams).includes('organization_id')), r.err || JSON.stringify(r.rows));
   r = await runSql(`SHOW METHODS IN clickhouse.services.services`, { CLICKHOUSE_ORG_ID: undefined });
-  check('show methods: organizationId required when CLICKHOUSE_ORG_ID is unset',
-    r.rows && r.rows.some((m) => m.MethodName === 'list' && String(m.RequiredParams).includes('organizationId')), r.err || JSON.stringify(r.rows));
+  check('show methods: organization_id required when CLICKHOUSE_ORG_ID is unset',
+    r.rows && r.rows.some((m) => m.MethodName === 'list' && String(m.RequiredParams).includes('organization_id')), r.err || JSON.stringify(r.rows));
 
   // --- basic auth: the mock 401s anything but the expected pair
   let mark = log.length;
@@ -156,14 +159,14 @@ try {
 
   // --- organizationId: env-resolved, WHERE override, unset failure
   mark = log.length;
-  r = await runSql(`SELECT id, name FROM clickhouse.services.services WHERE organizationId = '${OTHER_ORG_ID}'`);
-  check('WHERE organizationId beats CLICKHOUSE_ORG_ID (routed to other org, 0 rows)',
+  r = await runSql(`SELECT id, name FROM clickhouse.services.services WHERE organization_id = '${OTHER_ORG_ID}'`);
+  check('WHERE organization_id beats CLICKHOUSE_ORG_ID (routed to other org, 0 rows)',
     r.rows && r.rows.length === 0 && calls(mark, 'GET', `/v1/organizations/${OTHER_ORG_ID}/services`).length === 1,
     r.err || `rows=${r.rows?.length} paths=${JSON.stringify(log.slice(mark).map((e) => e.path))}`);
   r = await runSql(`SELECT id FROM clickhouse.services.services`, { CLICKHOUSE_ORG_ID: undefined });
-  check('unset CLICKHOUSE_ORG_ID and no WHERE -> cannot find any viable servers', r.err && /viable servers|organizationId/i.test(r.err), r.err || 'no error');
-  r = await runSql(`SELECT id FROM clickhouse.services.services WHERE organizationId = '${ORG_ID}'`, { CLICKHOUSE_ORG_ID: undefined });
-  check('unset env + WHERE organizationId works', r.rows && r.rows.length === 2, r.err || `got ${r.rows?.length}`);
+  check('unset CLICKHOUSE_ORG_ID and no WHERE -> cannot find any viable servers', r.err && /viable servers|organization_id/i.test(r.err), r.err || 'no error');
+  r = await runSql(`SELECT id FROM clickhouse.services.services WHERE organization_id = '${ORG_ID}'`, { CLICKHOUSE_ORG_ID: undefined });
+  check('unset env + WHERE organization_id works', r.rows && r.rows.length === 2, r.err || `got ${r.rows?.length}`);
 
   // --- organization-root paths on their path-level server override
   mark = log.length;
@@ -171,26 +174,26 @@ try {
   check('organizations list hits GET /v1/organizations (bare base)',
     r.rows && r.rows.length === 1 && calls(mark, 'GET', '/v1/organizations').length === 1, r.err || JSON.stringify(log.slice(mark).map((e) => e.path)));
   mark = log.length;
-  r = await runSql(`SELECT name FROM clickhouse.organizations.organizations WHERE organizationId = '${ORG_ID}'`);
+  r = await runSql(`SELECT name FROM clickhouse.organizations.organizations WHERE organization_id = '${ORG_ID}'`);
   check('organization get by id', r.rows && r.rows.length === 1 && r.rows[0].name === 'Mock Org' && calls(mark, 'GET', orgPath('')).length === 1, r.err || JSON.stringify(r.rows));
 
   // --- single read via $.result
-  r = await runSql(`SELECT name, state, json_extract(ipAccessList, '$[0].source') AS cidr FROM clickhouse.services.services WHERE serviceId = '${SERVICE_ID}'`);
+  r = await runSql(`SELECT name, state, json_extract(ip_access_list, '$[0].source') AS cidr FROM clickhouse.services.services WHERE service_id = '${SERVICE_ID}'`);
   check('service get ($.result object, json_extract on nested list)', r.rows && r.rows.length === 1 && r.rows[0].cidr === '0.0.0.0/0', r.err || JSON.stringify(r.rows));
 
   // --- FinOps: usage_costs projects $.result.costs
   mark = log.length;
-  r = await runSql(`SELECT date, entityType, entityName, totalCHC, json_extract(metrics, '$.computeCHC') AS compute FROM clickhouse.organizations.usage_costs WHERE from_date = '2026-08-01' AND to_date = '2026-08-07'`);
+  r = await runSql(`SELECT date, entity_type, entity_name, total_chc, json_extract(metrics, '$.computeCHC') AS compute FROM clickhouse.organizations.usage_costs WHERE from_date = '2026-08-01' AND to_date = '2026-08-07'`);
   check('usage_costs list (3 rows via $.result.costs)', r.rows && r.rows.length === 3 && r.rows.some((x) => String(x.compute) === '0.675'), r.err || JSON.stringify(r.rows));
   const ucCalls = calls(mark, 'GET', orgPath('/usageCost'));
   check('from_date/to_date pushed as query params', ucCalls.length === 1 && ucCalls[0].query.from_date === '2026-08-01' && ucCalls[0].query.to_date === '2026-08-07', JSON.stringify(ucCalls.map((c) => c.query)));
 
   // --- other reads
-  r = await runSql(`SELECT userId, role FROM clickhouse.members.members`);
+  r = await runSql(`SELECT user_id, role FROM clickhouse.members.members`);
   check('members list', r.rows && r.rows.length === 1 && r.rows[0].role === 'admin', r.err || JSON.stringify(r.rows));
   r = await runSql(`SELECT id, type FROM clickhouse.organizations.activities`);
   check('activities list', r.rows && r.rows.length === 2, r.err || JSON.stringify(r.rows));
-  r = await runSql(`SELECT id, status FROM clickhouse.backups.backups WHERE serviceId = '${SERVICE_ID}'`);
+  r = await runSql(`SELECT id, status FROM clickhouse.backups.backups WHERE service_id = '${SERVICE_ID}'`);
   check('backups list (service-scoped)', r.rows && r.rows.length === 2, r.err || JSON.stringify(r.rows));
   r = await runSql(`SELECT id, name FROM clickhouse.keys.keys`);
   check('keys list (1 seed key)', r.rows && r.rows.length === 1 && r.rows[0].id === KEY_ID, r.err || JSON.stringify(r.rows));
@@ -206,17 +209,17 @@ try {
   const newKey = [...state.keys.values()].find((k) => k.name === 'stackql-smoke-it');
   check('key exists in mock state', !!newKey);
   if (newKey) {
-    r = await runSql(`SELECT name, state FROM clickhouse.keys.keys WHERE keyId = '${newKey.id}'`);
+    r = await runSql(`SELECT name, state FROM clickhouse.keys.keys WHERE key_id = '${newKey.id}'`);
     check('key get after INSERT', r.rows && r.rows.length === 1 && r.rows[0].state === 'enabled', r.err || JSON.stringify(r.rows));
     mark = log.length;
-    r = await runSql(`UPDATE clickhouse.keys.keys SET state = 'disabled', name = 'stackql-smoke-it-renamed' WHERE keyId = '${newKey.id}'`);
+    r = await runSql(`UPDATE clickhouse.keys.keys SET state = 'disabled', name = 'stackql-smoke-it-renamed' WHERE key_id = '${newKey.id}'`);
     check('key UPDATE (PATCH)', !r.err, r.err);
     const keyPatch = calls(mark, 'PATCH', orgPath(`/keys/${newKey.id}`));
     check('key UPDATE wire body {state, name}', keyPatch.length === 1 && keyPatch[0].body?.state === 'disabled' && keyPatch[0].body?.name === 'stackql-smoke-it-renamed', JSON.stringify(keyPatch.map((c) => c.body)));
-    r = await runSql(`SELECT name, state FROM clickhouse.keys.keys WHERE keyId = '${newKey.id}'`);
+    r = await runSql(`SELECT name, state FROM clickhouse.keys.keys WHERE key_id = '${newKey.id}'`);
     check('key reflects UPDATE', r.rows && r.rows[0]?.state === 'disabled' && r.rows[0]?.name === 'stackql-smoke-it-renamed', r.err || JSON.stringify(r.rows));
     mark = log.length;
-    r = await runSql(`DELETE FROM clickhouse.keys.keys WHERE keyId = '${newKey.id}'`);
+    r = await runSql(`DELETE FROM clickhouse.keys.keys WHERE key_id = '${newKey.id}'`);
     check('key DELETE (status-only response)', !r.err && calls(mark, 'DELETE', orgPath(`/keys/${newKey.id}`)).length === 1, r.err);
     check('key gone from mock state', !state.keys.has(newKey.id));
     r = await runSql(`SELECT id FROM clickhouse.keys.keys`);
@@ -234,40 +237,40 @@ try {
   // --- ipAccessList array-patch UPDATE (add/remove passed through verbatim)
   mark = log.length;
   const patch = JSON.stringify({ add: [{ source: '203.0.113.0/24', description: 'office' }], remove: [{ source: '0.0.0.0/0', description: 'Anywhere' }] });
-  r = await runSql(`UPDATE clickhouse.services.services SET ipAccessList = '${patch}' WHERE serviceId = '${SERVICE_ID}'`);
-  check('service ipAccessList UPDATE (add/remove)', !r.err, r.err);
+  r = await runSql(`UPDATE clickhouse.services.services SET ip_access_list = '${patch}' WHERE service_id = '${SERVICE_ID}'`);
+  check('service ip_access_list UPDATE (snake key -> ipAccessList add/remove)', !r.err, r.err);
   const svcPatch = calls(mark, 'PATCH', orgPath(`/services/${SERVICE_ID}`));
   check('array-patch wire body {ipAccessList: {add, remove}}',
     svcPatch.length === 1 && svcPatch[0].body?.ipAccessList?.add?.[0]?.source === '203.0.113.0/24' && svcPatch[0].body?.ipAccessList?.remove?.[0]?.source === '0.0.0.0/0',
     JSON.stringify(svcPatch.map((c) => c.body)));
-  r = await runSql(`SELECT json_extract(ipAccessList, '$[0].source') AS cidr FROM clickhouse.services.services WHERE serviceId = '${SERVICE_ID}'`);
+  r = await runSql(`SELECT json_extract(ip_access_list, '$[0].source') AS cidr FROM clickhouse.services.services WHERE service_id = '${SERVICE_ID}'`);
   check('ipAccessList after patch: remove processed before add', r.rows && r.rows[0]?.cidr === '203.0.113.0/24', r.err || JSON.stringify(r.rows));
 
   // --- ClickStack dashboard round trip
-  r = await runSql(`SELECT id, name FROM clickhouse.clickstack.dashboards WHERE serviceId = '${SERVICE_ID}'`);
+  r = await runSql(`SELECT id, name FROM clickhouse.clickstack.dashboards WHERE service_id = '${SERVICE_ID}'`);
   check('dashboards list (1 seed)', r.rows && r.rows.length === 1 && r.rows[0].id === DASHBOARD_ID, r.err || JSON.stringify(r.rows));
   mark = log.length;
   const tiles = JSON.stringify([{ name: 'Error rate', x: 0, y: 0, w: 6, h: 3, config: { displayType: 'line', select: [{ aggFn: 'count', where: '' }] } }]);
-  r = await runSql(`INSERT INTO clickhouse.clickstack.dashboards (serviceId, name, tiles, tags) SELECT '${SERVICE_ID}', 'stackql-smoke-dash', '${tiles}', '["smoke"]'`);
+  r = await runSql(`INSERT INTO clickhouse.clickstack.dashboards (service_id, name, tiles, tags) SELECT '${SERVICE_ID}', 'stackql-smoke-dash', '${tiles}', '["smoke"]'`);
   check('dashboard INSERT', !r.err, r.err);
   const dashPost = calls(mark, 'POST', orgPath(`/services/${SERVICE_ID}/clickstack/dashboards`));
   check('dashboard INSERT wire body {name, tiles[], tags[]}', dashPost.length === 1 && dashPost[0].body?.name === 'stackql-smoke-dash' && dashPost[0].body?.tiles?.[0]?.config?.displayType === 'line' && dashPost[0].body?.tags?.[0] === 'smoke', JSON.stringify(dashPost.map((c) => c.body)));
   const newDash = [...state.dashboards.values()].find((d) => d.name === 'stackql-smoke-dash');
   if (newDash) {
-    r = await runSql(`SELECT name, json_extract(tiles, '$[0].name') AS tile FROM clickhouse.clickstack.dashboards WHERE serviceId = '${SERVICE_ID}' AND clickStackDashboardId = '${newDash.id}'`);
+    r = await runSql(`SELECT name, json_extract(tiles, '$[0].name') AS tile FROM clickhouse.clickstack.dashboards WHERE service_id = '${SERVICE_ID}' AND click_stack_dashboard_id = '${newDash.id}'`);
     check('dashboard get (nested tiles via json_extract)', r.rows && r.rows[0]?.tile === 'Error rate', r.err || JSON.stringify(r.rows));
     mark = log.length;
     // PUT is a full replacement: name and tiles are required on the update
-    r = await runSql(`UPDATE clickhouse.clickstack.dashboards SET name = 'stackql-smoke-dash-v2', tiles = '${tiles}' WHERE serviceId = '${SERVICE_ID}' AND clickStackDashboardId = '${newDash.id}'`);
+    r = await runSql(`UPDATE clickhouse.clickstack.dashboards SET name = 'stackql-smoke-dash-v2', tiles = '${tiles}' WHERE service_id = '${SERVICE_ID}' AND click_stack_dashboard_id = '${newDash.id}'`);
     check('dashboard UPDATE (PUT, full replacement: name + tiles required)', !r.err && calls(mark, 'PUT', orgPath(`/services/${SERVICE_ID}/clickstack/dashboards/${newDash.id}`)).length === 1, r.err || JSON.stringify(log.slice(mark).map((e) => `${e.method} ${e.path}`)));
-    r = await runSql(`DELETE FROM clickhouse.clickstack.dashboards WHERE serviceId = '${SERVICE_ID}' AND clickStackDashboardId = '${newDash.id}'`);
+    r = await runSql(`DELETE FROM clickhouse.clickstack.dashboards WHERE service_id = '${SERVICE_ID}' AND click_stack_dashboard_id = '${newDash.id}'`);
     check('dashboard DELETE', !r.err && !state.dashboards.has(newDash.id), r.err);
   } else {
     check('dashboard exists in mock state', false, 'INSERT did not create the dashboard');
   }
 
   // --- negative path: error envelope surfaces
-  r = await runSql(`SELECT name FROM clickhouse.services.services WHERE serviceId = 'does-not-exist'`);
+  r = await runSql(`SELECT name FROM clickhouse.services.services WHERE service_id = 'does-not-exist'`);
   check('404 error envelope surfaced', r.err && /404/.test(r.err) && /NOT_FOUND/.test(r.err), r.err || 'no error');
 } finally {
   server.close();

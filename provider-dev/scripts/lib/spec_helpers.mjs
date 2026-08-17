@@ -217,7 +217,8 @@ export function skipReason(pathKey, op, resolve) {
 // ---------------------------------------------------------------------------
 
 // Every operation except the two organization-root paths lives under this
-// prefix. It becomes the server URL template, with {organizationId} resolved
+// prefix. It becomes the server URL template, with the {organization_id}
+// server variable (snake_case, like the rest of the user surface) resolved
 // from CLICKHOUSE_ORG_ID via x-stackQL-envVar (stackql/stackql#707).
 export const ORG_PREFIX = '/v1/organizations/{organizationId}';
 // The organization list/get/update paths cannot live under the org-scoped

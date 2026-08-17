@@ -31,9 +31,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/ApiKey'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -51,9 +49,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -101,9 +97,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ApiKeyPostResponse'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -121,9 +115,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -174,9 +166,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ApiKey'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -194,9 +184,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -251,9 +239,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/ApiKey'
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -271,9 +257,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -294,9 +278,7 @@ paths:
         - OpenAPI
     delete:
       summary: Delete key
-      description: >-
-        Deletes API key. Only a key not used to authenticate the active request
-        can be deleted.
+      description: Deletes API key. Only a key not used to authenticate the active request can be deleted.
       operationId: openapiKeyDelete
       parameters:
         - in: path
@@ -323,9 +305,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '400':
-          description: >-
-            The request cannot be processed due to a client error. Please verify
-            your request parameters and try again.
+          description: The request cannot be processed due to a client error. Please verify your request parameters and try again.
           content:
             application/json:
               schema:
@@ -343,9 +323,7 @@ paths:
                     description: Unique id assigned to every request. UUIDv4
                     format: uuid
         '500':
-          description: >-
-            An internal server error has occurred. If this issue persists,
-            please contact ClickHouse Cloud support for assistance.
+          description: An internal server error has occurred. If this issue persists, please contact ClickHouse Cloud support for assistance.
           content:
             application/json:
               schema:
@@ -383,11 +361,7 @@ components:
             - disabled
         roles:
           type: array
-          description: >-
-            DEPRECATED. Use `assignedRoles` instead. List of roles assigned to
-            the key. For organizations that have migrated to custom roles, this
-            field is frozen at the pre-migration value and does not reflect
-            current role assignments.
+          description: DEPRECATED. Use `assignedRoles` instead. List of roles assigned to the key. For organizations that have migrated to custom roles, this field is frozen at the pre-migration value and does not reflect current role assignments.
           items:
             type: string
             enum:
@@ -408,16 +382,12 @@ components:
           type: string
           format: date-time
         expireAt:
-          description: >-
-            Timestamp the key expires. If not present, `null` or is empty the
-            key never expires. ISO-8601.
+          description: Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601.
           type: string
           format: date-time
           nullable: true
         usedAt:
-          description: >-
-            Timestamp the key was used last time, with one-minute precision. If
-            not present the key was never used. ISO-8601.
+          description: Timestamp the key was used last time, with one-minute precision. If not present the key was never used. ISO-8601.
           type: string
           format: date-time
         ipAccessList:
@@ -432,16 +402,12 @@ components:
           description: Name of the key.
           type: string
         expireAt:
-          description: >-
-            Timestamp the key expires. If not present, `null` or is empty the
-            key never expires. ISO-8601.
+          description: Timestamp the key expires. If not present, `null` or is empty the key never expires. ISO-8601.
           type: string
           format: date-time
           nullable: true
         state:
-          description: >-
-            Initial state of the key: 'enabled', 'disabled'. If not provided the
-            new key will be 'enabled'.
+          description: 'Initial state of the key: ''enabled'', ''disabled''. If not provided the new key will be ''enabled''.'
           type: string
           enum:
             - enabled
@@ -450,9 +416,7 @@ components:
           $ref: '#/components/schemas/ApiKeyHashData'
         roles:
           type: array
-          description: >-
-            DEPRECATED. Use `assignedRoleIds` instead. List of roles assigned to
-            the key. Contains at least 1 element.
+          description: DEPRECATED. Use `assignedRoleIds` instead. List of roles assigned to the key. Contains at least 1 element.
           items:
             type: string
             enum:
@@ -477,14 +441,10 @@ components:
         key:
           $ref: '#/components/schemas/ApiKey'
         keyId:
-          description: >-
-            Generated key ID. Provided only if there was no 'hashData' in the
-            request.
+          description: Generated key ID. Provided only if there was no 'hashData' in the request.
           type: string
         keySecret:
-          description: >-
-            Generated key secret. Provided only if there was no 'hashData' in
-            the request.
+          description: Generated key secret. Provided only if there was no 'hashData' in the request.
           type: string
       type: object
     ApiKeyPatchRequest:
@@ -494,9 +454,7 @@ components:
           type: string
         roles:
           type: array
-          description: >-
-            DEPRECATED. Use `assignedRoleIds` instead. List of roles assigned to
-            the key.
+          description: DEPRECATED. Use `assignedRoleIds` instead. List of roles assigned to the key.
           items:
             type: string
             enum:
@@ -511,9 +469,7 @@ components:
             type: string
             format: uuid
         expireAt:
-          description: >-
-            Timestamp the key expires. If `null` or is empty the key never
-            expires. ISO-8601.
+          description: Timestamp the key expires. If `null` or is empty the key never expires. ISO-8601.
           type: string
           format: date-time
           nullable: true
@@ -551,9 +507,7 @@ components:
           description: IP or CIDR
           type: string
         description:
-          description: >-
-            Optional description of IPv4 address or IPv4 CIDR to allow access
-            from
+          description: Optional description of IPv4 address or IPv4 CIDR to allow access from
           type: string
       type: object
     ApiKeyHashData:
@@ -562,14 +516,10 @@ components:
           description: 'Hash of the key ID. '
           type: string
         keyIdSuffix:
-          description: >-
-            Last 4 digits of the key ID. Algorithm: echo -n "yourpassword" |
-            sha256sum | tr -d '-' | xxd -r -p | base64
+          description: 'Last 4 digits of the key ID. Algorithm: echo -n "yourpassword" | sha256sum | tr -d ''-'' | xxd -r -p | base64'
           type: string
         keySecretHash:
-          description: >-
-            Hash of the key secret. Algorithm: echo -n "yourpassword" |
-            sha256sum | tr -d '-' | xxd -r -p | base64
+          description: 'Hash of the key secret. Algorithm: echo -n "yourpassword" | sha256sum | tr -d ''-'' | xxd -r -p | base64'
           type: string
       type: object
   x-stackQL-resources:
@@ -585,6 +535,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         create:
           config:
             requestBodyTranslate:
@@ -594,6 +546,8 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         get:
           operation:
             $ref: '#/paths/~1keys~1{keyId}/get'
@@ -601,6 +555,8 @@ components:
             mediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.result
+          request:
+            nativeCasing: camel
         update:
           config:
             requestBodyTranslate:
@@ -610,12 +566,16 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
         delete:
           operation:
             $ref: '#/paths/~1keys~1{keyId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+          request:
+            nativeCasing: camel
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/keys/methods/get'
@@ -628,12 +588,8 @@ components:
           - $ref: '#/components/x-stackQL-resources/keys/methods/delete'
         replace: []
 servers:
-  - url: https://api.clickhouse.cloud/v1/organizations/{organizationId}
+  - url: https://api.clickhouse.cloud/v1/organizations/{organization_id}
     variables:
-      organizationId:
-        description: >-
-          ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID
-          environment variable when it is set (x-stackQL-envVar); otherwise it
-          must be supplied on every query as WHERE organizationId = <uuid>. A
-          WHERE value always takes precedence over the environment.
+      organization_id:
+        description: ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = <uuid>. A WHERE value always takes precedence over the environment.
         x-stackQL-envVar: CLICKHOUSE_ORG_ID

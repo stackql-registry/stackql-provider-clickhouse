@@ -71,35 +71,27 @@ The provider config in the registry document is:
 {"auth": {"type": "basic", "username_var": "CLICKHOUSE_CLOUD_API_KEY", "password_var": "CLICKHOUSE_CLOUD_API_SECRET"}}
 ```
 
-<details>
-
-<summary>Overriding the credential env vars at runtime</summary>
-
-The env var names above are provider defaults; any of the `basic` auth forms can be supplied on the command line to use different names or a single pre-encoded credential:
+The env var names above are provider defaults (the same `basic` construct as the `confluent` and `kafka` providers); to use different variable names, pass the auth block on the command line:
 
 ```bash
-# a different variable pair
 AUTH='{"clickhouse": {"type": "basic", "username_var": "CH_KEY_ID", "password_var": "CH_KEY_SECRET"}}'
-stackql shell --auth="${AUTH}"
-
-# a single base64(keyId:keySecret) string
-export CLICKHOUSE_CLOUD_CREDS=$(echo -n "${KEY_ID}:${KEY_SECRET}" | base64)
-AUTH='{"clickhouse": {"type": "basic", "credentialsenvvar": "CLICKHOUSE_CLOUD_CREDS"}}'
 stackql shell --auth="${AUTH}"
 ```
 
-</details>
+## Column and parameter names
+
+Columns, `WHERE` keys and `INSERT`/`UPDATE` columns are snake_case (`created_at`, `ip_access_list`, `service_id`); the provider translates them to the API's camelCase on the wire. Nested JSON columns keep the wire casing inside the blob (`json_extract(current_scaling, '$.effectiveAutoscalingMode')`), and `EXEC` variables use the wire names (`@serviceId`, `@command`).
 
 ## Organization scope
 
-Every resource except `organizations` is scoped to an organization. The organization ID is a server variable resolved from the <CopyableCode code="CLICKHOUSE_ORG_ID" /> environment variable when it is set, so queries need no `WHERE organizationId` clause:
+Every resource except `organizations` is scoped to an organization. The organization ID is a server variable (`organization_id`) resolved from the <CopyableCode code="CLICKHOUSE_ORG_ID" /> environment variable when it is set, so queries need no `WHERE organization_id` clause:
 
 ```sql
 SELECT name, state, provider, region
 FROM clickhouse.services.services;
 ```
 
-A `WHERE organizationId = '...'` value always takes precedence over the environment, which is how a single session queries several organizations. With the variable unset, `organizationId` becomes a required parameter on every method (visible in `SHOW METHODS`) and must be supplied per query. To discover the ID:
+A `WHERE organization_id = '...'` value always takes precedence over the environment, which is how a single session queries several organizations. With the variable unset, `organization_id` becomes a required parameter on every method (visible in `SHOW METHODS`) and must be supplied per query. To discover the ID:
 
 ```sql
 SELECT id, name FROM clickhouse.organizations.organizations;
@@ -119,10 +111,10 @@ Service estate inventory - state, footprint and scaling configuration for every 
 
 ```sql
 SELECT name, state, provider, region,
-       numReplicas,
-       minReplicaMemoryGb, maxReplicaMemoryGb,
-       json_extract(currentScaling, '$.effectiveAutoscalingMode') AS scaling_mode,
-       idleScaling, idleTimeoutMinutes, clickhouseVersion
+       num_replicas,
+       min_replica_memory_gb, max_replica_memory_gb,
+       json_extract(current_scaling, '$.effectiveAutoscalingMode') AS scaling_mode,
+       idle_scaling, idle_timeout_minutes, clickhouse_version
 FROM clickhouse.services.services
 ORDER BY provider, region, name;
 ```
@@ -130,22 +122,22 @@ ORDER BY provider, region, name;
 Daily usage cost by entity (ClickHouse Credits) - the FinOps view:
 
 ```sql
-SELECT date, entityType, entityName, totalCHC,
-       json_extract(metrics, '$.computeCHC') AS computeCHC,
-       json_extract(metrics, '$.storageCHC') AS storageCHC,
-       json_extract(metrics, '$.backupCHC') AS backupCHC
+SELECT date, entity_type, entity_name, total_chc,
+       json_extract(metrics, '$.computeCHC') AS compute_chc,
+       json_extract(metrics, '$.storageCHC') AS storage_chc,
+       json_extract(metrics, '$.backupCHC') AS backup_chc
 FROM clickhouse.organizations.usage_costs
 WHERE from_date = '2026-08-01' AND to_date = '2026-08-31'
-ORDER BY date, entityName;
+ORDER BY date, entity_name;
 ```
 
 Idle-service detection - stopped or idle services that still carried cost in the window:
 
 ```sql
-SELECT s.name, s.state, SUM(c.totalCHC) AS chc_in_window
+SELECT s.name, s.state, SUM(c.total_chc) AS chc_in_window
 FROM clickhouse.services.services s
 JOIN clickhouse.organizations.usage_costs c
-  ON c.serviceId = s.id
+  ON c.service_id = s.id
 WHERE c.from_date = '2026-08-01' AND c.to_date = '2026-08-31'
   AND s.state IN ('stopped', 'idle')
 GROUP BY s.name, s.state
@@ -155,33 +147,51 @@ ORDER BY chc_in_window DESC;
 API keys by age, state and assigned roles:
 
 ```sql
-SELECT name, state, createdAt, expireAt, usedAt,
-       json_extract(assignedRoles, '$[0].roleName') AS first_role,
-       json_array_length(assignedRoles) AS role_count
+SELECT name, state, created_at, expire_at, used_at,
+       json_extract(assigned_roles, '$[0].roleName') AS first_role,
+       json_array_length(assigned_roles) AS role_count
 FROM clickhouse.keys.keys
-ORDER BY createdAt;
+ORDER BY created_at;
 ```
 
 Member and invitation audit:
 
 ```sql
-SELECT name, email, role, joinedAt, 'member' AS kind
+SELECT name, email, role, joined_at, 'member' AS kind
 FROM clickhouse.members.members
 UNION ALL
-SELECT email, email, role, createdAt, 'invitation'
+SELECT email, email, role, created_at, 'invitation'
 FROM clickhouse.members.invitations;
 ```
 
 Backup configuration coverage across the estate:
 
 ```sql
-SELECT s.name, b.backupPeriodInHours, b.backupRetentionPeriodInHours, b.backupStartTime
+SELECT s.name, b.backup_period_in_hours, b.backup_retention_period_in_hours, b.backup_start_time
 FROM clickhouse.services.services s
 JOIN clickhouse.backups.backup_configurations b
-  ON b.serviceId = s.id;
+  ON b.service_id = s.id;
 ```
 
-Service lifecycle - the state command is an `EXEC` method with a `command` of `start`, `stop` or `awake`:
+Organization quotas - usage against limits:
+
+```sql
+SELECT quota_code, name, value AS quota_limit, usage
+FROM clickhouse.organizations.quotas;
+```
+
+API key provisioning - organizations on Custom Roles assign roles by ID (`assigned_role_ids`), so the role lookup and the key creation are one statement:
+
+```sql
+INSERT INTO clickhouse.keys.keys (name, assigned_role_ids, state)
+SELECT 'finops-reader',
+       '["' || id || '"]',
+       'enabled'
+FROM clickhouse.roles.roles
+WHERE name = 'Organization API Reader';
+```
+
+Service lifecycle - the state command is an `EXEC` method with a `command` of `start`, `stop` or `awake` (`EXEC` variables use the wire names):
 
 ```sql
 EXEC clickhouse.services.services.update_state
@@ -193,15 +203,15 @@ Network access - the service `ipAccessList` `PATCH` takes `add` / `remove` array
 
 ```sql
 UPDATE clickhouse.services.services
-SET ipAccessList = '{"add": [{"source": "203.0.113.0/24", "description": "office"}],
-                     "remove": [{"source": "0.0.0.0/0", "description": "Anywhere"}]}'
-WHERE serviceId = '<service-uuid>';
+SET ip_access_list = '{"add": [{"source": "203.0.113.0/24", "description": "office"}],
+                       "remove": [{"source": "0.0.0.0/0", "description": "Anywhere"}]}'
+WHERE service_id = '<service-uuid>';
 ```
 
 ClickStack dashboards as code - a dashboard `INSERT` with tiles:
 
 ```sql
-INSERT INTO clickhouse.clickstack.dashboards (serviceId, name, tiles, tags)
+INSERT INTO clickhouse.clickstack.dashboards (service_id, name, tiles, tags)
 SELECT '<service-uuid>', 'Service Overview',
        '[{"name": "Error rate", "x": 0, "y": 0, "w": 6, "h": 3,
           "config": {"displayType": "line", "select": [{"aggFn": "count", "where": "SeverityText = ''ERROR''"}]}}]',

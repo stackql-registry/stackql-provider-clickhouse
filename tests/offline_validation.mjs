@@ -81,10 +81,10 @@ r = await runSql('SHOW METHODS IN clickhouse.services.services', { CLICKHOUSE_OR
 const byName = Object.fromEntries(r.rows.map((m) => [m.MethodName, m]));
 check('services.services methods (7)', r.rows.length === 7, JSON.stringify(Object.keys(byName)));
 check('services.services verbs', byName.list?.SQLVerb === 'SELECT' && byName.create?.SQLVerb === 'INSERT' && byName.update?.SQLVerb === 'UPDATE' && byName.delete?.SQLVerb === 'DELETE' && byName.update_state?.SQLVerb === 'EXEC' && byName.update_password?.SQLVerb === 'EXEC', JSON.stringify(byName));
-check('organizationId is required when CLICKHOUSE_ORG_ID is unset', String(byName.list?.RequiredParams || '').includes('organizationId'), JSON.stringify(byName.list));
+check('organization_id is required when CLICKHOUSE_ORG_ID is unset', String(byName.list?.RequiredParams || '').includes('organization_id'), JSON.stringify(byName.list));
 r = await runSql('SHOW METHODS IN clickhouse.services.services', { CLICKHOUSE_ORG_ID: '00000000-0000-4000-8000-000000000000' });
 const listM = r.rows.find((m) => m.MethodName === 'list');
-check('organizationId is optional when CLICKHOUSE_ORG_ID is set (x-stackQL-envVar)', listM && !String(listM.RequiredParams || '').includes('organizationId'), JSON.stringify(listM));
+check('organization_id is optional when CLICKHOUSE_ORG_ID is set (x-stackQL-envVar)', listM && !String(listM.RequiredParams || '').includes('organization_id'), JSON.stringify(listM));
 
 // organizations root paths: list needs nothing, get needs organizationId as a path param
 r = await runSql('SHOW METHODS IN clickhouse.organizations.organizations', { CLICKHOUSE_ORG_ID: undefined });
@@ -95,13 +95,13 @@ check('organizations.organizations get requires organizationId', String(org.get?
 // DESCRIBE EXTENDED on the representative resources
 r = await runSql('DESCRIBE EXTENDED clickhouse.services.services');
 const svcCols = r.rows.map((c) => c.name);
-check('DESCRIBE services.services has id, name, state, tier, provider, region, ipAccessList', ['id', 'name', 'state', 'tier', 'provider', 'region', 'ipAccessList', 'currentScaling'].every((c) => svcCols.includes(c)), JSON.stringify(svcCols));
+check('DESCRIBE services.services has snake_case columns (ip_access_list, current_scaling)', ['id', 'name', 'state', 'tier', 'provider', 'region', 'ip_access_list', 'current_scaling'].every((c) => svcCols.includes(c)), JSON.stringify(svcCols));
 r = await runSql('DESCRIBE EXTENDED clickhouse.organizations.usage_costs');
 const ucCols = r.rows.map((c) => c.name);
-check('DESCRIBE usage_costs projects the cost rows ($.result.costs)', ['date', 'entityType', 'entityName', 'totalCHC', 'metrics'].every((c) => ucCols.includes(c)) && !ucCols.includes('grandTotalCHC'), JSON.stringify(ucCols));
+check('DESCRIBE usage_costs projects the cost rows ($.result.costs)', ['date', 'entity_type', 'entity_name', 'total_chc', 'metrics'].every((c) => ucCols.includes(c)) && !ucCols.includes('grand_total_chc'), JSON.stringify(ucCols));
 r = await runSql('DESCRIBE EXTENDED clickhouse.keys.keys');
 const keyCols = r.rows.map((c) => c.name);
-check('DESCRIBE keys.keys has id, name, state, assignedRoles, expireAt', ['id', 'name', 'state', 'assignedRoles', 'expireAt', 'ipAccessList'].every((c) => keyCols.includes(c)), JSON.stringify(keyCols));
+check('DESCRIBE keys.keys has snake_case columns (assigned_roles, expire_at)', ['id', 'name', 'state', 'assigned_roles', 'expire_at', 'ip_access_list'].every((c) => keyCols.includes(c)), JSON.stringify(keyCols));
 r = await runSql('DESCRIBE EXTENDED clickhouse.clickstack.dashboards');
 check('DESCRIBE clickstack.dashboards has tiles', r.rows.some((c) => c.name === 'tiles'), JSON.stringify(r.rows.map((c) => c.name)));
 
@@ -109,7 +109,7 @@ check('DESCRIBE clickstack.dashboards has tiles', r.rows.some((c) => c.name === 
 r = await runSql('SHOW METHODS IN clickhouse.udfs.functions');
 check('udfs.functions methods (list, get, create, delete)', ['list', 'get', 'create', 'delete'].every((m) => r.rows.some((x) => x.MethodName === m)), JSON.stringify(r.rows));
 r = await runSql('DESCRIBE EXTENDED clickhouse.udfs.functions');
-check('DESCRIBE udfs.functions projects UDF rows ($.result.items)', r.rows.some((c) => c.name === 'functionName') && !r.rows.some((c) => c.name === 'pagination'), JSON.stringify(r.rows.map((c) => c.name)));
+check('DESCRIBE udfs.functions projects UDF rows ($.result.items)', r.rows.some((c) => c.name === 'function_name') && !r.rows.some((c) => c.name === 'pagination'), JSON.stringify(r.rows.map((c) => c.name)));
 r = await runSql('DESCRIBE EXTENDED clickhouse.organizations.prometheus_scrape_targets');
 check('DESCRIBE prometheus_scrape_targets (bare-array wrap) has targets and labels', ['targets', 'labels'].every((c) => r.rows.some((x) => x.name === c)), JSON.stringify(r.rows.map((c) => c.name)));
 

@@ -121,4 +121,4 @@ console.log(`Split completed: ${written.length} service specs written to ${outpu
 for (const f of written.sort()) {
   console.log(`  ${f}`);
 }
-console.log(`Server template: ${servers[0].url} (organizationId via x-stackQL-envVar ${servers[0].variables.organizationId['x-stackQL-envVar']}; root paths ${ORG_ROOT_PATHS.join(', ')} pinned to the API base in post_process)`);
+console.log(`Server template: ${servers[0].url} (organization_id via x-stackQL-envVar ${servers[0].variables.organization_id['x-stackQL-envVar']}; root paths ${ORG_ROOT_PATHS.join(', ')} pinned to the API base in post_process)`);

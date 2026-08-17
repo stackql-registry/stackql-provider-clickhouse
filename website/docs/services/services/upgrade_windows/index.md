@@ -87,21 +87,21 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns the configured upgrade window for a service.&lt;br /&gt;&lt;br /&gt;Errors:&lt;br /&gt;- 401: missing, invalid, or disabled API key.&lt;br /&gt;- 403: caller lacks `control-plane:service:view` on the service.&lt;br /&gt;- 404: service does not exist, is not visible to the caller, or no upgrade window has been configured.</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a>, <a href="#parameter-weekday"><code>weekday</code></a>, <a href="#parameter-startHourUtc"><code>startHourUtc</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a>, <a href="#parameter-weekday"><code>weekday</code></a>, <a href="#parameter-startHourUtc"><code>startHourUtc</code></a></td>
     <td></td>
     <td>Creates or fully replaces the upgrade window for a service. The upgrade window currently lasts 6 hours from `startHourUtc`. The upgrade window can only be set on primary services; secondary services inherit the primary service window.&lt;br /&gt;&lt;br /&gt;Errors:&lt;br /&gt;- 400: invalid field values (`weekday` not in 0–6, `startHourUtc` not in &#123;0, 6, 12, 18&#125;), or the service is a secondary service.&lt;br /&gt;- 401: missing, invalid, or disabled API key.&lt;br /&gt;- 403: caller lacks `control-plane:service:manage` on the service, or the organization does not have the scheduled upgrades feature enabled.&lt;br /&gt;- 404: service does not exist or is not visible to the caller.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organizationId"><code>organizationId</code></a></td>
+    <td><a href="#parameter-serviceId"><code>serviceId</code></a>, <a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Deletes the upgrade window for a service, restoring the default scheduling behaviour. The upgrade window can only be deleted on primary services. Deletion succeeds even if the organization has lost the scheduled upgrades entitlement, so a window can be cleared after entitlement loss.&lt;br /&gt;&lt;br /&gt;Errors:&lt;br /&gt;- 400: the service is a secondary service.&lt;br /&gt;- 401: missing, invalid, or disabled API key.&lt;br /&gt;- 403: caller lacks `control-plane:service:manage` on the service.&lt;br /&gt;- 404: service does not exist, is not visible to the caller, or no upgrade window is configured.</td>
 </tr>
@@ -121,10 +121,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
-<tr id="parameter-organizationId">
-    <td><CopyableCode code="organizationId" /></td>
+<tr id="parameter-organization_id">
+    <td><CopyableCode code="organization_id" /></td>
     <td><code>string</code></td>
-    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organizationId = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
+    <td>ClickHouse Cloud organization ID. Resolved from the CLICKHOUSE_ORG_ID environment variable when it is set (x-stackQL-envVar); otherwise it must be supplied on every query as WHERE organization_id = &lt;uuid&gt;. A WHERE value always takes precedence over the environment. (x-stackQL-envVar: CLICKHOUSE_ORG_ID)</td>
 </tr>
 <tr id="parameter-serviceId">
     <td><CopyableCode code="serviceId" /></td>
@@ -153,7 +153,7 @@ startHourUtc,
 weekday
 FROM clickhouse.services.upgrade_windows
 WHERE serviceId = '{{ serviceId }}' -- required
-AND organizationId = '{{ organizationId }}' -- required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
@@ -179,7 +179,7 @@ weekday = {{ weekday }},
 startHourUtc = {{ startHourUtc }}
 WHERE 
 serviceId = '{{ serviceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 AND weekday = '{{ weekday }}' --required
 AND startHourUtc = '{{ startHourUtc }}' --required
 RETURNING
@@ -206,7 +206,7 @@ Deletes the upgrade window for a service, restoring the default scheduling behav
 ```sql
 DELETE FROM clickhouse.services.upgrade_windows
 WHERE serviceId = '{{ serviceId }}' --required
-AND organizationId = '{{ organizationId }}' --required unless CLICKHOUSE_ORG_ID is set
+AND organization_id = '{{ organization_id }}' --required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
