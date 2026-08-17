@@ -22,9 +22,9 @@ jobs:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
@@ -32,13 +32,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # puts the latest stackql on PATH; bin/start-server.sh and the test
+      # runners resolve it from there (no wrapper - the real binary is needed)
       - name: Install stackql
-        run: |
-          curl -L https://releases.stackql.io/stackql/latest/stackql_linux_amd64.zip -o stackql.zip
-          unzip -o stackql.zip
-          chmod +x stackql
-          echo "STACKQL=$PWD/stackql" >> "$GITHUB_ENV"
-          ./stackql --version
+        uses: stackql/setup-stackql@v2
+
+      - name: stackql version
+        run: stackql --version
 
       # Drift is reported, not fatal, here: the committed pin is what gets
       # built and tested. The spec-drift job below opens the review issue.
@@ -86,14 +86,14 @@ jobs:
       CLICKHOUSE_CLOUD_API_SECRET: ${{ secrets.CLICKHOUSE_CLOUD_API_SECRET }}
       CLICKHOUSE_ORG_ID: ${{ secrets.CLICKHOUSE_ORG_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -119,9 +119,9 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
@@ -149,7 +149,7 @@ jobs:
 
       - name: Report drift
         if: steps.drift.outputs.drift == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
