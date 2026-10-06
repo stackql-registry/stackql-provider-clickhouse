@@ -86,11 +86,14 @@ r = await runSql('SHOW METHODS IN clickhouse.services.services', { CLICKHOUSE_OR
 const listM = r.rows.find((m) => m.MethodName === 'list');
 check('organization_id is optional when CLICKHOUSE_ORG_ID is set (x-stackQL-envVar)', listM && !String(listM.RequiredParams || '').includes('organization_id'), JSON.stringify(listM));
 
-// organizations root paths: list needs nothing, get needs organizationId as a path param
+// organizations root paths: list needs nothing, get needs the organizationId
+// path param. stackql >= 0.12 reports it under its snake_case alias
+// (organization_id, from snake_case_aliases in the provider config); older
+// engines report the native name.
 r = await runSql('SHOW METHODS IN clickhouse.organizations.organizations', { CLICKHOUSE_ORG_ID: undefined });
 const org = Object.fromEntries(r.rows.map((m) => [m.MethodName, m]));
 check('organizations.organizations list has no required params', org.list && !String(org.list.RequiredParams || '').trim(), JSON.stringify(org.list));
-check('organizations.organizations get requires organizationId', String(org.get?.RequiredParams || '').includes('organizationId'), JSON.stringify(org.get));
+check('organizations.organizations get requires organizationId', /organization_?[iI]d/.test(String(org.get?.RequiredParams || '')), JSON.stringify(org.get));
 
 // DESCRIBE EXTENDED on the representative resources
 r = await runSql('DESCRIBE EXTENDED clickhouse.services.services');

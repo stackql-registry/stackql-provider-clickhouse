@@ -27,6 +27,7 @@ Query, provision and operate the ClickHouse Cloud control plane using SQL - orga
 
 total services: __10__  
 total resources: __54__  
+source project: __[stackql-provider-clickhouse](https://github.com/stackql-registry/stackql-provider-clickhouse)__  
 
 :::
 

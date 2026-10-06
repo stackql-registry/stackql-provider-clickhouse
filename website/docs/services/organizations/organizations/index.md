@@ -154,7 +154,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td></td>
+    <td><a href="#parameter-organization_id"><code>organization_id</code></a></td>
     <td></td>
     <td>Returns a list with a single organization associated with the API key in the request.</td>
 </tr>
@@ -234,6 +234,7 @@ created_at,
 enable_core_dumps,
 private_endpoints
 FROM clickhouse.organizations.organizations
+WHERE organization_id = '{{ organization_id }}' -- required unless CLICKHOUSE_ORG_ID is set
 ;
 ```
 </TabItem>
